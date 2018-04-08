@@ -1,2 +1,2 @@
-# M5Stack_SuperApp_PlatformIO
-A M5Stack firmware made on PlatformIO
+# M5Stack_MultiApp_Firmware
+A firmware that include multiple "sketches"
