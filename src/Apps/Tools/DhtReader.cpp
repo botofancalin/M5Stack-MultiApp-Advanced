@@ -27,9 +27,9 @@ void Dht_Run()
                 M5.Lcd.drawCentreString("Humidity", 260, 80, 2);
                 M5.Lcd.drawCentreString(String(humidity), 260, 100, 4);
                 M5.Lcd.drawCentreString("%RH", 260, 125, 2);
-                M5.Lcd.VprogressBar(120, 50, 20, 100, RED, int(dht.getTemperature()));
+                M5.Lcd.VprogressBar(120, 50, 20, 100, RED, int(dht.getTemperature()),true);
                 M5.Lcd.fillCircle(129, 160, 20, RED);
-                M5.Lcd.VprogressBar(180, 50, 20, 100, BLUE, int(dht.getHumidity()));
+                M5.Lcd.VprogressBar(180, 50, 20, 100, BLUE, int(dht.getHumidity()),true);
                 M5.Lcd.fillCircle(189, 160, 20, BLUE);
                 oldtemperature = temperature;
                 oldhumidity = humidity;

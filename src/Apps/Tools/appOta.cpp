@@ -24,7 +24,7 @@ void appOta()
 			M5.Lcd.println("Done");
 		})
 		.onProgress([](unsigned int progress, unsigned int total) {
-			M5.Lcd.HprogressBar(10, 110, 300, 30, YELLOW, (progress / (total / 100)));
+			M5.Lcd.HprogressBar(20, 100, 280, 30, YELLOW, (progress / (total / 100)));
 		})
 		.onError([](ota_error_t error) {
 			M5.Lcd.println("Error[%u]: " + String(error));

@@ -10,6 +10,7 @@
 #include "esp_wps.h"
 #include "DHTesp.h"
 #include "ArduinoOTA.h"
+#include "esp_wps.h"
 // add system global variables here to be seen from all files
 
 #define EEPROM_SIZE 64
@@ -24,6 +25,7 @@ void appSysInfo();
 void appSleep();
 void appCfgBrigthness();
 void appReturn();
+void appWiFiSetup();
 
 void appI2CScanner();
 void WiFiScanner_run();
@@ -41,3 +43,5 @@ void appOsciloscope();
 
 void clock_setup();
 void clock_run();
+
+void Wps_run(int mode);

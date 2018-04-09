@@ -2,14 +2,17 @@
 #include <Display.h>
 
 unsigned long sleeptime = 0;
+int SignalStrength = 0;
 unsigned long waiting = 60000;
-unsigned long lastcheck = millis(); // timer check
+unsigned long lastcheck = 0;
 
 void setup()
 {
 	M5.begin();
 	Wire.begin();
 	dacWrite(25, 0); // Speaker OFF
+	WiFi.mode(WIFI_MODE_STA);
+	WiFi.begin();
 
 	if (!EEPROM.begin(EEPROM_SIZE))
 	{
@@ -35,7 +38,7 @@ void setup()
 	//           IF SELECTOR = -1 then MyMenu.execute() run function with name in last parameter (FUNCTION_NAME)
 	//           IF SELECTOR = [0-7] then MyMenu.execute() switch menu items to SUBMENU_ID
 	//    FUNCTION_NAME: name of function to run....
-	
+
 	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, "/Data/Apps.jpg", appReturn);
 	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, "/Data/System.jpg", appReturn);
 	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, "/Data/About.jpg", appAbout);
@@ -47,6 +50,7 @@ void setup()
 	MyMenu.addMenuItem(1, "RETURN", "<", "OK", ">", 0, "/Data/Return.jpg", appReturn);
 
 	MyMenu.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, "/Data/SysInfo.jpg", appSysInfo);
+	MyMenu.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, "/Data/WiFi.jpg", appWiFiSetup);
 	MyMenu.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, "/Data/BackLight.jpg", appCfgBrigthness);
 	MyMenu.addMenuItem(2, "SLEEP/CHARGING", "<", "OK", ">", -1, "/Data/Sleep.jpg", appSleep);
 	MyMenu.addMenuItem(2, "RETURN", "<", "OK", ">", 0, "/Data/Return.jpg", appReturn);
@@ -58,6 +62,14 @@ void loop()
 {
 	if (WiFi.isConnected())
 	{
+		unsigned long now = millis();
+		if (now - lastcheck >= 1000)
+		{
+			lastcheck = now;
+			M5.Lcd.setTextColor(WHITE, 15);
+			SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
+			M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
+		}
 		if (!OtaRunning)
 		{
 			appOta();

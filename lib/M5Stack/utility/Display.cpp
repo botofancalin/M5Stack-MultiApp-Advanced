@@ -2920,18 +2920,24 @@ void ILI9341::drawBitmap(int16_t x, int16_t y, int16_t w, int16_t h,
   pushRect(x, y, w, h, (uint16_t *)pcolors);
 }
 
-void ILI9341::HprogressBar(int x, int y, int w, int h, uint32_t color, uint8_t val)
+void ILI9341::HprogressBar(int x, int y, int w, int h, uint32_t color, uint8_t val, bool redraw)
 {
-  fillRoundRect(x + 1, y + 1, w - 1, h - 1, 10, 0);
-  drawRoundRect(x, y, w, h, 10, color);
-  fillRoundRect(x + 1, y + 1, w * (((float)val) / 100.0), h - 1, 10, color);
+  if (redraw)
+  {
+    fillRect(x + 1, y + 1, w - 1, h - 2, 0);
+  }
+  drawRect(x, y, w, h, color);
+  fillRect(x + 1, y + 1, w * (((float)val) / 100.0), h - 2, color);
 }
 
-void ILI9341::VprogressBar(int x, int y, int w, int h, uint32_t color, uint8_t val)
+void ILI9341::VprogressBar(int x, int y, int w, int h, uint32_t color, uint8_t val, bool redraw)
 {
-  fillRoundRect(x + 1, y + 1, w - 1, h - 1, 10, 0);
+  if (redraw)
+  {
+    fillRoundRect(x + 1, y + 1, w - 1, h - 1, 10, 0);
+  }
   drawRoundRect(x, y, w, h, 10, color);
-  fillRoundRect(x + 1, y + (h - (h * (((float)val) / 100.0))), w - 1, h * (((float)val) / 100.0), 10, color);
+  fillRoundRect(x + 1, y + (h - (h * (((float)val) / 100.0))), w - 2, h * (((float)val) / 100.0), 10, color);
 }
 
 void ILI9341::setBrightness(uint8_t brightness)

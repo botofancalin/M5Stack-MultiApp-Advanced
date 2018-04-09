@@ -55,29 +55,29 @@
 // run slightly faster, so leave it commented out unless you need it!
 // Transaction support is needed to work with SD library but not needed with TFT_SdFat
 
-#define SPI_HAS_TRANSACTION 
-#define SUPPORT_TRANSACTIONS 
+#define SPI_HAS_TRANSACTION
+#define SUPPORT_TRANSACTIONS
 
 // New color definitions use for all my libraries
-#define TFT_BLACK       0x0000      /*   0,   0,   0 */
-#define TFT_NAVY        0x000F      /*   0,   0, 128 */
-#define TFT_DARKGREEN   0x03E0      /*   0, 128,   0 */
-#define TFT_DARKCYAN    0x03EF      /*   0, 128, 128 */
-#define TFT_MAROON      0x7800      /* 128,   0,   0 */
-#define TFT_PURPLE      0x780F      /* 128,   0, 128 */
-#define TFT_OLIVE       0x7BE0      /* 128, 128,   0 */
-#define TFT_LIGHTGREY   0xC618      /* 192, 192, 192 */
-#define TFT_DARKGREY    0x7BEF      /* 128, 128, 128 */
-#define TFT_BLUE        0x001F      /*   0,   0, 255 */
-#define TFT_GREEN       0x07E0      /*   0, 255,   0 */
-#define TFT_CYAN        0x07FF      /*   0, 255, 255 */
-#define TFT_RED         0xF800      /* 255,   0,   0 */
-#define TFT_MAGENTA     0xF81F      /* 255,   0, 255 */
-#define TFT_YELLOW      0xFFE0      /* 255, 255,   0 */
-#define TFT_WHITE       0xFFFF      /* 255, 255, 255 */
-#define TFT_ORANGE      0xFD20      /* 255, 165,   0 */
-#define TFT_GREENYELLOW 0xAFE5      /* 173, 255,  47 */
-#define TFT_PINK        0xF81F
+#define TFT_BLACK 0x0000       /*   0,   0,   0 */
+#define TFT_NAVY 0x000F        /*   0,   0, 128 */
+#define TFT_DARKGREEN 0x03E0   /*   0, 128,   0 */
+#define TFT_DARKCYAN 0x03EF    /*   0, 128, 128 */
+#define TFT_MAROON 0x7800      /* 128,   0,   0 */
+#define TFT_PURPLE 0x780F      /* 128,   0, 128 */
+#define TFT_OLIVE 0x7BE0       /* 128, 128,   0 */
+#define TFT_LIGHTGREY 0xC618   /* 192, 192, 192 */
+#define TFT_DARKGREY 0x7BEF    /* 128, 128, 128 */
+#define TFT_BLUE 0x001F        /*   0,   0, 255 */
+#define TFT_GREEN 0x07E0       /*   0, 255,   0 */
+#define TFT_CYAN 0x07FF        /*   0, 255, 255 */
+#define TFT_RED 0xF800         /* 255,   0,   0 */
+#define TFT_MAGENTA 0xF81F     /* 255,   0, 255 */
+#define TFT_YELLOW 0xFFE0      /* 255, 255,   0 */
+#define TFT_WHITE 0xFFFF       /* 255, 255, 255 */
+#define TFT_ORANGE 0xFD20      /* 255, 165,   0 */
+#define TFT_GREENYELLOW 0xAFE5 /* 173, 255,  47 */
+#define TFT_PINK 0xF81F
 
 // Color definitions for backwards compatibility with old sketches
 // use colour definitions like TFT_BLACK to make sketches more portable
@@ -214,37 +214,37 @@
 // Only load the fonts defined in User_Setup.h (to save space)
 // Set flag so RLE rendering code is optionally compiled
 #ifdef LOAD_GLCD
-  #include <Fonts/glcdfont.c>
+#include <Fonts/glcdfont.c>
 #endif
 
 #ifdef LOAD_FONT2
-  #include <Fonts/Font16.h>
+#include <Fonts/Font16.h>
 #endif
 
 #ifdef LOAD_FONT4
-  #include <Fonts/Font32rle.h>
-  #define LOAD_RLE
+#include <Fonts/Font32rle.h>
+#define LOAD_RLE
 #endif
 
 #ifdef LOAD_FONT6
-  #include <Fonts/Font64rle.h>
-  #ifndef LOAD_RLE
-    #define LOAD_RLE
-  #endif
+#include <Fonts/Font64rle.h>
+#ifndef LOAD_RLE
+#define LOAD_RLE
+#endif
 #endif
 
 #ifdef LOAD_FONT7
-  #include <Fonts/Font7srle.h>
-  #ifndef LOAD_RLE
-    #define LOAD_RLE
-  #endif
+#include <Fonts/Font7srle.h>
+#ifndef LOAD_RLE
+#define LOAD_RLE
+#endif
 #endif
 
 #ifdef LOAD_FONT8
-  #include <Fonts/Font72rle.h>
-  #ifndef LOAD_RLE
-    #define LOAD_RLE
-  #endif
+#include <Fonts/Font72rle.h>
+#ifndef LOAD_RLE
+#define LOAD_RLE
+#endif
 #endif
 
 /**************************************************************************
@@ -264,20 +264,26 @@
 
 //#define DC_C digitalWrite(TFT_DC, HIGH); GPIO.out_w1tc = (1 << TFT_DC)//digitalWrite(TFT_DC, LOW)
 //#define DC_D digitalWrite(TFT_DC, LOW); GPIO.out_w1ts = (1 << TFT_DC)//digitalWrite(TFT_DC, HIGH)
-#define DC_C GPIO.out_w1ts = (1 << TFT_DC); GPIO.out_w1ts = (1 << TFT_DC); GPIO.out_w1tc = (1 << TFT_DC)
-#define DC_D GPIO.out_w1tc = (1 << TFT_DC); GPIO.out_w1ts = (1 << TFT_DC)
+#define DC_C                     \
+  GPIO.out_w1ts = (1 << TFT_DC); \
+  GPIO.out_w1ts = (1 << TFT_DC); \
+  GPIO.out_w1tc = (1 << TFT_DC)
+#define DC_D                     \
+  GPIO.out_w1tc = (1 << TFT_DC); \
+  GPIO.out_w1ts = (1 << TFT_DC)
 
 //#define CS_L digitalWrite(TFT_CS, HIGH); GPIO.out_w1tc = (1 << TFT_CS)//digitalWrite(TFT_CS, LOW)
 //#define CS_H digitalWrite(TFT_CS, LOW); GPIO.out_w1ts = (1 << TFT_CS)//digitalWrite(TFT_CS, HIGH)
-#define CS_L GPIO.out_w1ts = (1 << TFT_CS);GPIO.out_w1tc = (1 << TFT_CS)
+#define CS_L                     \
+  GPIO.out_w1ts = (1 << TFT_CS); \
+  GPIO.out_w1tc = (1 << TFT_CS)
 #define CS_H GPIO.out_w1ts = (1 << TFT_CS)
 
-
 #ifdef LOAD_GFXFF
-  // We can include all the free fonts and they will only be built into
-  // the sketch if they are used
+// We can include all the free fonts and they will only be built into
+// the sketch if they are used
 
-  #include <Fonts/GFXFF/gfxfont.h>
+#include <Fonts/GFXFF/gfxfont.h>
 
 // Call up any user custom fonts
 #include <Fonts/Custom/Orbitron_Light_24.h> // CF_OL24
@@ -350,40 +356,45 @@
 #include <Fonts/GFXFF/FreeSerifBoldItalic12pt7b.h> // FF46 or FSBI12
 #include <Fonts/GFXFF/FreeSerifBoldItalic18pt7b.h> // FF47 or FSBI18
 #include <Fonts/GFXFF/FreeSerifBoldItalic24pt7b.h> // FF48 or FSBI24
-  
+
 #endif // #ifdef LOAD_GFXFF
 
-
 //These enumerate the text plotting alignment (reference datum point)
-#define TL_DATUM 0 // Top left (default)
-#define TC_DATUM 1 // Top centre
-#define TR_DATUM 2 // Top right
-#define ML_DATUM 3 // Middle left
-#define CL_DATUM 3 // Centre left, same as above
-#define MC_DATUM 4 // Middle centre
-#define CC_DATUM 4 // Centre centre, same as above
-#define MR_DATUM 5 // Middle right
-#define CR_DATUM 5 // Centre right, same as above
-#define BL_DATUM 6 // Bottom left
-#define BC_DATUM 7 // Bottom centre
-#define BR_DATUM 8 // Bottom right
-#define L_BASELINE  9 // Left character baseline (Line the 'A' character would sit on)
+#define TL_DATUM 0    // Top left (default)
+#define TC_DATUM 1    // Top centre
+#define TR_DATUM 2    // Top right
+#define ML_DATUM 3    // Middle left
+#define CL_DATUM 3    // Centre left, same as above
+#define MC_DATUM 4    // Middle centre
+#define CC_DATUM 4    // Centre centre, same as above
+#define MR_DATUM 5    // Middle right
+#define CR_DATUM 5    // Centre right, same as above
+#define BL_DATUM 6    // Bottom left
+#define BC_DATUM 7    // Bottom centre
+#define BR_DATUM 8    // Bottom right
+#define L_BASELINE 9  // Left character baseline (Line the 'A' character would sit on)
 #define C_BASELINE 10 // Centre character baseline
 #define R_BASELINE 11 // Right character baseline
 
-
 // Swap any type
-template <typename T> static inline void
-swap_coord(T& a, T& b) { T t = a; a = b; b = t; }
+template <typename T>
+static inline void
+swap_coord(T &a, T &b)
+{
+  T t = a;
+  a = b;
+  b = t;
+}
 
 // This is a structure to conveniently hold infomation on the default fonts
 // Stores pointer to font character image address table, width table and height
 
-typedef struct {
-    const uint8_t *chartbl;
-    const uint8_t *widthtbl;
-    uint8_t height;
-    uint8_t baseline;
+typedef struct
+{
+  const uint8_t *chartbl;
+  const uint8_t *widthtbl;
+  uint8_t height;
+  uint8_t baseline;
 } fontinfo;
 
 typedef enum {
@@ -395,47 +406,47 @@ typedef enum {
 } jpeg_div_t;
 
 // Now fill the structure
-const PROGMEM fontinfo fontdata [] = {
-   { 0, 0, 0, 0 },
+const PROGMEM fontinfo fontdata[] = {
+    {0, 0, 0, 0},
 
-   // GLCD font (Font 1) does not have all parameters
-   { 0, 0, 8, 7 },
+    // GLCD font (Font 1) does not have all parameters
+    {0, 0, 8, 7},
 
-  #ifdef LOAD_FONT2
-   { (const uint8_t *)chrtbl_f16, widtbl_f16, chr_hgt_f16, baseline_f16},
-  #else
-   { 0, 0, 0, 0 },
-  #endif
+#ifdef LOAD_FONT2
+    {(const uint8_t *)chrtbl_f16, widtbl_f16, chr_hgt_f16, baseline_f16},
+#else
+    {0, 0, 0, 0},
+#endif
 
-   // Font 3 current unused
-   { 0, 0, 0, 0 },
+    // Font 3 current unused
+    {0, 0, 0, 0},
 
-  #ifdef LOAD_FONT4
-   { (const uint8_t *)chrtbl_f32, widtbl_f32, chr_hgt_f32, baseline_f32},
-  #else
-   { 0, 0, 0, 0 },
-  #endif
+#ifdef LOAD_FONT4
+    {(const uint8_t *)chrtbl_f32, widtbl_f32, chr_hgt_f32, baseline_f32},
+#else
+    {0, 0, 0, 0},
+#endif
 
-   // Font 5 current unused
-   { 0, 0, 0, 0 },
+    // Font 5 current unused
+    {0, 0, 0, 0},
 
-  #ifdef LOAD_FONT6
-   { (const uint8_t *)chrtbl_f64, widtbl_f64, chr_hgt_f64, baseline_f64},
-  #else
-   { 0, 0, 0, 0 },
-  #endif
+#ifdef LOAD_FONT6
+    {(const uint8_t *)chrtbl_f64, widtbl_f64, chr_hgt_f64, baseline_f64},
+#else
+    {0, 0, 0, 0},
+#endif
 
-  #ifdef LOAD_FONT7
-   { (const uint8_t *)chrtbl_f7s, widtbl_f7s, chr_hgt_f7s, baseline_f7s},
-  #else
-   { 0, 0, 0, 0 },
-  #endif
+#ifdef LOAD_FONT7
+    {(const uint8_t *)chrtbl_f7s, widtbl_f7s, chr_hgt_f7s, baseline_f7s},
+#else
+    {0, 0, 0, 0},
+#endif
 
-  #ifdef LOAD_FONT8
-   { (const uint8_t *)chrtbl_f72, widtbl_f72, chr_hgt_f72, baseline_f72}
-  #else
-   { 0, 0, 0, 0 }
-  #endif
+#ifdef LOAD_FONT8
+    {(const uint8_t *)chrtbl_f72, widtbl_f72, chr_hgt_f72, baseline_f72}
+#else
+    {0, 0, 0, 0}
+#endif
 };
 
 /**************************************************************************
@@ -443,12 +454,11 @@ const PROGMEM fontinfo fontdata [] = {
 ** GBK character support
 **
 **************************************************************************/
-typedef enum
-{
-	DontUsedHzk16,
-	InternalHzk16,
-	ExternalHzk16
-}Hzk16Types;
+typedef enum {
+  DontUsedHzk16,
+  InternalHzk16,
+  ExternalHzk16
+} Hzk16Types;
 
 // Class functions and variables
 class ILI9341 : public Print
@@ -457,205 +467,205 @@ class ILI9341 : public Print
 public:
   ILI9341(int16_t _W = TFT_WIDTH, int16_t _H = TFT_HEIGHT);
 
-  void  init(void), begin(void); // Same - begin included for backwards compatibility
+  void init(void), begin(void); // Same - begin included for backwards compatibility
 
-  void  drawPixel(uint32_t x, uint32_t y, uint32_t color);
+  void drawPixel(uint32_t x, uint32_t y, uint32_t color);
 
-  void  drawChar(int32_t x, int32_t y, unsigned char c, uint32_t color, uint32_t bg, uint8_t font),
-        setWindow(int16_t x0, int16_t y0, int16_t x1, int16_t y1),
+  void drawChar(int32_t x, int32_t y, unsigned char c, uint32_t color, uint32_t bg, uint8_t font),
+      setWindow(int16_t x0, int16_t y0, int16_t x1, int16_t y1),
 
-        pushColor(uint16_t color),
-        pushColor(uint16_t color, uint16_t len),
+      pushColor(uint16_t color),
+      pushColor(uint16_t color, uint16_t len),
 
-        pushColors(uint16_t *data, uint8_t len),
-        pushColors(uint8_t *data, uint32_t len),
-        pushRect(uint32_t x0, uint32_t y0, uint32_t w, uint32_t h, uint16_t *data),
+      pushColors(uint16_t *data, uint8_t len),
+      pushColors(uint8_t *data, uint32_t len),
+      pushRect(uint32_t x0, uint32_t y0, uint32_t w, uint32_t h, uint16_t *data),
 
-        fillScreen(uint32_t color),
+      fillScreen(uint32_t color),
 
-        drawLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color),
-        drawFastVLine(int32_t x, int32_t y, int32_t h, uint32_t color),
-        drawFastHLine(int32_t x, int32_t y, int32_t w, uint32_t color),
+      drawLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color),
+      drawFastVLine(int32_t x, int32_t y, int32_t h, uint32_t color),
+      drawFastHLine(int32_t x, int32_t y, int32_t w, uint32_t color),
 
-        drawRect(int32_t x, int32_t y, int32_t w, int32_t h, uint32_t color),
-        fillRect(int32_t x, int32_t y, int32_t w, int32_t h, uint32_t color),
-        drawRoundRect(int32_t x0, int32_t y0, int32_t w, int32_t h, int32_t radius, uint32_t color),
-        fillRoundRect(int32_t x0, int32_t y0, int32_t w, int32_t h, int32_t radius, uint32_t color),
+      drawRect(int32_t x, int32_t y, int32_t w, int32_t h, uint32_t color),
+      fillRect(int32_t x, int32_t y, int32_t w, int32_t h, uint32_t color),
+      drawRoundRect(int32_t x0, int32_t y0, int32_t w, int32_t h, int32_t radius, uint32_t color),
+      fillRoundRect(int32_t x0, int32_t y0, int32_t w, int32_t h, int32_t radius, uint32_t color),
 
-        setRotation(uint8_t r),
-        invertDisplay(boolean i),
+      setRotation(uint8_t r),
+      invertDisplay(boolean i),
 
-        drawCircle(int32_t x0, int32_t y0, int32_t r, uint32_t color),
-        drawCircleHelper(int32_t x0, int32_t y0, int32_t r, uint8_t cornername, uint32_t color),
-        fillCircle(int32_t x0, int32_t y0, int32_t r, uint32_t color),
-        fillCircleHelper(int32_t x0, int32_t y0, int32_t r, uint8_t cornername, int32_t delta, uint32_t color),
+      drawCircle(int32_t x0, int32_t y0, int32_t r, uint32_t color),
+      drawCircleHelper(int32_t x0, int32_t y0, int32_t r, uint8_t cornername, uint32_t color),
+      fillCircle(int32_t x0, int32_t y0, int32_t r, uint32_t color),
+      fillCircleHelper(int32_t x0, int32_t y0, int32_t r, uint8_t cornername, int32_t delta, uint32_t color),
 
-        drawEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry, uint16_t color),
-        fillEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry, uint16_t color),
+      drawEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry, uint16_t color),
+      fillEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry, uint16_t color),
 
-        drawTriangle(int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t x2, int32_t y2, uint32_t color),
-        fillTriangle(int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t x2, int32_t y2, uint32_t color),
+      drawTriangle(int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t x2, int32_t y2, uint32_t color),
+      fillTriangle(int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t x2, int32_t y2, uint32_t color),
 
-        drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color),
-        drawBitmap(int16_t x, int16_t y, int16_t w, int16_t h, const uint16_t *pcolors),
+      drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color),
+      drawBitmap(int16_t x, int16_t y, int16_t w, int16_t h, const uint16_t *pcolors),
 
-        setCursor(int16_t x, int16_t y),
-        setCursor(int16_t x, int16_t y, uint8_t font),
-        setTextColor(uint16_t color),
-        setTextColor(uint16_t fgcolor, uint16_t bgcolor),
-        setTextSize(uint8_t size),
+      setCursor(int16_t x, int16_t y),
+      setCursor(int16_t x, int16_t y, uint8_t font),
+      setTextColor(uint16_t color),
+      setTextColor(uint16_t fgcolor, uint16_t bgcolor),
+      setTextSize(uint8_t size),
 
-        setTextWrap(boolean wrap),
-        setTextDatum(uint8_t datum),
-        setTextPadding(uint16_t x_width),
+      setTextWrap(boolean wrap),
+      setTextDatum(uint8_t datum),
+      setTextPadding(uint16_t x_width),
 
 #ifdef LOAD_GFXFF
-        setFreeFont(const GFXfont *f),
-        setTextFont(uint8_t font),
+      setFreeFont(const GFXfont *f),
+      setTextFont(uint8_t font),
 #else
-        setFreeFont(uint8_t font),
-        setTextFont(uint8_t font),
+      setFreeFont(uint8_t font),
+      setTextFont(uint8_t font),
 #endif
-        #define setFont setFreeFont
-        spiwrite(uint8_t),
-        writecommand(uint8_t c),
-        writeCommand(uint8_t cmd),
-        writedata(uint8_t d),
-        commandList(const uint8_t *addr);
-
+#define setFont setFreeFont
+      spiwrite(uint8_t),
+      writecommand(uint8_t c),
+      writeCommand(uint8_t cmd),
+      writedata(uint8_t d),
+      commandList(const uint8_t *addr);
 
 public:
-
-  uint8_t  getRotation(void);
+  uint8_t getRotation(void);
 
   uint16_t fontsLoaded(void),
-           color565(uint8_t r, uint8_t g, uint8_t b);
+      color565(uint8_t r, uint8_t g, uint8_t b);
 
-  int16_t  drawChar(unsigned int uniCode, int x, int y, int font),
-           drawChar(unsigned int uniCode, int x, int y),
-           drawNumber(long long_num,int poX, int poY, int font),
-           drawNumber(long long_num,int poX, int poY),
-           drawFloat(float floatNumber,int decimal,int poX, int poY, int font),
-           drawFloat(float floatNumber,int decimal,int poX, int poY),
-           
-           // Handle char arrays
-           drawString(const char *string, int poX, int poY, int font),
-           drawString(const char *string, int poX, int poY),
-           drawCentreString(const char *string, int dX, int poY, int font), // Deprecated, use setTextDatum() and drawString()
-           drawRightString(const char *string, int dX, int poY, int font),  // Deprecated, use setTextDatum() and drawString()
+  int16_t drawChar(unsigned int uniCode, int x, int y, int font),
+      drawChar(unsigned int uniCode, int x, int y),
+      drawNumber(long long_num, int poX, int poY, int font),
+      drawNumber(long long_num, int poX, int poY),
+      drawFloat(float floatNumber, int decimal, int poX, int poY, int font),
+      drawFloat(float floatNumber, int decimal, int poX, int poY),
 
-           // Handle String type
-           drawString(const String& string, int poX, int poY, int font),
-           drawString(const String& string, int poX, int poY),
-           drawCentreString(const String& string, int dX, int poY, int font), // Deprecated, use setTextDatum() and drawString()
-           drawRightString(const String& string, int dX, int poY, int font);  // Deprecated, use setTextDatum() and drawString()
-           
-  int16_t  height(void),
-           width(void),
-           textWidth(const char *string, int font),
-           textWidth(const char *string),
-           textWidth(const String& string, int font),
-           textWidth(const String& string),
-           fontHeight(int16_t font);
+      // Handle char arrays
+      drawString(const char *string, int poX, int poY, int font),
+      drawString(const char *string, int poX, int poY),
+      drawCentreString(const char *string, int dX, int poY, int font), // Deprecated, use setTextDatum() and drawString()
+      drawRightString(const char *string, int dX, int poY, int font),  // Deprecated, use setTextDatum() and drawString()
 
-// --------------- M5Stack Define ---------------------
-  void     sleep(),
-           setBrightness(uint8_t brightness),
-           HprogressBar(int x, int y, int w, int h, uint32_t color,uint8_t val),
-           VprogressBar(int x, int y, int w, int h, uint32_t color,uint8_t val),
-           setAddrWindow(int32_t xs, int32_t ys, int32_t xe, int32_t ye),
-           display(),
-           clearDisplay(),
-           clear();
+      // Handle String type
+      drawString(const String &string, int poX, int poY, int font),
+      drawString(const String &string, int poX, int poY),
+      drawCentreString(const String &string, int dX, int poY, int font), // Deprecated, use setTextDatum() and drawString()
+      drawRightString(const String &string, int dX, int poY, int font);  // Deprecated, use setTextDatum() and drawString()
 
-  void     startWrite(void),
-           endWrite(void),
-           writeInitData(const uint8_t *data),
-           writePixel(uint16_t color),
-           writePixels(uint16_t *colors, uint32_t len),
-           drawJpg(const uint8_t *jpg_data, size_t jpg_len, uint16_t x = 0, uint16_t y = 0, uint16_t maxWidth = 0, uint16_t maxHeight = 0, uint16_t offX = 0, uint16_t offY = 0, jpeg_div_t scale = JPEG_DIV_NONE),
-           drawJpgFile(fs::FS &fs, const char *path, uint16_t x = 0, uint16_t y = 0, uint16_t maxWidth = 0, uint16_t maxHeight = 0, uint16_t offX = 0, uint16_t offY = 0, jpeg_div_t scale = JPEG_DIV_NONE),
-           drawBmpFile(fs::FS &fs, const char *path, uint16_t x = 0, uint16_t y = 0, uint16_t maxWidth = 0, uint16_t maxHeight = 0, uint16_t offX = 0, uint16_t offY = 0);
+  int16_t height(void),
+      width(void),
+      textWidth(const char *string, int font),
+      textWidth(const char *string),
+      textWidth(const String &string, int font),
+      textWidth(const String &string),
+      fontHeight(int16_t font);
 
-      
+  // --------------- M5Stack Define ---------------------
+  void sleep(),
+      setBrightness(uint8_t brightness),
+      HprogressBar(int x, int y, int w, int h, uint32_t color, uint8_t val, bool redraw = false),
+      VprogressBar(int x, int y, int w, int h, uint32_t color, uint8_t val, bool redraw = false),
+      setAddrWindow(int32_t xs, int32_t ys, int32_t xe, int32_t ye),
+      display(),
+      clearDisplay(),
+      clear();
+
+  void startWrite(void),
+      endWrite(void),
+      writeInitData(const uint8_t *data),
+      writePixel(uint16_t color),
+      writePixels(uint16_t *colors, uint32_t len),
+      drawJpg(const uint8_t *jpg_data, size_t jpg_len, uint16_t x = 0, uint16_t y = 0, uint16_t maxWidth = 0, uint16_t maxHeight = 0, uint16_t offX = 0, uint16_t offY = 0, jpeg_div_t scale = JPEG_DIV_NONE),
+      drawJpgFile(fs::FS &fs, const char *path, uint16_t x = 0, uint16_t y = 0, uint16_t maxWidth = 0, uint16_t maxHeight = 0, uint16_t offX = 0, uint16_t offY = 0, jpeg_div_t scale = JPEG_DIV_NONE),
+      drawBmpFile(fs::FS &fs, const char *path, uint16_t x = 0, uint16_t y = 0, uint16_t maxWidth = 0, uint16_t maxHeight = 0, uint16_t offX = 0, uint16_t offY = 0);
+
   virtual size_t write(uint8_t);
 
-
 private:
-
-      uint8_t colstart = 0, rowstart = 0; // some ST7735 displays need this changed
+  uint8_t colstart = 0, rowstart = 0; // some ST7735 displays need this changed
 
 protected:
-      int32_t cursor_x, cursor_y, win_xe, win_ye, padX;
-      uint32_t _width, _height; // Display w/h as modified by current rotation
-      uint32_t textcolor, textbgcolor, fontsloaded, addr_row, addr_col;
+  int32_t cursor_x, cursor_y, win_xe, win_ye, padX;
+  uint32_t _width, _height; // Display w/h as modified by current rotation
+  uint32_t textcolor, textbgcolor, fontsloaded, addr_row, addr_col;
 
-      uint8_t glyph_ab,     // glyph height above baseline
-              glyph_bb,     // glyph height below baseline
-              textfont,     // Current selected font
-              textsize,     // Current font size multiplier
-              textdatum,    // Text reference datum
-              rotation;     // Display rotation (0-3)
+  uint8_t glyph_ab, // glyph height above baseline
+      glyph_bb,     // glyph height below baseline
+      textfont,     // Current selected font
+      textsize,     // Current font size multiplier
+      textdatum,    // Text reference datum
+      rotation;     // Display rotation (0-3)
 
-      boolean textwrap; // If set, 'wrap' text at right edge of display
+  boolean textwrap; // If set, 'wrap' text at right edge of display
 
-      boolean locked, inTransaction; // Transaction and mutex lock flags for ESP32
+  boolean locked, inTransaction; // Transaction and mutex lock flags for ESP32
 
-      #ifdef LOAD_GFXFF
-        GFXfont *gfxFont;
-      #endif
+#ifdef LOAD_GFXFF
+  GFXfont *gfxFont;
+#endif
 
-      // #define startWrite spi_begin
-      // #define endWrite spi_end
-      inline void spi_begin() __attribute__((always_inline));
-      inline void spi_end() __attribute__((always_inline));
+  // #define startWrite spi_begin
+  // #define endWrite spi_end
+  inline void spi_begin() __attribute__((always_inline));
+  inline void spi_end() __attribute__((always_inline));
 
-/**************************************************************************
+  /**************************************************************************
 **
 ** GBK character support
 **
 **************************************************************************/
 public:
-	// GB2312 font
-	void loadHzk16(const char* HZK16Path = "/HZK16", const char* ASC16Path = "/ASC16");
-	void disableHzk16();
-	inline bool isHzk16Used(){return hzk16Used;}
-	// Highlight the text (Once set to be true, the text background will not be transparent any more)
-	inline void highlight(bool isHighlight) { highlighted = isHighlight; }
-	// Set highlight color
-	inline void setHighlightColor(uint16_t color) { highlightcolor = color; istransparent = false; }
-	// Set background to transparent or not (if not, text will always be drawn with background color set with setTextColor)
-	inline void setTransparentBgColor(bool isTransparent) { istransparent = isTransparent; }
-	// Get whether is transparent background
-	inline bool isTransparentBg(){return istransparent;}
-	
+  // GB2312 font
+  void loadHzk16(const char *HZK16Path = "/HZK16", const char *ASC16Path = "/ASC16");
+  void disableHzk16();
+  inline bool isHzk16Used() { return hzk16Used; }
+  // Highlight the text (Once set to be true, the text background will not be transparent any more)
+  inline void highlight(bool isHighlight) { highlighted = isHighlight; }
+  // Set highlight color
+  inline void setHighlightColor(uint16_t color)
+  {
+    highlightcolor = color;
+    istransparent = false;
+  }
+  // Set background to transparent or not (if not, text will always be drawn with background color set with setTextColor)
+  inline void setTransparentBgColor(bool isTransparent) { istransparent = isTransparent; }
+  // Get whether is transparent background
+  inline bool isTransparentBg() { return istransparent; }
+
 private:
-	uint8_t
-		hzkBufCount,
-		hzkBuf[2];
-	boolean
-		hzk16Used,
-		istransparent,
-		highlighted;
-	Hzk16Types
-		hzk16Type;					// Use of HZK16 and ASC16 font.
-	File
-		Asc16File, Hzk16File,		// Font file
-		*pAsc16File, *pHzk16File;	// Font file pointer
-	uint8_t *pAscCharMatrix, *pGbkCharMatrix;	
-	uint16_t
-		highlightcolor, 
-		ascCharWidth, 
-		ascCharHeigth, 
-		gbkCharWidth, 
-		gbkCharHeight;
-	
-	bool initHzk16(boolean use, const char* HZK16Path = nullptr, const char* ASC16Path = nullptr);
-	// Write HZK Ascii codes
-	void writeHzkAsc(const char c);
-	// Write HZK GBK codes
-	void writeHzkGbk(const uint8_t* c);
-	void writeHzk(const char c);
+  uint8_t
+      hzkBufCount,
+      hzkBuf[2];
+  boolean
+      hzk16Used,
+      istransparent,
+      highlighted;
+  Hzk16Types
+      hzk16Type; // Use of HZK16 and ASC16 font.
+  File
+      Asc16File,
+      Hzk16File,                // Font file
+      *pAsc16File, *pHzk16File; // Font file pointer
+  uint8_t *pAscCharMatrix, *pGbkCharMatrix;
+  uint16_t
+      highlightcolor,
+      ascCharWidth,
+      ascCharHeigth,
+      gbkCharWidth,
+      gbkCharHeight;
+
+  bool initHzk16(boolean use, const char *HZK16Path = nullptr, const char *ASC16Path = nullptr);
+  // Write HZK Ascii codes
+  void writeHzkAsc(const char c);
+  // Write HZK GBK codes
+  void writeHzkGbk(const uint8_t *c);
+  void writeHzk(const char c);
 };
 
 #ifndef max
