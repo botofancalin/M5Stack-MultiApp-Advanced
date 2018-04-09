@@ -14,9 +14,8 @@ void WiFiScanner_run()
 
     M5.Lcd.drawCentreString(F("SCANNING....."), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
 
-    WiFi.disconnect();
     delay(500);
-    WiFi.mode(WIFI_STA);
+    WiFi.mode(WIFI_MODE_STA);
     WiFi.disconnect();
     delay(500);
 
@@ -26,7 +25,7 @@ void WiFiScanner_run()
         {
             M5.update();
         }
-        
+
         wifi_count = WiFi.scanNetworks();
 
         if (wifi_count > 0)
@@ -267,5 +266,7 @@ void WiFiScanner_run()
             M5.update();
         }
     }
+    WiFi.mode(WIFI_MODE_STA);
+    WiFi.begin();
     return;
 }

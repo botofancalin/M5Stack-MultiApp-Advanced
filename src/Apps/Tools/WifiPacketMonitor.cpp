@@ -170,5 +170,7 @@ void Monitor_run()
 	}
 	WiFi.disconnect();
 	M5.Lcd.setTextFont(1);
+	WiFi.mode(WIFI_MODE_STA);
+	WiFi.begin();
 	return;
 }

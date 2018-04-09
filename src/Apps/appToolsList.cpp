@@ -26,7 +26,7 @@ void appListTools()
             MyMenu.nextList();
         }
         if (M5.BtnB.wasPressed())
-        {   // integrated app calling system
+        { // integrated app calling system
             if (MyMenu.getListString() == "CLOCK")
             {
                 clock_setup(); // this is similar to Arduino "Setup" function
@@ -36,7 +36,7 @@ void appListTools()
                 Make sure you call M5.update(); into your app "Loop" like function*/
                 while (!M5.BtnA.wasPressed())
                 {
-                    clock_run();// This is similar to Arduino "Loop" function
+                    clock_run(); // This is similar to Arduino "Loop" function
                 }
                 M5.Lcd.setRotation(0);
                 M5.Lcd.fillScreen(0);
@@ -46,10 +46,7 @@ void appListTools()
             if (MyMenu.getListString() == "WIFI SCANNER")
             {
                 M5.update();
-                while (!M5.BtnA.wasPressed())
-                {
-                    WiFiScanner_run();
-                }
+                WiFiScanner_run();
                 M5.Lcd.setRotation(0);
                 M5.Lcd.fillScreen(0);
                 MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
@@ -70,10 +67,7 @@ void appListTools()
             if (MyMenu.getListString() == "WIFI PACKET MONITOR")
             {
                 M5.update();
-                while (!M5.BtnB.wasPressed())
-                {
-                    Monitor_run();
-                }
+                Monitor_run();
                 M5.Lcd.setRotation(0);
                 M5.Lcd.fillScreen(0);
                 MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
