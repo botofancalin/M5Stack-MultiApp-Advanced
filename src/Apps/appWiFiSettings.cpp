@@ -30,7 +30,7 @@ void appWiFiSetup()
             {
                 MyMenu.windowClr();
                 delay(200);
-                Wps_run(1);
+                Wps_run(true);
                 while (!WiFi.isConnected())
                 {
                     delay(50);
@@ -50,7 +50,7 @@ void appWiFiSetup()
             {
                 MyMenu.windowClr();
                 delay(200);
-                Wps_run(2);
+                Wps_run(false);
                 while (!WiFi.isConnected())
                 {
                     delay(50);

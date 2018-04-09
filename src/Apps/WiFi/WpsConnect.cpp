@@ -78,19 +78,18 @@ void WiFiEvent(WiFiEvent_t event, system_event_info_t info)
     }
 }
 
-void Wps_run(int mode)
+void Wps_run(bool mode)
 {
     WiFi.disconnect();
 
-    switch (mode)
-    {
-    case 1:
-        config = WPS_CONFIG_INIT_DEFAULT(WPS_TYPE_PBC);
-        break;
-    case 2:
-        config = WPS_CONFIG_INIT_DEFAULT(WPS_TYPE_PIN);
-        break;
-    }
+if (mode)
+{
+     config = WPS_CONFIG_INIT_DEFAULT(WPS_TYPE_PBC);
+}
+else
+{
+    config = WPS_CONFIG_INIT_DEFAULT(WPS_TYPE_PIN);
+}
 
     WiFi.onEvent(WiFiEvent);
     WiFi.mode(WIFI_MODE_STA);

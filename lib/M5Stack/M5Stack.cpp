@@ -31,7 +31,7 @@ void M5Stack::begin()
     Lcd.setTextSize(1);
     Lcd.setBrightness(50);
 
-    // TF Card
+    // TF Card & SPIFFS
     SPIFFS.begin();
     SD.begin(TFCARD_CS_PIN);
 

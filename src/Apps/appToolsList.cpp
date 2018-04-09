@@ -16,7 +16,6 @@ void appListTools()
     MyMenu.addList("I2C SCANNER");
     MyMenu.addList("METERS");
     MyMenu.addList("DHT TEMP & HUMIDITY");
-    MyMenu.addList("CLOCK");
     MyMenu.showList();
 
     while (!M5.BtnA.wasPressed())
@@ -27,22 +26,6 @@ void appListTools()
         }
         if (M5.BtnB.wasPressed())
         { // integrated app calling system
-            if (MyMenu.getListString() == "CLOCK")
-            {
-                clock_setup(); // this is similar to Arduino "Setup" function
-                M5.update();
-                /*while BtnA is not pressed, the app is running. 
-                Once BtnA was pressed, the app will exit
-                Make sure you call M5.update(); into your app "Loop" like function*/
-                while (!M5.BtnA.wasPressed())
-                {
-                    clock_run(); // This is similar to Arduino "Loop" function
-                }
-                M5.Lcd.setRotation(0);
-                M5.Lcd.fillScreen(0);
-                MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
-            }
             if (MyMenu.getListString() == "WIFI SCANNER")
             {
                 M5.update();
