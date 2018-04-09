@@ -1,3 +1,4 @@
+#pragma once
 //include this file into your app file so your app can be called from menu
 #include "ESPmDNS.h"
 #include "SPIFFS.h"
