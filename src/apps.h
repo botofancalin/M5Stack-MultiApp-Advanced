@@ -1,17 +1,14 @@
 #pragma once
 //include this file into your app file so your app can be called from menu
 #include "ESPmDNS.h"
-#include "SPIFFS.h"
 #include "WiFiUdp.h"
 #include "M5Stack.h"
-#include "Wire.h"
 #include "EEPROM.h"
 #include "M5StackSAM.h"
 #include "esp_wifi.h"
 #include "esp_wps.h"
 #include "DHTesp.h"
 #include "ArduinoOTA.h"
-#include "esp_wps.h"
 #include "WebServer.h"
 
 // add system global variables here to be seen from all files

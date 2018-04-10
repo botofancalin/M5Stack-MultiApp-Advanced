@@ -294,11 +294,12 @@ void printDirectory()
         {
             output += "file";
             output += "\",\"name\":\"";
-            output += entry.name() + (sizeof(dir.name()) + 1);
+            output += entry.name() + (String(dir.name())).length();
         }
-        // Ignore '/' prefix
+
         output += "\"";
         output += "}";
+
         server.sendContent(output);
         entry.close();
     }
@@ -337,7 +338,7 @@ void MywebServer(void *parameter)
         {
             MDNS.addService("http", "tcp", 80);
             M5.Lcd.drawString("MDNS responder started", 10, 40, 4);
-            M5.Lcd.drawString("http://"+String(host)+".local", 10, 70, 4);
+            M5.Lcd.drawString("http://" + String(host) + ".local", 10, 70, 4);
         }
 
         server.on("/list", HTTP_GET, printDirectory);
@@ -355,6 +356,7 @@ void MywebServer(void *parameter)
     for (;;)
     {
         server.handleClient();
+        vTaskDelay(1 / portTICK_PERIOD_MS);
     }
     vTaskDelete(NULL);
 }
