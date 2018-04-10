@@ -32,8 +32,9 @@ void M5Stack::begin()
     Lcd.setBrightness(50);
 
     // TF Card & SPIFFS
-    SPIFFS.begin();
     SD.begin(TFCARD_CS_PIN);
+    vTaskDelay(10 / portTICK_RATE_MS);
+    SPIFFS.begin();
 
     // Set wakeup button
     setWakeupButton(BUTTON_A_PIN);

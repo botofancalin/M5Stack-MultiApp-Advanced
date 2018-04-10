@@ -14,12 +14,12 @@ void setup()
 
 	preferences.begin("WiFi-mode", false);
 	WiFi_Mode = preferences.getInt("mode", 0);
+	preferences.end();
 	WiFi.mode(wifi_mode_t(WiFi_Mode));
-	if (WiFi_Mode != 0)
+	if (WiFi_Mode == WIFI_MODE_AP || WiFi_Mode == WIFI_MODE_APSTA)
 	{
 		WiFi.begin();
 	}
-	preferences.end();
 
 	preferences.begin("Brightness", false);
 	M5.lcd.setBrightness(preferences.getUShort("Brightness", 95));
