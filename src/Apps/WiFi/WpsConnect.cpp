@@ -1,27 +1,4 @@
-/*
-Example Code To Get ESP32 To Connect To A Router Using WPS
-===========================================================
-This example code provides both Push Button method and Pin
-based WPS entry to get your ESP connected to your WiFi router.
-
-Hardware Requirements
-========================
-ESP32 and a Router having atleast one WPS functionality
-
-This code is under Public Domain License.
-
-Author:
-Pranav Cherukupalli <cherukupallip@gmail.com>
-*/
-
 #include "../../apps.h"
-
-/*
-Change the definition of the WPS mode
-from WPS_TYPE_PBC to WPS_TYPE_PIN in
-the case that you are using pin type
-WPS
-*/
 
 esp_wps_config_t config;
 
