@@ -332,7 +332,7 @@ void handleNotFound()
 
 void MywebServer(void *parameter)
 {
-    if (WiFi.isConnected())
+    if (WiFi.localIP().toString() != "0.0.0.0" || WiFi.softAPIP().toString() != "0.0.0.0")
     {
         if (MDNS.begin(host))
         {

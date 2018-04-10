@@ -11,8 +11,6 @@ void setup()
 	M5.begin();
 	Wire.begin();
 	dacWrite(25, 0); // Speaker OFF
-	WiFi.mode(WIFI_MODE_STA);
-	WiFi.begin();
 
 	if (!EEPROM.begin(EEPROM_SIZE))
 	{
@@ -23,28 +21,12 @@ void setup()
 		M5.lcd.setBrightness(byte(EEPROM.read(0)));
 	}
 
-	// CHANGING COLOR SCHEMA:
-	//  MyMenu.setColorSchema(MENU_COLOR, WINDOW_COLOR, TEXT_COLOR);
-	//  COLORS are uint16_t (RGB565 format)
-	// .MyMenu.getrgb(byte R, byte G, byte B); - CALCULATING RGB565 format
-
-	//HERCULES MONITOR COLOR SCHEMA
-	//MyMenu.setColorSchema(MyMenu.getrgb(163, 51, 165), MyMenu.getrgb(116, 123, 127), MyMenu.getrgb(255, 255, 255));
-
-	// ADD MENU ITEM
-	// MyMenu.addMenuItem(SUBMENU_ID,MENU_TITTLE,BTN_A_TITTLE,BTN_B_TITTLE,BTN_C_TITTLE,SELECTOR,FUNCTION_NAME);
-	//    SUBMENU_ID byte [0-7]: TOP MENU = 0, SUBMENUs = [1-7]
-	//    SELECTOR
-	//           IF SELECTOR = -1 then MyMenu.execute() run function with name in last parameter (FUNCTION_NAME)
-	//           IF SELECTOR = [0-7] then MyMenu.execute() switch menu items to SUBMENU_ID
-	//    FUNCTION_NAME: name of function to run....
-
 	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, "/Data/Apps.jpg", appReturn);
 	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, "/Data/System.jpg", appReturn);
 	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, "/Data/About.jpg", appAbout);
 
 	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, "/Data/Oscilloscope.jpg", appOsciloscope);
-	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, NULL, appWebServer);
+	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, "/Data/WebServer.jpg", appWebServer);
 	MyMenu.addMenuItem(1, "STOPWATCH", "<", "OK", ">", -1, "/Data/Stopwatch.jpg", appStopWatch);
 	MyMenu.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, "/Data/Tools.jpg", appListTools);
 	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, "/Data/Games.jpg", appListGames);
@@ -61,22 +43,30 @@ void setup()
 
 void loop()
 {
-	if (WiFi.isConnected())
+	unsigned long now = millis();
+	if (now - lastcheck >= 1000)
 	{
-		unsigned long now = millis();
-		if (now - lastcheck >= 1000)
+		if (WiFi.localIP().toString() != "0.0.0.0" || WiFi.softAPIP().toString() != "0.0.0.0")
 		{
-			lastcheck = now;
-			M5.Lcd.setTextColor(WHITE, 15);
-			SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
-			M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
+			if (WiFi.getMode() == WIFI_MODE_STA)
+			{
+				M5.Lcd.setTextColor(WHITE, 15);
+				SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
+				M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
+			}
+			if (WiFi.getMode() == WIFI_MODE_AP)
+			{
+				M5.Lcd.setTextColor(WHITE, 15);
+				M5.Lcd.drawRightString("Clients: " + String(WiFi.softAPgetStationNum()), 300, 5, 2);
+			}
+			if (!OtaRunning)
+			{
+				appOta();
+				OtaRunning = true;
+			}
+			ArduinoOTA.handle();
 		}
-		if (!OtaRunning)
-		{
-			appOta();
-			OtaRunning = true;
-		}
-		ArduinoOTA.handle();
+		lastcheck = now;
 	}
 	M5.update();
 	if (M5.BtnC.wasPressed())

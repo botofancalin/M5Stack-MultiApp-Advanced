@@ -42,8 +42,11 @@ void page_0()
     M5.Lcd.drawString(F("WIFI STA MAC:"), 10, 140, 2);
     M5.Lcd.drawString(WiFiMAC, 120, 140, 2);
 
-    M5.Lcd.drawString(F("IP ADDRESS:"), 10, 160, 2);
+    M5.Lcd.drawString(F("STA IP ADDRESS:"), 10, 160, 2);
     M5.Lcd.drawString((WiFi.localIP().toString()), 120, 160, 2);
+
+    M5.Lcd.drawString(F("AP IP ADDRESS:"), 10, 180, 2);
+    M5.Lcd.drawString((WiFi.softAPIP().toString()), 120, 180, 2);
 }
 
 void page_1()

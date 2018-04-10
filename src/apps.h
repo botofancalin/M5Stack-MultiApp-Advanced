@@ -10,6 +10,7 @@
 #include "DHTesp.h"
 #include "ArduinoOTA.h"
 #include "WebServer.h"
+#include "Preferences.h"
 
 // add system global variables here to be seen from all files
 
@@ -43,3 +44,5 @@ void appStopWatch();
 void appOsciloscope();
 
 void Wps_run(bool mode = true);
+void AP_Mode();
+void STA_Mode();
