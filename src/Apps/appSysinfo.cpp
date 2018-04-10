@@ -50,14 +50,17 @@ void page_1()
 {
     int flashSize = ESP.getFlashChipSize();
 
-    M5.Lcd.drawString(F("FLASH SIZE:"), 10, 40, 2);
-    M5.Lcd.drawNumber(flashSize, 120, 40, 2);
+    M5.Lcd.drawString(F("MIN FREE HEAP:"), 10, 40, 2);
+    M5.Lcd.drawNumber(esp_get_minimum_free_heap_size(), 120, 40, 2);
 
-    M5.Lcd.drawString(F("SPIFFS SIZE:"), 10, 60, 2);
-    M5.Lcd.drawNumber(SPIFFS.totalBytes(), 120, 60, 2);
+    M5.Lcd.drawString(F("FLASH SIZE:"), 10, 60, 2);
+    M5.Lcd.drawNumber(flashSize, 120, 60, 2);
 
-    M5.Lcd.drawString(F("SPIFFS USED:"), 10, 80, 2);
-    M5.Lcd.drawNumber(SPIFFS.usedBytes(), 120, 80, 2);
+    M5.Lcd.drawString(F("SPIFFS SIZE:"), 10, 80, 2);
+    M5.Lcd.drawNumber(SPIFFS.totalBytes(), 120, 80, 2);
+
+    M5.Lcd.drawString(F("SPIFFS USED:"), 10, 100, 2);
+    M5.Lcd.drawNumber(SPIFFS.usedBytes(), 120, 100, 2);
 
     if (SD.exists("/"))
     {
@@ -81,14 +84,14 @@ void page_1()
             SD_Type = "UNKNOWN";
             break;
         }
-        M5.Lcd.drawString(F("SD CARD TYPE:"), 10, 100, 2);
-        M5.Lcd.drawString(SD_Type, 120, 100, 2);
+        M5.Lcd.drawString(F("SD CARD TYPE:"), 10, 120, 2);
+        M5.Lcd.drawString(SD_Type, 120, 120, 2);
 
-        M5.Lcd.drawString(F("SD CARD SIZE:"), 10, 120, 2);
-        M5.Lcd.drawNumber(SD.cardSize(), 120, 120, 2);
+        M5.Lcd.drawString(F("SD CARD SIZE:"), 10, 140, 2);
+        M5.Lcd.drawNumber(SD.cardSize(), 120, 140, 2);
 
-        M5.Lcd.drawString(F("SD BYTES USED:"), 10, 140, 2);
-        M5.Lcd.drawNumber(SD.usedBytes(), 120, 140, 2);
+        M5.Lcd.drawString(F("SD BYTES USED:"), 10, 160, 2);
+        M5.Lcd.drawNumber(SD.usedBytes(), 120, 160, 2);
     }
 }
 
