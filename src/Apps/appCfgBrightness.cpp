@@ -2,8 +2,9 @@
 
 void appCfgBrigthness()
 {
-    byte tmp_brigth = byte(EEPROM.read(0));
-    byte tmp_lbrigth = 0;
+    preferences.begin("Brightness", false);
+    unsigned short tmp_brigth = preferences.getUShort("Brightness", 95);
+    unsigned short tmp_lbrigth = 0;
 
     MyMenu.drawAppMenu(F("DISPLAY BRIGHTNESS"), F("-"), F("OK"), F("+"));
 
@@ -24,13 +25,13 @@ void appCfgBrigthness()
         if (tmp_lbrigth != tmp_brigth)
         {
             tmp_lbrigth = tmp_brigth;
-            EEPROM.write(0, tmp_lbrigth);
-            EEPROM.commit();
-            M5.lcd.setBrightness(byte(EEPROM.read(0)));
+            preferences.putUShort("Brightness", tmp_lbrigth);
+            M5.Lcd.setBrightness(tmp_lbrigth);
             MyMenu.windowClr();
-            M5.Lcd.drawNumber(byte(EEPROM.read(0)), 120, 90, 6);
+            M5.Lcd.drawNumber(tmp_lbrigth, 120, 90, 6);
         }
         M5.update();
     }
+    preferences.end();
     MyMenu.show();
 }

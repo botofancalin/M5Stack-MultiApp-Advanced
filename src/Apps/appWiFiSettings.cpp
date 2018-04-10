@@ -112,21 +112,6 @@ void appWiFiSetup()
                 MyMenu.windowClr();
                 delay(200);
                 Wps_run(true);
-                while (!WiFi.isConnected())
-                {
-                    M5.update();
-                    delay(50);
-                    counter++;
-                    if (counter > 1200)
-                    {
-                        MyMenu.windowClr();
-                        break;
-                    }
-                    if (M5.BtnA.wasPressed())
-                    {
-                        break;
-                    }
-                }
                 MyMenu.windowClr();
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
@@ -136,21 +121,6 @@ void appWiFiSetup()
                 MyMenu.windowClr();
                 delay(200);
                 Wps_run(false);
-                while (!WiFi.isConnected())
-                {
-                    delay(50);
-                    M5.update();
-                    counter++;
-                    if (counter > 2400)
-                    {
-                        MyMenu.windowClr();
-                        break;
-                    }
-                    if (M5.BtnA.wasPressed())
-                    {
-                        break;
-                    }
-                }
                 MyMenu.windowClr();
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
@@ -161,7 +131,6 @@ void appWiFiSetup()
                 delay(200);
                 WiFi.disconnect();
                 WiFi.mode(WIFI_MODE_NULL);
-                WiFi.begin();
                 preferences.begin("WiFi-mode", false);
                 preferences.putInt("mode", int(WIFI_MODE_NULL));
                 preferences.end();

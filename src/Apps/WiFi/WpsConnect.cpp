@@ -99,4 +99,11 @@ void Wps_run(bool mode)
 
     esp_wifi_wps_enable(&config);
     esp_wifi_wps_start(0);
+    while (!WiFi.isConnected())
+    {
+        if (M5.BtnA.wasPressed())
+        {
+            break;
+        }
+    }
 }

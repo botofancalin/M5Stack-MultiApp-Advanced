@@ -11,7 +11,7 @@ void setup()
 	M5.begin();
 	Wire.begin();
 	dacWrite(25, 0); // Speaker OFF
-	
+
 	preferences.begin("WiFi-mode", false);
 	WiFi_Mode = preferences.getInt("mode", 0);
 	WiFi.mode(wifi_mode_t(WiFi_Mode));
@@ -21,14 +21,9 @@ void setup()
 	}
 	preferences.end();
 
-	if (!EEPROM.begin(EEPROM_SIZE))
-	{
-		M5.powerOFF();
-	}
-	else
-	{
-		M5.lcd.setBrightness(byte(EEPROM.read(0)));
-	}
+	preferences.begin("Brightness", false);
+	M5.lcd.setBrightness(preferences.getUShort("Brightness", 95));
+	preferences.end();
 
 	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, "/Data/Apps.jpg", appReturn);
 	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, "/Data/System.jpg", appReturn);
@@ -55,26 +50,28 @@ void loop()
 	unsigned long now = millis();
 	if (now - lastcheck >= 1000)
 	{
-		if (WiFi.localIP().toString() != "0.0.0.0" || WiFi.softAPIP().toString() != "0.0.0.0")
+		if (WiFi_Mode == WIFI_MODE_STA && WiFi.isConnected())
 		{
-			if (WiFi.getMode() == WIFI_MODE_STA)
-			{
-				M5.Lcd.setTextColor(WHITE, 15);
-				SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
-				M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
-			}
-			if (WiFi.getMode() == WIFI_MODE_AP)
-			{
-				M5.Lcd.setTextColor(WHITE, 15);
-				M5.Lcd.drawRightString("Clients: " + String(WiFi.softAPgetStationNum()), 300, 5, 2);
-			}
-			if (!OtaRunning)
-			{
-				appOta();
-				OtaRunning = true;
-			}
-			ArduinoOTA.handle();
+			M5.Lcd.setTextColor(WHITE, 15);
+			SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
+			M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
 		}
+		if (WiFi_Mode == WIFI_MODE_AP)
+		{
+			M5.Lcd.setTextColor(WHITE, 15);
+			M5.Lcd.drawRightString("Clients: " + String(WiFi.softAPgetStationNum()), 300, 5, 2);
+		}
+		if (WiFi_Mode == WIFI_MODE_NULL)
+		{
+			M5.Lcd.setTextColor(WHITE, 15);
+			M5.Lcd.drawRightString("Wifi OFF", 310, 5, 2);
+		}
+		if (!OtaRunning)
+		{
+			appOta();
+			OtaRunning = true;
+		}
+		ArduinoOTA.handle();
 		lastcheck = now;
 	}
 	M5.update();
