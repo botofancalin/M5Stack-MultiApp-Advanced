@@ -120,7 +120,7 @@ void draw()
 void Monitor_run()
 {
 	WiFi.disconnect();
-	WiFi.mode(WIFI_OFF);
+	WiFi.mode(WIFI_MODE_NULL);
 	esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE);
 	M5.Lcd.fillScreen(BLACK);
 	M5.Lcd.setTextColor(WHITE, BLACK);;

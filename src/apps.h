@@ -15,7 +15,7 @@
 // add system global variables here to be seen from all files
 
 #define EEPROM_SIZE 64
-static bool OtaRunning = false;
+
 static int WiFi_Mode;
 
 // add app external call function here to be able to call it from menu

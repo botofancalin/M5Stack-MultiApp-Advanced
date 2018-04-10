@@ -337,7 +337,7 @@ void MywebServer(void *parameter)
         if (MDNS.begin(host))
         {
             MDNS.addService("http", "tcp", 80);
-            M5.Lcd.drawString("MDNS responder started", 10, 40, 4);
+              M5.Lcd.drawString("HTTP server started", 10, 40, 4);
             M5.Lcd.drawString("http://" + String(host) + ".local", 10, 70, 4);
         }
 
@@ -348,7 +348,6 @@ void MywebServer(void *parameter)
         server.onNotFound(handleNotFound);
 
         server.begin();
-        M5.Lcd.drawString("HTTP server started", 10, 100, 4);
         M5.Lcd.drawString("If you exit this app,", 10, 130, 2);
         M5.Lcd.drawString("the server will continue to run", 10, 150, 2);
         M5.Lcd.drawString("untill you stop it.", 10, 170, 2);

@@ -1,10 +1,9 @@
 #include "apps.h"
 #include <Display.h>
 
-unsigned long sleeptime = 0;
-int SignalStrength = 0;
-unsigned long waiting = 60000;
 unsigned long lastcheck = 0;
+int SignalStrength = 0;
+bool OtaRunning = false;
 
 void setup()
 {
@@ -16,7 +15,7 @@ void setup()
 	WiFi_Mode = preferences.getInt("mode", 0);
 	preferences.end();
 	WiFi.mode(wifi_mode_t(WiFi_Mode));
-	if (WiFi_Mode == WIFI_MODE_AP || WiFi_Mode == WIFI_MODE_APSTA)
+	if (WiFi_Mode == WIFI_MODE_STA)
 	{
 		WiFi.begin();
 	}
@@ -50,44 +49,47 @@ void loop()
 	unsigned long now = millis();
 	if (now - lastcheck >= 1000)
 	{
-		if (WiFi_Mode == WIFI_MODE_STA && WiFi.isConnected())
+		WiFi_Mode = WiFi.getMode();
+		if (WiFi_Mode == 1 && WiFi.isConnected())
 		{
 			M5.Lcd.setTextColor(WHITE, 15);
 			SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
 			M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
 		}
-		if (WiFi_Mode == WIFI_MODE_AP)
+		else if (WiFi_Mode == 3)
 		{
 			M5.Lcd.setTextColor(WHITE, 15);
 			M5.Lcd.drawRightString("Clients: " + String(WiFi.softAPgetStationNum()), 300, 5, 2);
 		}
-		if (WiFi_Mode == WIFI_MODE_NULL)
+		else if (WiFi_Mode == 0)
 		{
 			M5.Lcd.setTextColor(WHITE, 15);
 			M5.Lcd.drawRightString("Wifi OFF", 310, 5, 2);
 		}
-		if (!OtaRunning)
+
+		if (!OtaRunning && WiFi_Mode > 0)
 		{
 			appOta();
 			OtaRunning = true;
 		}
-		ArduinoOTA.handle();
 		lastcheck = now;
 	}
+
 	M5.update();
+	if (OtaRunning)
+	{
+		ArduinoOTA.handle();
+	}
 	if (M5.BtnC.wasPressed())
 	{
-		sleeptime = millis() + waiting;
 		MyMenu.up();
 	}
 	if (M5.BtnA.wasPressed())
 	{
-		sleeptime = millis() + waiting;
 		MyMenu.down();
 	}
 	if (M5.BtnB.wasPressed())
 	{
-		sleeptime = millis() + waiting;
 		MyMenu.execute();
 	}
 }

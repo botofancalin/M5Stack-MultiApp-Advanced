@@ -42,11 +42,12 @@ void page_0()
     M5.Lcd.drawString(F("WIFI STA MAC:"), 10, 140, 2);
     M5.Lcd.drawString(WiFiMAC, 120, 140, 2);
 
-    M5.Lcd.drawString(F("STA IP ADDRESS:"), 10, 160, 2);
+    M5.Lcd.drawString(F("IP ADDRESS:"), 10, 160, 2);
     M5.Lcd.drawString((WiFi.localIP().toString()), 120, 160, 2);
 
-    M5.Lcd.drawString(F("AP IP ADDRESS:"), 10, 180, 2);
-    M5.Lcd.drawString((WiFi.softAPIP().toString()), 120, 180, 2);
+    String wifi_m_mode[] = {"OFF", "STA", "AP", "AP STA", "MAX"};
+    M5.Lcd.drawString(F("WIFI MODE:"), 10, 180, 2);
+    M5.Lcd.drawString(wifi_m_mode[WiFi.getMode()], 120, 180, 2);
 }
 
 void page_1()
@@ -65,36 +66,18 @@ void page_1()
     M5.Lcd.drawString(F("SPIFFS USED:"), 10, 100, 2);
     M5.Lcd.drawNumber(SPIFFS.usedBytes(), 120, 100, 2);
 
-    if (SD.exists("/"))
+    int type = SD.cardType();
+    String SD_Type[] = {"NONE", "MMC", "SD", "SDHC", "UNKNOWN"};
+    M5.Lcd.drawString(F("SD CARD TYPE:"), 10, 120, 2);
+    M5.Lcd.drawString(SD_Type[type], 120, 120, 2);
+
+    if (type != 0)
     {
-        int sdtype = SD.cardType();
-        String SD_Type;
-        switch (sdtype)
-        {
-        case 0:
-            SD_Type = "NONE";
-            break;
-        case 1:
-            SD_Type = "MMC";
-            break;
-        case 2:
-            SD_Type = "SD";
-            break;
-        case 3:
-            SD_Type = "SDHC";
-            break;
-        default:
-            SD_Type = "UNKNOWN";
-            break;
-        }
-        M5.Lcd.drawString(F("SD CARD TYPE:"), 10, 120, 2);
-        M5.Lcd.drawString(SD_Type, 120, 120, 2);
+    M5.Lcd.drawString(F("SD CARD SIZE:"), 10, 140, 2);
+    M5.Lcd.drawNumber(SD.cardSize(), 120, 140, 2);
 
-        M5.Lcd.drawString(F("SD CARD SIZE:"), 10, 140, 2);
-        M5.Lcd.drawNumber(SD.cardSize(), 120, 140, 2);
-
-        M5.Lcd.drawString(F("SD BYTES USED:"), 10, 160, 2);
-        M5.Lcd.drawNumber(SD.usedBytes(), 120, 160, 2);
+    M5.Lcd.drawString(F("SD BYTES USED:"), 10, 160, 2);
+    M5.Lcd.drawNumber(SD.usedBytes(), 120, 160, 2);
     }
 }
 

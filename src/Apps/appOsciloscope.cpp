@@ -27,15 +27,15 @@ const char *Ranges[] = { " 1V", "0.5V", "0.2V", "0.1V", "50mV" };
 int range0 = RANGE_MIN;
 byte range1 = RANGE_MIN;
 byte ch0_mode = MODE_ON;
-byte ch0_off = 0;
 byte ch1_mode = MODE_OFF;
-byte ch1_off = 0;
+int ch0_off = 0;
+int ch1_off = 0;
 int rate = 3;
 byte trig_mode = TRIG_AUTO;
 byte trig_lv = 40;
 byte trig_edge = TRIG_E_UP;
 byte trig_ch = 0;
-byte Start = 1;
+bool Start = true;
 int menu = 19;
 byte data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
 byte sample = 0;       // index for double buffer
@@ -55,7 +55,7 @@ void DrawText()
 	M5.Lcd.setTextSize(1);
 	M5.Lcd.fillRect(270, menu, 70, 10, BLUE);
 	(menu != 19) ? M5.Lcd.fillRect(270, menu - 10, 70, 10, BLACK) : M5.Lcd.fillRect(270, 139, 70, 10, BLACK);
-	M5.Lcd.drawString((Start == 0 ? "Stop" : "Run"), 270, 20);
+	M5.Lcd.drawString((Start ? "Stop" : "Run"), 270, 20);
 	M5.Lcd.drawString(String(String(Ranges[range0]) + "/DIV"), 270, 30);
 	M5.Lcd.drawString(String(String(Ranges[range1]) + "/DIV"), 270, 40);
 	M5.Lcd.drawString(String(String(Rates[rate]) + "/DIV"), 270, 50);

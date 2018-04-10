@@ -1,15 +1,11 @@
 #include "../apps.h"
 
-unsigned long counter;
-
 void AP_Mode()
 {
     WiFi.disconnect();
     delay(200);
     WiFi.mode(WIFI_MODE_AP);
-    preferences.begin("WiFi-mode", false);
-    preferences.putInt("mode", int(WIFI_MODE_AP));
-    preferences.end();
+    WiFi_Mode = WIFI_MODE_AP;
     WiFi.begin("M5Stack");
     WiFi.softAPsetHostname("M5Stack");
     M5.Lcd.drawString("AP Mode Started", 5, 50, 2);
@@ -22,9 +18,7 @@ void STA_Mode()
     WiFi.disconnect();
     WiFi.mode(WIFI_MODE_STA);
     WiFi.begin();
-    preferences.begin("WiFi-mode", false);
-    preferences.putInt("mode", int(WIFI_MODE_STA));
-    preferences.end();
+    WiFi_Mode = WIFI_MODE_STA;
     M5.Lcd.drawString("STA Mode Started", 5, 50, 2);
     M5.Lcd.drawString("Will Connect to sored SSID", 5, 70, 2);
 }
@@ -34,9 +28,7 @@ void APSTA_Mode()
     WiFi.disconnect();
     WiFi.mode(WIFI_MODE_APSTA);
     WiFi.begin();
-    preferences.begin("WiFi-mode", false);
-    preferences.putInt("mode", int(WIFI_MODE_APSTA));
-    preferences.end();
+    WiFi_Mode = WIFI_MODE_APSTA;
     M5.Lcd.drawString("AP + STA Mode Started", 5, 50, 2);
     M5.Lcd.drawString("Will use the sored SSID", 5, 70, 2);
 }
@@ -112,18 +104,14 @@ void appWiFiSetup()
                 MyMenu.windowClr();
                 delay(200);
                 Wps_run(true);
-                MyMenu.windowClr();
-                MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
+                WiFi_Mode = WIFI_MODE_STA;
             }
             if (MyMenu.getListString() == "WPS Pin Code")
             {
                 MyMenu.windowClr();
                 delay(200);
                 Wps_run(false);
-                MyMenu.windowClr();
-                MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
+                WiFi_Mode = WIFI_MODE_STA;
             }
             if (MyMenu.getListString() == "WiFi OFF")
             {
@@ -131,9 +119,7 @@ void appWiFiSetup()
                 delay(200);
                 WiFi.disconnect();
                 WiFi.mode(WIFI_MODE_NULL);
-                preferences.begin("WiFi-mode", false);
-                preferences.putInt("mode", int(WIFI_MODE_NULL));
-                preferences.end();
+                WiFi_Mode = WIFI_MODE_NULL;
                 M5.Lcd.drawString("WiFi Turned OFF", 5, 50, 2);
                 delay(1000);
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
@@ -142,5 +128,8 @@ void appWiFiSetup()
         }
         M5.update();
     }
+    preferences.begin("WiFi-mode", false);
+    preferences.putInt("mode", WiFi_Mode);
+    preferences.end();
     MyMenu.show();
 }
