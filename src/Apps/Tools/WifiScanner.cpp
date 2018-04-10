@@ -266,7 +266,13 @@ void WiFiScanner_run()
             M5.update();
         }
     }
-    WiFi.mode(WIFI_MODE_STA);
-    WiFi.begin();
+   preferences.begin("WiFi-mode", false);
+	WiFi_Mode = preferences.getInt("mode", 0);
+	WiFi.mode(wifi_mode_t(WiFi_Mode));
+	if (WiFi_Mode != 0)
+	{
+		WiFi.begin();
+	}
+	preferences.end();
     return;
 }

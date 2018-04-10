@@ -92,7 +92,9 @@ void Wps_run(bool mode)
 
     WiFi.onEvent(WiFiEvent);
     WiFi.mode(WIFI_MODE_STA);
-
+    preferences.begin("WiFi-mode", false);
+    preferences.putInt("mode", int(WIFI_MODE_STA));
+    preferences.end();
     M5.Lcd.drawString("Starting WPS", 5, 30, 2);
 
     esp_wifi_wps_enable(&config);

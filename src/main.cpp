@@ -11,6 +11,15 @@ void setup()
 	M5.begin();
 	Wire.begin();
 	dacWrite(25, 0); // Speaker OFF
+	
+	preferences.begin("WiFi-mode", false);
+	WiFi_Mode = preferences.getInt("mode", 0);
+	WiFi.mode(wifi_mode_t(WiFi_Mode));
+	if (WiFi_Mode != 0)
+	{
+		WiFi.begin();
+	}
+	preferences.end();
 
 	if (!EEPROM.begin(EEPROM_SIZE))
 	{
