@@ -19,26 +19,26 @@ const char *TRIG_Modes[] = { "Auto", "Norm", "Scan" };
 const int TRIG_E_UP = 0;
 const int TRIG_E_DN = 1;
 #define RATE_MIN 0
-#define RATE_MAX 13
-const char *Rates[] = { "F1-1", "F1-2", "  F2", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s" };
+#define RATE_MAX 12
+const char *Rates[] = { "F1-1", "  F2", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s" };
+int rate = 2;
 #define RANGE_MIN 0
 #define RANGE_MAX 4
 const char *Ranges[] = { " 1V", "0.5V", "0.2V", "0.1V", "50mV" };
-int range0 = RANGE_MIN;
+byte range0 = RANGE_MIN;
 byte range1 = RANGE_MIN;
 byte ch0_mode = MODE_ON;
 byte ch1_mode = MODE_OFF;
 int ch0_off = 0;
 int ch1_off = 0;
-int rate = 3;
 byte trig_mode = TRIG_AUTO;
 byte trig_lv = 40;
 byte trig_edge = TRIG_E_UP;
 byte trig_ch = 0;
-bool Start = true;
 int menu = 19;
-byte data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
-byte sample = 0;       // index for double buffer
+int data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
+int sample = 0;       // index for double buffer
+bool Start = true;
 bool exitprg = false;
 int phase = 0;
 int phaseStep = 5;
@@ -220,7 +220,6 @@ void DrawGrid()
 		for (int y = 0; y <= LCD_HEIGHT; y += DOTS_DIV)
 		{
 			M5.Lcd.drawPixel(x, y, GREY);
-			CheckSW();
 		}
 		if (LCD_HEIGHT == 240)
 		{
@@ -232,9 +231,10 @@ void DrawGrid()
 		for (int y = 0; y <= LCD_HEIGHT; y += 2)
 		{
 			M5.Lcd.drawPixel(x, y, GREY);
-			CheckSW();
 		}
 	}
+	CheckSW();
+	M5.Lcd.setTextColor(WHITE,BLACK);
 	M5.Lcd.drawString("<", 60, 220, 2);
 	M5.Lcd.drawString("Menu", 145, 220, 2);
 	M5.Lcd.drawString(">", 252, 220, 2);
@@ -278,8 +278,8 @@ void ClearAndDrawGraph()
 		{
 			M5.Lcd.drawLine(x, LCD_HEIGHT - data[sample + 1][x], x + 1, LCD_HEIGHT - data[sample + 1][x + 1], CH2COLOR);
 		}
-		CheckSW();
 	}
+	CheckSW();
 }
 
 void ClearAndDrawDot(int i)
@@ -305,30 +305,6 @@ void ClearAndDrawDot(int i)
 		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[sample + 1][i - 1], i, LCD_HEIGHT - data[sample + 1][i], CH2COLOR);
 	}
 	DrawGrid(i);
-}
-
-void DrawGraph()
-{
-	for (int x = 0; x < SAMPLES; x++)
-	{
-		M5.Lcd.drawPixel(x, LCD_HEIGHT - data[sample][x], CH1COLOR);
-		M5.Lcd.drawPixel(x, LCD_HEIGHT - data[sample + 1][x], CH2COLOR);
-	}
-}
-
-void ClearGraph()
-{
-	int clear = 0;
-
-	if (sample == 0)
-	{
-		clear = 2;
-	}
-	for (int x = 0; x < SAMPLES; x++)
-	{
-		M5.Lcd.drawPixel(x, LCD_HEIGHT - data[clear][x], BLACK);
-		M5.Lcd.drawPixel(x, LCD_HEIGHT - data[clear + 1][x], BLACK);
-	}
 }
 
 inline long adRead(byte ch, byte mode, int off)
@@ -426,8 +402,6 @@ void appOsciloscope()
 					}
 				}
 				oad = ad;
-
-				CheckSW();
 				if (trig_mode == TRIG_SCAN)
 				{
 					break;
@@ -436,10 +410,11 @@ void appOsciloscope()
 				{
 					break;
 				}
+				CheckSW();
 			}
 		}
 		// sample and draw depending on the sampling rate
-		if (rate <= 5 && Start)
+		if (rate <= 4 && Start)
 		{
 			if (sample == 0) // change the index for the double buffer
 			{
@@ -461,18 +436,7 @@ void appOsciloscope()
 					data[sample + 1][i] = 0;
 				}
 			}
-			else if (rate == 1) // full speed, channel 1 only
-			{
-				for (int i = 0; i < SAMPLES; i++)
-				{
-					data[sample + 1][i] = adRead(ad_ch1, ch1_mode, ch1_off);
-				}
-				for (int i = 0; i < SAMPLES; i++)
-				{
-					data[sample][i] = 0;
-				}
-			}
-			else if (rate == 2) // full speed, dual channel
+			else if (rate == 1) // full speed, dual channel
 			{
 				for (int i = 0; i < SAMPLES; i++)
 				{
@@ -480,11 +444,11 @@ void appOsciloscope()
 					data[sample + 1][i] = adRead(ad_ch1, ch1_mode, ch1_off);
 				}
 			}
-			else if (rate >= 3 && rate <= 5) // .5ms, 1ms or 2ms sampling
+			else if (rate >= 2 && rate <= 4) // .5ms, 1ms or 2ms sampling
 			{
 				const unsigned long r_[] = { 5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV };
 				unsigned long st = micros();
-				unsigned long r = r_[rate - 3];
+				unsigned long r = r_[rate - 2];
 				for (int i = 0; i < SAMPLES; i++)
 				{
 					while ((st - micros()) < r)
@@ -527,20 +491,20 @@ void appOsciloscope()
 			unsigned long st = micros();
 			for (int i = 0; i < SAMPLES; i++)
 			{
-				while ((st - micros()) < r_[rate - 6])
+				while ((st - micros()) < r_[rate - 5])
 				{
 					CheckSW();
-					if (rate < 6)
+					if (rate < 5)
 					{
 						break;
 					}
 				}
-				if (rate < 6) // sampling rate has been changed
+				if (rate < 5) // sampling rate has been changed
 				{
 					break;
 				}
-				st += r_[rate - 6];
-				if (st - micros() > r_[rate - 6]) // sampling rate has been changed to byteer interval
+				st += r_[rate - 5];
+				if (st - micros() > r_[rate - 5]) // sampling rate has been changed to byteer interval
 				{
 					st = micros();
 				}
