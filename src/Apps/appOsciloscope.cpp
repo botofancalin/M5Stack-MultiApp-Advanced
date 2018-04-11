@@ -20,7 +20,7 @@ const int TRIG_E_UP = 0;
 const int TRIG_E_DN = 1;
 #define RATE_MIN 0
 #define RATE_MAX 12
-const char *Rates[] = { "F1-1", "  F2", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s" };
+const char *Rates[] = { "  F1", "  F2", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s" };
 int rate = 2;
 #define RANGE_MIN 0
 #define RANGE_MAX 4
@@ -32,7 +32,7 @@ byte ch1_mode = MODE_OFF;
 int ch0_off = 0;
 int ch1_off = 0;
 byte trig_mode = TRIG_AUTO;
-byte trig_lv = 40;
+int trig_lv = 40;
 byte trig_edge = TRIG_E_UP;
 byte trig_ch = 0;
 int menu = 19;
