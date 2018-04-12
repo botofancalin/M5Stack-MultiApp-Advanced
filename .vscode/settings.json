@@ -1,6 +1,6 @@
 {
     "terminal.integrated.env.windows": {
-        "PATH": "C:\\Users\\Calin\\.platformio\\penv\\Scripts;C:\\Users\\Calin\\.platformio\\penv;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\LLVM\\bin;C:\\Program Files\\dotnet\\;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Zerynth\\ztc\\windows64;C:\\CooCox\\CoIDE_V2Beta\\bin;C:\\Users\\Calin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Calin\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Calin\\AppData\\Local\\atom\\bin;C:\\Program Files\\Microsoft VS Code\\bin;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\LLVM\\bin;C:\\Program Files\\dotnet\\;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Zerynth\\ztc\\windows64;C:\\CooCox\\CoIDE_V2Beta\\bin;C:\\Users\\Calin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Calin\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Calin\\AppData\\Local\\atom\\bin;C:\\Program Files\\Microsoft VS Code\\bin",
+        "PATH": "C:\\Users\\Calin\\.platformio\\penv\\Scripts;C:\\Users\\Calin\\.platformio\\penv;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\LLVM\\bin;C:\\Program Files\\dotnet\\;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Zerynth\\ztc\\windows64;C:\\CooCox\\CoIDE_V2Beta\\bin;C:\\Program Files\\Git\\cmd;C:\\Users\\Calin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Calin\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Calin\\AppData\\Local\\atom\\bin;C:\\Program Files\\Microsoft VS Code\\bin;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\LLVM\\bin;C:\\Program Files\\dotnet\\;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Zerynth\\ztc\\windows64;C:\\CooCox\\CoIDE_V2Beta\\bin;C:\\Program Files\\Git\\cmd;C:\\Users\\Calin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Calin\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Calin\\AppData\\Local\\atom\\bin;C:\\Program Files\\Microsoft VS Code\\bin",
         "PLATFORMIO_CALLER": "vscode"
     },
     "files.associations": {
@@ -10,6 +10,10 @@
         "functional": "cpp",
         "tuple": "cpp",
         "type_traits": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "rtc_io_reg.h": "c",
+        "freertos.h": "c",
+        "esp32-hal-dac.h": "c",
+        "ets_sys.h": "c"
     }
 }

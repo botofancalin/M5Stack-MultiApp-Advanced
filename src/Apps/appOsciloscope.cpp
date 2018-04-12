@@ -6,25 +6,25 @@ const int SAMPLES = 320;
 const int DOTS_DIV = 30;
 const int ad_ch0 = 35; // Analog 35 pin for channel 0
 const int ad_ch1 = 36; // Analog 36 pin for channel 1
-const long VREF[] = { 250, 500, 1250, 2500, 5000 };
-const int MILLIVOL_per_dot[] = { 33, 17, 6, 3, 2 };
+const long VREF[] = {250, 500, 1250, 2500, 5000};
+const int MILLIVOL_per_dot[] = {33, 17, 6, 3, 2};
 const int MODE_ON = 0;
 const int MODE_INV = 1;
 const int MODE_OFF = 2;
-const char *Modes[] = { "NORM", "INV", "OFF" };
+const char *Modes[] = {"NORM", "INV", "OFF"};
 const int TRIG_AUTO = 0;
 const int TRIG_NORM = 1;
 const int TRIG_SCAN = 2;
-const char *TRIG_Modes[] = { "Auto", "Norm", "Scan" };
+const char *TRIG_Modes[] = {"Auto", "Norm", "Scan"};
 const int TRIG_E_UP = 0;
 const int TRIG_E_DN = 1;
 #define RATE_MIN 0
 #define RATE_MAX 12
-const char *Rates[] = { "  F1", "  F2", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s" };
+const char *Rates[] = {"  F1", "  F2", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s"};
 int rate = 2;
 #define RANGE_MIN 0
 #define RANGE_MAX 4
-const char *Ranges[] = { " 1V", "0.5V", "0.2V", "0.1V", "50mV" };
+const char *Ranges[] = {" 1V", "0.5V", "0.2V", "0.1V", "50mV"};
 byte range0 = RANGE_MIN;
 byte range1 = RANGE_MIN;
 byte ch0_mode = MODE_ON;
@@ -37,7 +37,7 @@ byte trig_edge = TRIG_E_UP;
 byte trig_ch = 0;
 int menu = 19;
 int data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
-int sample = 0;       // index for double buffer
+int sample = 0;		  // index for double buffer
 bool Start = true;
 bool exitprg = false;
 int phase = 0;
@@ -234,7 +234,7 @@ void DrawGrid()
 		}
 	}
 	CheckSW();
-	M5.Lcd.setTextColor(WHITE,BLACK);
+	M5.Lcd.setTextColor(WHITE, BLACK);
 	M5.Lcd.drawString("<", 60, 220, 2);
 	M5.Lcd.drawString("Menu", 145, 220, 2);
 	M5.Lcd.drawString(">", 252, 220, 2);
@@ -355,11 +355,11 @@ void appOsciloscope()
 	xTaskCreatePinnedToCore(
 		LedC_Task,   /* Task function. */
 		"LedC_Task", /* name of the task, a name just for humans */
-		8192,        /* Stack size of task */
-		NULL,        /* parameter of the task */
-		1,           /* priority of the task */
+		8192,		 /* Stack size of task */
+		NULL,		 /* parameter of the task */
+		1,			 /* priority of the task */
 		&LedC_Gen,   /* Task handle to keep track of the created task */
-		0);          /*cpu core number where the task is assigned*/
+		0);			 /*cpu core number where the task is assigned*/
 
 	while (1)
 	{
@@ -446,7 +446,7 @@ void appOsciloscope()
 			}
 			else if (rate >= 2 && rate <= 4) // .5ms, 1ms or 2ms sampling
 			{
-				const unsigned long r_[] = { 5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV };
+				const unsigned long r_[] = {5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
 				unsigned long st = micros();
 				unsigned long r = r_[rate - 2];
 				for (int i = 0; i < SAMPLES; i++)
@@ -467,7 +467,7 @@ void appOsciloscope()
 		}
 		else if (Start)
 		{ // 5ms - 500ms sampling
-		  // copy currently showing data to another
+			// copy currently showing data to another
 			if (sample == 0)
 			{
 				for (int i = 0; i < SAMPLES; i++)
@@ -485,9 +485,9 @@ void appOsciloscope()
 				}
 			}
 
-			const unsigned long r_[] = { 50000 / DOTS_DIV, 100000 / DOTS_DIV, 200000 / DOTS_DIV,
-				500000 / DOTS_DIV, 1000000 / DOTS_DIV, 2000000 / DOTS_DIV,
-				5000000 / DOTS_DIV, 10000000 / DOTS_DIV };
+			const unsigned long r_[] = {50000 / DOTS_DIV, 100000 / DOTS_DIV, 200000 / DOTS_DIV,
+										500000 / DOTS_DIV, 1000000 / DOTS_DIV, 2000000 / DOTS_DIV,
+										5000000 / DOTS_DIV, 10000000 / DOTS_DIV};
 			unsigned long st = micros();
 			for (int i = 0; i < SAMPLES; i++)
 			{

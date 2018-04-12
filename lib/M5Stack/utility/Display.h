@@ -47,7 +47,7 @@
 // #define SPI_FREQUENCY  20000000
 // #define SPI_FREQUENCY  27000000 // Actually sets it to 26.67MHz = 80/3
 #define SPI_FREQUENCY 40000000 // Maximum to use SPIFFS
-// #define SPI_FREQUENCY  80000000
+//#define SPI_FREQUENCY  80000000
 
 // Comment out the following #define if "SPI Transactions" do not need to be
 // supported. Tranaction support is required if other SPI devices are connected.
