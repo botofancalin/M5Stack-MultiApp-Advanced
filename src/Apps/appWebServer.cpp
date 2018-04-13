@@ -332,13 +332,13 @@ void handleNotFound()
 
 void MywebServer(void *parameter)
 {
-    if (WiFi.localIP().toString() != "0.0.0.0" || WiFi.softAPIP().toString() != "0.0.0.0")
+    if (WiFi.localIP().toString() != "0.0.0.0" || WiFi.getMode() == 3)
     {
         if (MDNS.begin(host))
         {
-            MDNS.addService("http", "tcp", 80);
-              M5.Lcd.drawString("HTTP server started", 10, 40, 4);
-            M5.Lcd.drawString("http://" + String(host) + ".local", 10, 70, 4);
+        MDNS.addService("http", "tcp", 80);
+        M5.Lcd.drawString("HTTP server started", 10, 40, 4);
+        M5.Lcd.drawString("http://" + String(host) + ".local", 10, 70, 4);
         }
 
         server.on("/list", HTTP_GET, printDirectory);
