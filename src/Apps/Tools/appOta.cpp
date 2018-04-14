@@ -2,7 +2,8 @@
 
 void appOta()
 {
-    	ArduinoOTA
+	ArduinoOTA.setHostname("My_M5Stack");
+	ArduinoOTA
 		.onStart([]() {
 			String type;
 			if (ArduinoOTA.getCommand() == U_FLASH)
@@ -15,9 +16,9 @@ void appOta()
 			}
 
 			// NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-            M5.Lcd.setCursor(0,60);
-            M5.Lcd.setTextColor(YELLOW);
-            M5.Lcd.setTextSize(2);
+			M5.Lcd.setCursor(0, 60);
+			M5.Lcd.setTextColor(YELLOW);
+			M5.Lcd.setTextSize(2);
 			M5.Lcd.println("Start updating " + type);
 		})
 		.onEnd([]() {

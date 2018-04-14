@@ -3,14 +3,7 @@
 M5SAM MyMenu = M5SAM();
 
 M5SAM::M5SAM()
-//  : menuList(NULL),
-//    menuIDX(0),
-//    subMenuIDX(0),
-//    menuCount(0)
 {
-
-  _keyboardIRQRcvd = LOW;
-
   levelIDX = 0;
   menuCount[levelIDX] = 0;
   menuIDX = 0;
@@ -32,7 +25,7 @@ void M5SAM::clearList()
   list_page = 0;
   list_lastpagelines = 0;
   list_idx = 0;
-  for (byte x = 0; x < M5SAM_LIST_MAX_COUNT; x++)
+  for (uint8_t x = 0; x < M5SAM_LIST_MAX_COUNT; x++)
   {
     list_labels[x] = "";
   }
@@ -41,7 +34,7 @@ void M5SAM::clearList()
 
 void M5SAM::addList(String inStr)
 {
-  if (inStr.length() <= M5SAM_LIST_MAX_LABEL_SIZE and inStr.length() > 0 and list_count < M5SAM_LIST_MAX_COUNT)
+  if (inStr.length() <= M5SAM_LIST_MAX_LABEL_SIZE && inStr.length() > 0 && list_count < M5SAM_LIST_MAX_COUNT)
   {
     list_labels[list_count] = inStr;
     list_count++;
@@ -68,7 +61,7 @@ void M5SAM::addList(String inStr)
   }
 }
 
-byte M5SAM::getListID()
+uint8_t M5SAM::getListID()
 {
   return list_idx;
 }
@@ -99,7 +92,7 @@ void M5SAM::nextList()
   showList();
 }
 
-void M5SAM::drawListItem(byte inIDX, byte postIDX)
+void M5SAM::drawListItem(uint8_t inIDX, uint8_t postIDX)
 {
   if (inIDX == list_idx)
   {
@@ -115,14 +108,14 @@ void M5SAM::drawListItem(byte inIDX, byte postIDX)
 void M5SAM::showList()
 {
   windowClr();
-  byte labelid = 0;
+  uint8_t labelid = 0;
   M5.Lcd.drawCentreString(listCaption, M5.Lcd.width() / 2, 45, 2);
   if ((list_page + 1) == list_pages)
   {
-    if (list_lastpagelines == 0 and list_count >= M5SAM_LIST_PAGE_LABELS)
+    if (list_lastpagelines == 0 && list_count >= M5SAM_LIST_PAGE_LABELS)
     {
       list_lines = M5SAM_LIST_PAGE_LABELS;
-      for (byte i = 0; i < M5SAM_LIST_PAGE_LABELS; i++)
+      for (uint8_t i = 0; i < M5SAM_LIST_PAGE_LABELS; i++)
       {
         labelid = i + (list_page * M5SAM_LIST_PAGE_LABELS);
         drawListItem(labelid, i);
@@ -133,7 +126,7 @@ void M5SAM::showList()
       if (list_pages > 1)
       {
         list_lines = list_lastpagelines;
-        for (byte i = 0; i < list_lastpagelines; i++)
+        for (uint8_t i = 0; i < list_lastpagelines; i++)
         {
           labelid = i + (list_page * M5SAM_LIST_PAGE_LABELS);
           drawListItem(labelid, i);
@@ -142,7 +135,7 @@ void M5SAM::showList()
       else
       {
         list_lines = list_count;
-        for (byte i = 0; i < list_count; i++)
+        for (uint8_t i = 0; i < list_count; i++)
         {
           labelid = i + (list_page * M5SAM_LIST_PAGE_LABELS);
           drawListItem(labelid, i);
@@ -153,7 +146,7 @@ void M5SAM::showList()
   else
   {
     list_lines = M5SAM_LIST_PAGE_LABELS;
-    for (byte i = 0; i < M5SAM_LIST_PAGE_LABELS; i++)
+    for (uint8_t i = 0; i < M5SAM_LIST_PAGE_LABELS; i++)
     {
       labelid = i + (list_page * M5SAM_LIST_PAGE_LABELS);
       drawListItem(labelid, i);
@@ -179,7 +172,7 @@ void M5SAM::down()
   }
 }
 
-void M5SAM::GoToLevel(byte inlevel)
+void M5SAM::GoToLevel(uint8_t inlevel)
 {
   levelIDX = inlevel;
   menuIDX = 0;
@@ -198,9 +191,9 @@ void M5SAM::execute()
   }
 }
 
-void M5SAM::addMenuItem(byte levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, signed char goto_level, const char* Menu_Img, void (*function)())
+void M5SAM::addMenuItem(uint8_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
 {
-  byte mCnt = menuCount[levelID];
+  uint8_t mCnt = menuCount[levelID];
   menuList[levelID] = (MenuCommandCallback *)realloc(menuList[levelID], (mCnt + 1) * sizeof(MenuCommandCallback));
   strncpy(menuList[levelID][mCnt].title, menu_title, M5SAM_MENU_TITLE_MAX_SIZE);
   strncpy(menuList[levelID][mCnt].btnAtitle, btnA_title, M5SAM_BTN_TITLE_MAX_SIZE);
@@ -215,15 +208,15 @@ void M5SAM::addMenuItem(byte levelID, const char *menu_title, const char *btnA_t
 void M5SAM::show()
 {
   drawMenu(menuList[levelIDX][menuIDX].title, menuList[levelIDX][menuIDX].btnAtitle, menuList[levelIDX][menuIDX].btnBtitle,
-  menuList[levelIDX][menuIDX].btnCtitle, menucolor, windowcolor, menuList[levelIDX][menuIDX].MenuImg, menutextcolor);
+           menuList[levelIDX][menuIDX].btnCtitle, menucolor, windowcolor, menuList[levelIDX][menuIDX].MenuImg, menutextcolor);
 }
 
 void M5SAM::windowClr()
 {
-  M5.Lcd.fillRoundRect(0, 32, M5.Lcd.width(), M5.Lcd.height() - 32 - 32, 3, windowcolor);
+  M5.Lcd.fillRoundRect(0, 29, M5.Lcd.width(), M5.Lcd.height() - 28 - 28, 3, windowcolor);
 }
 
-unsigned int M5SAM::getrgb(byte inred, byte ingrn, byte inblue)
+unsigned int M5SAM::getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue)
 {
   inred = map(inred, 0, 255, 0, 31);
   ingrn = map(ingrn, 0, 255, 0, 63);
@@ -244,39 +237,6 @@ void M5SAM::setColorSchema(unsigned int inmenucolor, unsigned int inwindowcolor,
   menutextcolor = intextcolor;
 }
 
-String M5SAM::keyboardGetString()
-{
-  String tmp_str = "";
-  boolean tmp_klock = HIGH;
-  keyboardEnable();
-  M5.Lcd.fillRoundRect(0, M5.Lcd.height() - 28, M5.Lcd.width(), 28, 3, windowcolor);
-  M5.Lcd.drawString(">" + tmp_str, 5, M5.Lcd.height() - 28 + 6, 2);
-  while (tmp_klock == HIGH)
-  {
-    if (_keyboardIRQRcvd == HIGH)
-    {
-      if (_keyboardChar == 0x08)
-      {
-        tmp_str = tmp_str.substring(0, tmp_str.length() - 1);
-      }
-      else if (_keyboardChar == 0x0D)
-      {
-        tmp_klock = LOW;
-      }
-      else
-      {
-        tmp_str = tmp_str + char(_keyboardChar);
-      }
-      M5.Lcd.fillRoundRect(0, M5.Lcd.height() - 28, M5.Lcd.width(), 28, 3, windowcolor);
-      M5.Lcd.drawString(">" + tmp_str, 5, M5.Lcd.height() - 28 + 6, 2);
-      _keyboardIRQRcvd = LOW;
-    }
-  }
-  keyboardDisable();
-  btnRestore();
-  return tmp_str;
-}
-
 void M5SAM::btnRestore()
 {
   M5.Lcd.setTextColor(menutextcolor);
@@ -290,32 +250,6 @@ void M5SAM::btnRestore()
   M5.Lcd.setTextColor(menutextcolor, windowcolor);
 }
 
-void M5SAM::keyboardEnable()
-{
-  pinMode(5, INPUT);
-  attachInterrupt(digitalPinToInterrupt(5), keyboardIRQ, FALLING);
-  while (!digitalRead(5))
-  {
-    Wire.requestFrom(0x08, 1, true);
-    Wire.read();
-  }
-}
-
-void M5SAM::keyboardDisable()
-{
-  detachInterrupt(5);
-}
-
-void M5SAM::keyboardIRQ()
-{
-  while (!digitalRead(5))
-  {
-    Wire.requestFrom(0x08, 1, true);
-    _keyboardChar = Wire.read();
-  }
-  _keyboardIRQRcvd = HIGH;
-}
-
 void M5SAM::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor, unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
 {
   lastBtnTittle[0] = inbtnAttl;
@@ -325,10 +259,10 @@ void M5SAM::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, Strin
   M5.Lcd.fillRoundRect(126, M5.Lcd.height() - 28, 60, 28, 3, inmenucolor);
   M5.Lcd.fillRoundRect(221, M5.Lcd.height() - 28, 60, 28, 3, inmenucolor);
   M5.Lcd.fillRoundRect(0, 0, M5.Lcd.width(), 28, 3, inmenucolor);
-  M5.Lcd.fillRoundRect(0, 32, M5.Lcd.width(), M5.Lcd.height() - 32 - 32, 3, inwindowcolor);
+  M5.Lcd.fillRoundRect(0, 29, M5.Lcd.width(), M5.Lcd.height() - 28 - 28, 3, inwindowcolor);
   if (iMenuImg != NULL)
   {
-     M5.Lcd.drawJpgFile(SD, iMenuImg, 0, 32);
+    M5.Lcd.drawJpgFile(SD, iMenuImg, 0, 30);
   }
 
   M5.Lcd.setTextColor(intxtcolor);

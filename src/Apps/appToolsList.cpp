@@ -24,8 +24,8 @@ void appListTools()
         {
             MyMenu.nextList();
         }
-        if (M5.BtnB.wasPressed())
-        { // integrated app calling system
+        if (M5.BtnB.wasPressed()) 
+        {
             if (MyMenu.getListString() == "WIFI SCANNER")
             {
                 M5.update();

@@ -17,14 +17,13 @@
 #define BIRDH2 8 // half height
 // pipe size
 #define PIPEW 24     // pipe width
-#define GAPHEIGHT 52 // pipe gap height
+#define GAPHEIGHT 56 // pipe gap height
 // floor size
 #define FLOORH 30 // floor height (from bottom of the screen)
 // grass size
 #define GRASSH 4 // grass height (inside floor, starts at floor y)
 
 int maxflappy_bird_score = 0;
-const int buttonPin = 2;
 // background
 const unsigned int BCKGRDCOL = M5.Lcd.color565(138, 235, 244);
 // bird

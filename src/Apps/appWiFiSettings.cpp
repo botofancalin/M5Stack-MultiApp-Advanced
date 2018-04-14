@@ -44,9 +44,9 @@ void appWiFiSetup()
 
     MyMenu.clearList();
     MyMenu.setListCaption("WiFi");
+    MyMenu.addList("Connect by WPS Button");
+    MyMenu.addList("Connect by WPS Pin Code");
     MyMenu.addList("WiFi STA");
-    MyMenu.addList("WPS Button");
-    MyMenu.addList("WPS Pin Code");
     MyMenu.addList("WiFi AP");
     MyMenu.addList("WiFi AP + STA");
     MyMenu.addList("WiFi OFF");

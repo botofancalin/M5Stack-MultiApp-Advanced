@@ -33,6 +33,7 @@ void setup()
 	MyMenu.addMenuItem(1, "STOPWATCH", "<", "OK", ">", -1, "/Data/Stopwatch.jpg", appStopWatch);
 	MyMenu.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, "/Data/Tools.jpg", appListTools);
 	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, "/Data/Games.jpg", appListGames);
+	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, "/Data/Browser.jpg", doMyMenu);
 	MyMenu.addMenuItem(1, "RETURN", "<", "OK", ">", 0, "/Data/Return.jpg", appReturn);
 
 	MyMenu.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, "/Data/SysInfo.jpg", appSysInfo);
@@ -50,18 +51,18 @@ void loop()
 	if (now - lastcheck >= 1000)
 	{
 		WiFi_Mode = WiFi.getMode();
-		if (WiFi_Mode == 1 && WiFi.isConnected())
+		if (WiFi_Mode == WIFI_MODE_STA && WiFi.isConnected())
 		{
 			M5.Lcd.setTextColor(WHITE, 15);
 			SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
 			M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
 		}
-		else if (WiFi_Mode == 3)
+		else if (WiFi_Mode == WIFI_MODE_APSTA)
 		{
 			M5.Lcd.setTextColor(WHITE, 15);
 			M5.Lcd.drawRightString("Clients: " + String(WiFi.softAPgetStationNum()), 300, 5, 2);
 		}
-		else if (WiFi_Mode == 0)
+		else if (WiFi_Mode == WIFI_MODE_NULL)
 		{
 			M5.Lcd.setTextColor(WHITE, 15);
 			M5.Lcd.drawRightString("Wifi OFF", 310, 5, 2);

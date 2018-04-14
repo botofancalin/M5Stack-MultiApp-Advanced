@@ -33,8 +33,6 @@
 WebServer server(80);
 TaskHandle_t webServerTask = NULL;
 
-const char *host = "M5Stack";
-
 File uploadFile;
 
 void returnOK()
@@ -166,6 +164,10 @@ void handleFileUpload()
 
 void deleteRecursive(String path)
 {
+    if (!SD.exists((char *)path.c_str()))
+    {
+        return;
+    }
     File file = SD.open((char *)path.c_str());
     if (!file.isDirectory())
     {
@@ -304,7 +306,6 @@ void printDirectory()
         entry.close();
     }
     server.sendContent("]");
-    // Send zero length chunk to terminate the HTTP body
     server.sendContent("");
     dir.close();
 }
@@ -334,12 +335,16 @@ void MywebServer(void *parameter)
 {
     if (WiFi.localIP().toString() != "0.0.0.0" || WiFi.getMode() == 3)
     {
-        if (MDNS.begin(host))
-        {
-        MDNS.addService("http", "tcp", 80);
-        M5.Lcd.drawString("HTTP server started", 10, 40, 4);
-        M5.Lcd.drawString("http://" + String(host) + ".local", 10, 70, 4);
-        }
+
+            M5.Lcd.drawString("HTTP server started", 10, 40, 4);
+            if (WiFi.getMode() == 3)
+            {
+                M5.Lcd.drawString("http://192.168.4.1", 10, 70, 4);
+            }
+            else
+            {
+                M5.Lcd.drawString("http://" + WiFi.localIP().toString(), 10, 70, 4);
+            }
 
         server.on("/list", HTTP_GET, printDirectory);
         server.on("/edit", HTTP_DELETE, handleDelete);

@@ -3,21 +3,21 @@
 const int LCD_WIDTH = 320;
 const int LCD_HEIGHT = 240;
 const int SAMPLES = 320;
-const int DOTS_DIV = 30;
-const int ad_ch0 = 35; // Analog 35 pin for channel 0
-const int ad_ch1 = 36; // Analog 36 pin for channel 1
-const long VREF[] = {250, 500, 1250, 2500, 5000};
-const int MILLIVOL_per_dot[] = {33, 17, 6, 3, 2};
-const int MODE_ON = 0;
-const int MODE_INV = 1;
-const int MODE_OFF = 2;
+const uint8_t DOTS_DIV = 30;
+const uint8_t ad_ch0 = 35; // Analog 35 pin for channel 0
+const uint8_t ad_ch1 = 36; // Analog 36 pin for channel 1
+const int VREF[] = {250, 500, 1250, 2500, 5000};
+const uint8_t MILLIVOL_per_dot[] = {33, 17, 6, 3, 2};
+const uint8_t MODE_ON = 0;
+const uint8_t MODE_INV = 1;
+const uint8_t MODE_OFF = 2;
 const char *Modes[] = {"NORM", "INV", "OFF"};
-const int TRIG_AUTO = 0;
-const int TRIG_NORM = 1;
-const int TRIG_SCAN = 2;
+const uint8_t TRIG_AUTO = 0;
+const uint8_t TRIG_NORM = 1;
+const uint8_t TRIG_SCAN = 2;
 const char *TRIG_Modes[] = {"Auto", "Norm", "Scan"};
-const int TRIG_E_UP = 0;
-const int TRIG_E_DN = 1;
+const uint8_t TRIG_E_UP = 0;
+const uint8_t TRIG_E_DN = 1;
 #define RATE_MIN 0
 #define RATE_MAX 12
 const char *Rates[] = {"  F1", "  F2", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s"};
@@ -25,18 +25,18 @@ int rate = 2;
 #define RANGE_MIN 0
 #define RANGE_MAX 4
 const char *Ranges[] = {" 1V", "0.5V", "0.2V", "0.1V", "50mV"};
-byte range0 = RANGE_MIN;
-byte range1 = RANGE_MIN;
-byte ch0_mode = MODE_ON;
-byte ch1_mode = MODE_OFF;
+uint8_t range0 = RANGE_MIN;
+uint8_t range1 = RANGE_MIN;
+uint8_t ch0_mode = MODE_ON;
+uint8_t ch1_mode = MODE_OFF;
 int ch0_off = 0;
 int ch1_off = 0;
-byte trig_mode = TRIG_AUTO;
-int trig_lv = 40;
-byte trig_edge = TRIG_E_UP;
-byte trig_ch = 0;
-int menu = 19;
-int data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
+uint8_t trig_mode = TRIG_AUTO;
+uint8_t trig_lv = 40;
+uint8_t trig_edge = TRIG_E_UP;
+uint8_t trig_ch = 0;
+uint8_t menu = 19;
+uint16_t data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
 int sample = 0;		  // index for double buffer
 bool Start = true;
 bool exitprg = false;
@@ -307,9 +307,9 @@ void ClearAndDrawDot(int i)
 	DrawGrid(i);
 }
 
-inline long adRead(byte ch, byte mode, int off)
+inline int adRead(uint8_t ch, uint8_t mode, int off)
 {
-	long a = analogRead(ch);
+	int a = analogRead(ch);
 	a = (((a + off) * VREF[(ch == ad_ch0) ? range0 : range1]) / 10000UL) + 35;
 	a = ((a >= LCD_HEIGHT) ? LCD_HEIGHT : a);
 	if (mode == MODE_INV)
@@ -359,14 +359,14 @@ void appOsciloscope()
 		NULL,		 /* parameter of the task */
 		1,			 /* priority of the task */
 		&LedC_Gen,   /* Task handle to keep track of the created task */
-		0);			 /*cpu core number where the task is assigned*/
+		0);			 /* cpu core number where the task is assigned*/
 
 	while (1)
 	{
 		if (trig_mode != TRIG_SCAN)
 		{
 			unsigned long st = millis();
-			byte oad;
+			uint8_t oad;
 			if (trig_ch == 0)
 			{
 				oad = adRead(ad_ch0, ch0_mode, ch0_off);
@@ -377,7 +377,7 @@ void appOsciloscope()
 			}
 			for (;;)
 			{
-				byte ad;
+				uint8_t ad;
 				if (trig_ch == 0)
 				{
 					ad = adRead(ad_ch0, ch0_mode, ch0_off);
@@ -413,8 +413,7 @@ void appOsciloscope()
 				CheckSW();
 			}
 		}
-		// sample and draw depending on the sampling rate
-		if (rate <= 4 && Start)
+		if (rate <= 4 && Start) // sample and draw depending on the sampling rate
 		{
 			if (sample == 0) // change the index for the double buffer
 			{
@@ -446,9 +445,9 @@ void appOsciloscope()
 			}
 			else if (rate >= 2 && rate <= 4) // .5ms, 1ms or 2ms sampling
 			{
-				const unsigned long r_[] = {5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
+				const unsigned int r_[] = {5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
 				unsigned long st = micros();
-				unsigned long r = r_[rate - 2];
+				unsigned int r = r_[rate - 2];
 				for (int i = 0; i < SAMPLES; i++)
 				{
 					while ((st - micros()) < r)
@@ -465,14 +464,13 @@ void appOsciloscope()
 			DrawGrid();
 			DrawText();
 		}
-		else if (Start)
-		{ // 5ms - 500ms sampling
-			// copy currently showing data to another
+		else if (Start) // 5ms - 500ms sampling
+		{
 			if (sample == 0)
 			{
 				for (int i = 0; i < SAMPLES; i++)
 				{
-					data[2][i] = data[0][i];
+					data[2][i] = data[0][i]; // copy currently showing data to another
 					data[3][i] = data[1][i];
 				}
 			}
@@ -484,7 +482,6 @@ void appOsciloscope()
 					data[1][i] = data[3][i];
 				}
 			}
-
 			const unsigned long r_[] = {50000 / DOTS_DIV, 100000 / DOTS_DIV, 200000 / DOTS_DIV,
 										500000 / DOTS_DIV, 1000000 / DOTS_DIV, 2000000 / DOTS_DIV,
 										5000000 / DOTS_DIV, 10000000 / DOTS_DIV};
@@ -504,7 +501,7 @@ void appOsciloscope()
 					break;
 				}
 				st += r_[rate - 5];
-				if (st - micros() > r_[rate - 5]) // sampling rate has been changed to byteer interval
+				if (st - micros() > r_[rate - 5]) // sampling rate has been changed to uint8_ter interval
 				{
 					st = micros();
 				}

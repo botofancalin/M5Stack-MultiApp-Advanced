@@ -9,7 +9,7 @@ uint32_t lastDrawTime;
 uint32_t tmpPacketCounter;
 uint32_t pkts[MAX_X]; // here the packets per second will be saved
 uint32_t deauths = 0; // deauth frames per second
-unsigned int ch = 1;  // current 802.11 channel
+uint8_t ch = 1;  // current 802.11 channel
 int rssiSum;
 
 esp_err_t event_handler(void *ctx, system_event_t *event)

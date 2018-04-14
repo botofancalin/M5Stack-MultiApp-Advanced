@@ -1,9 +1,10 @@
 #pragma once
 //include this file into your app file so your app can be called from menu
-#include "ESPmDNS.h"
+//#include "ESPmDNS.h"
 #include "WiFiUdp.h"
 #include "M5Stack.h"
 #include "EEPROM.h"
+#include "ESPmDNS.h"
 #include "M5StackSAM.h"
 #include "esp_wifi.h"
 #include "esp_wps.h"
@@ -47,3 +48,5 @@ void appOsciloscope();
 void Wps_run(bool mode = true);
 void AP_Mode();
 void STA_Mode();
+
+void doMyMenu();
