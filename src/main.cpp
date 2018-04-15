@@ -1,5 +1,4 @@
 #include "apps.h"
-#include <Display.h>
 
 unsigned long lastcheck = 0;
 int SignalStrength = 0;
@@ -28,12 +27,12 @@ void setup()
 	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, "/Data/System.jpg", appReturn);
 	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, "/Data/About.jpg", appAbout);
 
+	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, "/Data/Browser.jpg", doMyMenu);
 	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, "/Data/Oscilloscope.jpg", appOsciloscope);
 	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, "/Data/WebServer.jpg", appWebServer);
 	MyMenu.addMenuItem(1, "STOPWATCH", "<", "OK", ">", -1, "/Data/Stopwatch.jpg", appStopWatch);
 	MyMenu.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, "/Data/Tools.jpg", appListTools);
 	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, "/Data/Games.jpg", appListGames);
-	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, "/Data/Browser.jpg", doMyMenu);
 	MyMenu.addMenuItem(1, "RETURN", "<", "OK", ">", 0, "/Data/Return.jpg", appReturn);
 
 	MyMenu.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, "/Data/SysInfo.jpg", appSysInfo);

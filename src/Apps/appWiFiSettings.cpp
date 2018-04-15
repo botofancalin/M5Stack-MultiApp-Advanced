@@ -99,14 +99,14 @@ void appWiFiSetup()
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
             }
-            if (MyMenu.getListString() == "WPS Button")
+            if (MyMenu.getListString() == "Connect by WPS Button")
             {
                 MyMenu.windowClr();
                 delay(200);
                 Wps_run(true);
                 WiFi_Mode = WIFI_MODE_STA;
             }
-            if (MyMenu.getListString() == "WPS Pin Code")
+            if (MyMenu.getListString() == "Connect by WPS Pin Code")
             {
                 MyMenu.windowClr();
                 delay(200);

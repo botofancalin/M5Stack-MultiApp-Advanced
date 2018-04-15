@@ -3,18 +3,18 @@
 bool repaint = false;
 bool inmenu = false;
 int appsCount = 0;
+int levels = 0;
 
 struct FileInfo
 {
     String fileName; // heap
     int fileSize;
 };
-
+FileInfo fileinfo;
 std::vector<FileInfo> fileVector;
 
 void listDir(fs::FS &fs, String dirName, int levels)
 {
-    FileInfo fileinfo;
     File root = fs.open(dirName);
     if (!root)
     {
@@ -37,10 +37,10 @@ void listDir(fs::FS &fs, String dirName, int levels)
         }
         else
         {
+            fileVector.push_back(fileinfo);
             String fileName = file.name();
             fileVector[appsCount].fileName = fileName;
             fileVector[appsCount].fileSize = file.size();
-            fileVector.push_back(fileinfo);
             appsCount++;
         }
         file = root.openNextFile();
@@ -50,7 +50,6 @@ void listDir(fs::FS &fs, String dirName, int levels)
 void aSortFiles()
 {
     bool swapped;
-    FileInfo temp;
     String name1, name2;
     do
     {
@@ -72,9 +71,9 @@ void aSortFiles()
 
             if (name1 > name2)
             {
-                temp = fileVector[i];
+                fileinfo = fileVector[i];
                 fileVector[i] = fileVector[i + 1];
-                fileVector[i + 1] = temp;
+                fileVector[i + 1] = fileinfo;
                 swapped = true;
             }
         }
@@ -92,12 +91,13 @@ void buildMyMenu()
     }
 }
 
+
 void doMyMenu()
 {
     appsCount = 0;
     M5.update();
     MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
-    listDir(SD, "/", 16);
+    listDir(SD, "/", 1);
     aSortFiles();
     buildMyMenu();
     MyMenu.showList();
@@ -122,6 +122,10 @@ void doMyMenu()
                 MyMenu.windowClr();
                 M5.Lcd.drawJpgFile(SD, FileName.c_str());
                 repaint = true;
+            }
+            else if (FileName.endsWith(".mp3"))
+            {
+               mp3Player(&FileName) ;
             }
             else if (!inmenu)
             {
