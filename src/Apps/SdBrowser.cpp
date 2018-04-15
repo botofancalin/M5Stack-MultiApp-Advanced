@@ -111,6 +111,7 @@ void doMyMenu()
         {
             if (repaint)
             {
+                M5.Lcd.clear();
                 MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
                 MyMenu.btnRestore();
             }
@@ -124,7 +125,22 @@ void doMyMenu()
             if (FileName.endsWith(".jpg"))
             {
                 MyMenu.windowClr();
-                M5.Lcd.drawJpgFile(SD, FileName.c_str());
+                if (fileVector[MenuID].fileSize > 100000UL)
+                {
+                    M5.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_8);
+                }
+                else if (fileVector[MenuID].fileSize > 70000UL)
+                {
+                    M5.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_4);
+                }
+                else if (fileVector[MenuID].fileSize > 50000)
+                {
+                    M5.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_2);
+                }
+                else
+                {
+                    M5.Lcd.drawJpgFile(SD, FileName.c_str());
+                }
                 repaint = true;
             }
             else if (FileName.endsWith(".mp3"))
