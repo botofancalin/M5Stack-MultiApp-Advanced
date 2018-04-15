@@ -1,9 +1,10 @@
 #include "../apps.h"
 
+const char *ignored = "System Volume Information";
 bool repaint = false;
 bool inmenu = false;
 int appsCount = 0;
-int levels = 0;
+int levels = 1;
 
 struct FileInfo
 {
@@ -28,20 +29,24 @@ void listDir(fs::FS &fs, String dirName, int levels)
     File file = root.openNextFile();
     while (file)
     {
-        if (file.isDirectory() && file.name() != "System Volume Information")
+        if (!strstr((file.name()), ignored))
         {
-            if (levels)
+            Serial.println(file.name());
+            if (file.isDirectory())
             {
-                listDir(fs, file.name(), levels - 1);
+                if (levels)
+                {
+                    listDir(fs, file.name(), levels - 1);
+                }
             }
-        }
-        else
-        {
-            fileVector.push_back(fileinfo);
-            String fileName = file.name();
-            fileVector[appsCount].fileName = fileName;
-            fileVector[appsCount].fileSize = file.size();
-            appsCount++;
+            else
+            {
+                fileVector.push_back(fileinfo);
+                String fileName = file.name();
+                fileVector[appsCount].fileName = fileName;
+                fileVector[appsCount].fileSize = file.size();
+                appsCount++;
+            }
         }
         file = root.openNextFile();
     }
@@ -91,13 +96,12 @@ void buildMyMenu()
     }
 }
 
-
 void doMyMenu()
 {
     appsCount = 0;
     M5.update();
     MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
-    listDir(SD, "/", 1);
+    listDir(SD, "/", levels);
     aSortFiles();
     buildMyMenu();
     MyMenu.showList();
@@ -125,7 +129,7 @@ void doMyMenu()
             }
             else if (FileName.endsWith(".mp3"))
             {
-               mp3Player(&FileName) ;
+                mp3Player(&FileName);
             }
             else if (!inmenu)
             {

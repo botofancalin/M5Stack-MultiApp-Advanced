@@ -23,26 +23,28 @@ void setVolume(float *v)
 unsigned long drawTimeline_previousMillis = 0;
 void drawTimeline()
 {
-  unsigned long currentMillis = millis();
-  if (currentMillis - drawTimeline_previousMillis > 250)
-  {
-    int x = 30;
-    int y = 180;
-    int width = 260;
-    int heightLine = 3;
-    int heightMark = 20;
-    int widthMark = 3;
-    int yClear = y - (heightMark / 2);
-    int wClear = width + (widthMark / 2);
+    unsigned long currentMillis = millis();
+    if (currentMillis - drawTimeline_previousMillis > 250)
+    {
+        int x = 30;
+        int y = 180;
+        int width = 200;
+        int heightLine = 3;
+        int heightMark = 20;
+        int widthMark = 3;
+        int yClear = y - (heightMark / 2);
+        int wClear = width + (widthMark / 2);
 
-    drawTimeline_previousMillis = currentMillis;
-    M5.Lcd.fillRect(x, yClear +1, wClear, heightMark, 0);
-    M5.Lcd.fillRect(x, y, width, heightLine, 0x7bef);
-    int size_ = id3->getSize();
-    int pos_ = id3->getPos();
-    int xPos = x + ((pos_ * (width - (widthMark / 2))) / size_);
-    M5.Lcd.fillRect(xPos, yClear+1, widthMark, heightMark, 0xe8e4);
-  }
+        drawTimeline_previousMillis = currentMillis;
+        M5.Lcd.fillRect(x, yClear + 2, wClear, heightMark, 0);
+        M5.Lcd.fillRect(x, y, width, heightLine, 31727);
+        int size_ = id3->getSize();
+        int pos_ = id3->getPos();
+        int xPos = x + ((pos_ * (width - (widthMark / 2))) / size_);
+        M5.Lcd.fillRect(xPos, yClear + 2, widthMark, heightMark, 59620);
+        M5.Lcd.fillRect(width + 50, y - 4, 70, 10, BLACK);
+        M5.Lcd.drawNumber((size_ - pos_), width + 50, y - 7, 2);
+    }
 }
 
 void mp3Player(String *fileName)
@@ -50,6 +52,9 @@ void mp3Player(String *fileName)
     M5.update();
     MyMenu.drawAppMenu(F("Mp3Player"), F("VOL-"), F("EXIT"), F("VOL+"));
     MyMenu.windowClr();
+    M5.Lcd.setTextColor(CYAN);
+    M5.Lcd.drawCentreString(*fileName, 160, 140, 2);
+    M5.Lcd.setTextColor(WHITE);
     getvolume();
     file = new AudioFileSourceSD((*fileName).c_str());
     id3 = new AudioFileSourceID3(file);
@@ -95,8 +100,9 @@ void mp3Player(String *fileName)
     mp3 = NULL;
     file = NULL;
     out = NULL;
-    dacWrite(25,0);
-    dacWrite(26,0);
+    dacWrite(25, 0);
+    dacWrite(26, 0);
+    MyMenu.windowClr();
     MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
     MyMenu.showList();
 }

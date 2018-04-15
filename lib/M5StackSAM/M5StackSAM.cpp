@@ -25,18 +25,16 @@ void M5SAM::clearList()
   list_page = 0;
   list_lastpagelines = 0;
   list_idx = 0;
-  for (uint8_t x = 0; x < M5SAM_LIST_MAX_COUNT; x++)
-  {
-    list_labels[x] = "";
-  }
+  list_labels.clear();
+  list_labels.shrink_to_fit();
   listCaption = "";
 }
 
 void M5SAM::addList(String inStr)
 {
-  if (inStr.length() <= M5SAM_LIST_MAX_LABEL_SIZE && inStr.length() > 0 && list_count < M5SAM_LIST_MAX_COUNT)
+  if (inStr.length() <= M5SAM_LIST_MAX_LABEL_SIZE && inStr.length() > 0)
   {
-    list_labels[list_count] = inStr;
+    list_labels.push_back(inStr);
     list_count++;
   }
   if (list_count > 0)
@@ -61,7 +59,7 @@ void M5SAM::addList(String inStr)
   }
 }
 
-uint8_t M5SAM::getListID()
+unsigned int M5SAM::getListID()
 {
   return list_idx;
 }
@@ -92,7 +90,7 @@ void M5SAM::nextList()
   showList();
 }
 
-void M5SAM::drawListItem(uint8_t inIDX, uint8_t postIDX)
+void M5SAM::drawListItem(uint32_t inIDX, uint32_t postIDX)
 {
   if (inIDX == list_idx)
   {
@@ -108,14 +106,14 @@ void M5SAM::drawListItem(uint8_t inIDX, uint8_t postIDX)
 void M5SAM::showList()
 {
   windowClr();
-  uint8_t labelid = 0;
+  unsigned int labelid = 0;
   M5.Lcd.drawCentreString(listCaption, M5.Lcd.width() / 2, 45, 2);
   if ((list_page + 1) == list_pages)
   {
     if (list_lastpagelines == 0 && list_count >= M5SAM_LIST_PAGE_LABELS)
     {
       list_lines = M5SAM_LIST_PAGE_LABELS;
-      for (uint8_t i = 0; i < M5SAM_LIST_PAGE_LABELS; i++)
+      for (uint32_t i = 0; i < M5SAM_LIST_PAGE_LABELS; i++)
       {
         labelid = i + (list_page * M5SAM_LIST_PAGE_LABELS);
         drawListItem(labelid, i);
@@ -126,7 +124,7 @@ void M5SAM::showList()
       if (list_pages > 1)
       {
         list_lines = list_lastpagelines;
-        for (uint8_t i = 0; i < list_lastpagelines; i++)
+        for (uint32_t i = 0; i < list_lastpagelines; i++)
         {
           labelid = i + (list_page * M5SAM_LIST_PAGE_LABELS);
           drawListItem(labelid, i);
@@ -135,7 +133,7 @@ void M5SAM::showList()
       else
       {
         list_lines = list_count;
-        for (uint8_t i = 0; i < list_count; i++)
+        for (uint32_t i = 0; i < list_count; i++)
         {
           labelid = i + (list_page * M5SAM_LIST_PAGE_LABELS);
           drawListItem(labelid, i);
@@ -146,7 +144,7 @@ void M5SAM::showList()
   else
   {
     list_lines = M5SAM_LIST_PAGE_LABELS;
-    for (uint8_t i = 0; i < M5SAM_LIST_PAGE_LABELS; i++)
+    for (uint32_t i = 0; i < M5SAM_LIST_PAGE_LABELS; i++)
     {
       labelid = i + (list_page * M5SAM_LIST_PAGE_LABELS);
       drawListItem(labelid, i);
@@ -172,7 +170,7 @@ void M5SAM::down()
   }
 }
 
-void M5SAM::GoToLevel(uint8_t inlevel)
+void M5SAM::GoToLevel(uint32_t inlevel)
 {
   levelIDX = inlevel;
   menuIDX = 0;
@@ -191,9 +189,9 @@ void M5SAM::execute()
   }
 }
 
-void M5SAM::addMenuItem(uint8_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
+void M5SAM::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
 {
-  uint8_t mCnt = menuCount[levelID];
+  uint32_t mCnt = menuCount[levelID];
   menuList[levelID] = (MenuCommandCallback *)realloc(menuList[levelID], (mCnt + 1) * sizeof(MenuCommandCallback));
   strncpy(menuList[levelID][mCnt].title, menu_title, M5SAM_MENU_TITLE_MAX_SIZE);
   strncpy(menuList[levelID][mCnt].btnAtitle, btnA_title, M5SAM_BTN_TITLE_MAX_SIZE);
@@ -216,7 +214,7 @@ void M5SAM::windowClr()
   M5.Lcd.fillRoundRect(0, 29, M5.Lcd.width(), M5.Lcd.height() - 28 - 28, 3, windowcolor);
 }
 
-unsigned int M5SAM::getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue)
+unsigned int M5SAM::getrgb(uint32_t inred, uint32_t ingrn, uint32_t inblue)
 {
   inred = map(inred, 0, 255, 0, 31);
   ingrn = map(ingrn, 0, 255, 0, 63);
