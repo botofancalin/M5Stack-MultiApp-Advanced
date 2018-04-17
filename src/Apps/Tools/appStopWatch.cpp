@@ -1,4 +1,4 @@
-#include "../apps.h"
+#include "../../apps.h"
 
 void appStopWatch()
 {
@@ -13,11 +13,6 @@ void appStopWatch()
     M5.Lcd.drawString(F("SEC"), 170, 120, 2);
     M5.Lcd.drawFloat(tmp_sec, 1, 210, 100, 6);
     M5.Lcd.drawNumber(tmp_min, 80, 100, 6);
-
-    while (M5.BtnB.wasPressed())
-    {
-        M5.update();
-    }
 
     while (!M5.BtnB.wasPressed())
     {
@@ -64,5 +59,5 @@ void appStopWatch()
             }
         }
     }
-    MyMenu.show();
+    M5.update();
 }

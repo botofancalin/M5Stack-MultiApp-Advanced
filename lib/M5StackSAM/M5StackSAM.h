@@ -30,7 +30,7 @@ public:
   void drawAppMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl);
   void GoToLevel(uint32_t inlevel);
   unsigned int getrgb(uint32_t inred, uint32_t ingrn, uint32_t inblue);
-  void addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)());
+  void addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, signed char goto_level, const uint8_t *Menu_Img, void (*function)());
   void show();
   void showList();
   void clearList();
@@ -45,7 +45,7 @@ public:
 private:
   String listCaption;
   void drawListItem(uint32_t inIDX, uint32_t postIDX);
-  void drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor, unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor);
+  void drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor, unsigned int inwindowcolor, const uint8_t *iMenuImg, unsigned int intxtcolor);
   struct MenuCommandCallback
   {
     char title[M5SAM_MENU_TITLE_MAX_SIZE + 1];
@@ -53,7 +53,7 @@ private:
     char btnBtitle[M5SAM_BTN_TITLE_MAX_SIZE + 1];
     char btnCtitle[M5SAM_BTN_TITLE_MAX_SIZE + 1];
     signed char gotoLevel;
-    const char *MenuImg;
+    const uint8_t *MenuImg;
     void (*function)();
   };
   std::vector<String> list_labels;

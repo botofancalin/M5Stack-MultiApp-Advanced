@@ -1,4 +1,4 @@
-
+#pragma once
 //include this file into your app file so your app can be called from menu
 //#include "ESPmDNS.h"
 #include "WiFiUdp.h"
@@ -31,7 +31,7 @@ void appWebServer();
 void appStopWatch();
 void appListTools();
 void appListGames();
-void doMyMenu();
+void appBrowser();
 void appSysInfo();
 void appWiFiSetup();
 void appCfgBrigthness();

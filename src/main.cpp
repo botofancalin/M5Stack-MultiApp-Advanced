@@ -1,4 +1,5 @@
 #include "apps.h"
+#include "Resources.h"
 
 unsigned long lastcheck = 0;
 int SignalStrength = 0;
@@ -23,23 +24,22 @@ void setup()
 	M5.lcd.setBrightness(preferences.getUShort("Brightness", 95));
 	preferences.end();
 
-	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, "/Data/Apps.jpg", appReturn);
-	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, "/Data/System.jpg", appReturn);
-	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, "/Data/About.jpg", appAbout);
+	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps, appReturn);
+	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
+	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
 
-	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, "/Data/Oscilloscope.jpg", appOsciloscope);
-	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, "/Data/WebServer.jpg", appWebServer);
-	MyMenu.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, "/Data/Tools.jpg", appListTools);
-	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, "/Data/Games.jpg", appListGames);
-	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, "/Data/Browser.jpg", doMyMenu);
-	MyMenu.addMenuItem(1, "STOPWATCH", "<", "OK", ">", -1, "/Data/Stopwatch.jpg", appStopWatch);
-	MyMenu.addMenuItem(1, "RETURN", "<", "OK", ">", 0, "/Data/Return.jpg", appReturn);
+	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOsciloscope);
+	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
+	MyMenu.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, Tools, appListTools);
+	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, Games, appListGames);
+	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, Browser, appBrowser);
+	MyMenu.addMenuItem(1, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
-	MyMenu.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, "/Data/SysInfo.jpg", appSysInfo);
-	MyMenu.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, "/Data/WiFi.jpg", appWiFiSetup);
-	MyMenu.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, "/Data/BackLight.jpg", appCfgBrigthness);
-	MyMenu.addMenuItem(2, "SLEEP/CHARGING", "<", "OK", ">", -1, "/Data/Sleep.jpg", appSleep);
-	MyMenu.addMenuItem(2, "RETURN", "<", "OK", ">", 0, "/Data/Return.jpg", appReturn);
+	MyMenu.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, Sysinfo, appSysInfo);
+	MyMenu.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, WifiConn, appWiFiSetup);
+	MyMenu.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, Backlight, appCfgBrigthness);
+	MyMenu.addMenuItem(2, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
+	MyMenu.addMenuItem(2, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
 	MyMenu.show();
 }

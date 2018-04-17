@@ -96,7 +96,7 @@ void buildMyMenu()
     }
 }
 
-void doMyMenu()
+void appBrowser()
 {
     appsCount = 0;
     M5.update();
@@ -124,7 +124,7 @@ void doMyMenu()
             String FileName = fileVector[MenuID].fileName;
             if (FileName.endsWith(".jpg"))
             {
-                MyMenu.windowClr();
+                M5.Lcd.clear();
                 if (fileVector[MenuID].fileSize > 100000UL)
                 {
                     M5.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_8);
@@ -142,6 +142,7 @@ void doMyMenu()
                     M5.Lcd.drawJpgFile(SD, FileName.c_str());
                 }
                 repaint = true;
+                MyMenu.btnRestore();
             }
             else if (FileName.endsWith(".mp3"))
             {

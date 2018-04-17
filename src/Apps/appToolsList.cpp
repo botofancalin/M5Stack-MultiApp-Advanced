@@ -14,8 +14,9 @@ void appListTools()
     MyMenu.addList("WIFI PACKET MONITOR");
     MyMenu.addList("WIFI SCANNER");
     MyMenu.addList("I2C SCANNER");
-    MyMenu.addList("METERS");
     MyMenu.addList("DHT TEMP & HUMIDITY");
+    MyMenu.addList("STOPWATCH");
+    MyMenu.addList("VOLTMETER");
     MyMenu.showList();
 
     while (!M5.BtnA.wasPressed())
@@ -56,7 +57,16 @@ void appListTools()
                 MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
             }
-            if (MyMenu.getListString() == "METERS")
+            if (MyMenu.getListString() == "STOPWATCH")
+            {
+                M5.update();
+                appStopWatch();
+                M5.Lcd.setRotation(0);
+                M5.Lcd.fillScreen(0);
+                MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+                MyMenu.showList();
+            }
+            if (MyMenu.getListString() == "VOLTMETER")
             {
                 meters_setup();
                 M5.update();

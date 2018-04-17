@@ -1,15 +1,15 @@
 #include "../../apps.h"
 
-#define MAX_CH 14 
+#define MAX_CH 14
 #define SNAP_LEN 2324 // max len of each recieved packet
-#define MAX_X 315     // 128
-#define MAX_Y 230     //  51
+#define MAX_X 315	 // 128
+#define MAX_Y 230	 //  51
 
 uint32_t lastDrawTime;
 uint32_t tmpPacketCounter;
 uint32_t pkts[MAX_X]; // here the packets per second will be saved
 uint32_t deauths = 0; // deauth frames per second
-uint8_t ch = 1;  // current 802.11 channel
+uint8_t ch = 1;		  // current 802.11 channel
 int rssiSum;
 
 esp_err_t event_handler(void *ctx, system_event_t *event)
@@ -92,9 +92,9 @@ void draw()
 		rssi = rssiSum;
 	}
 	String p = "Ch: " + (String)ch + " | Rssi: " + (String)rssi + " | Packets: " +
-		(String)tmpPacketCounter + " | Deauth: [" + deauths + "]";
+			   (String)tmpPacketCounter + " | Deauth: [" + deauths + "]";
 	M5.Lcd.setTextColor(WHITE, BLUE);
-	M5.Lcd.drawString(p + "  ", 10, 2, 2);                          // string DRAW
+	M5.Lcd.drawString(p + "  ", 10, 2, 2);						 // string DRAW
 	M5.Lcd.drawLine(40, MAX_Y - 200, MAX_X, MAX_Y - 200, GREEN); // MAX LINE DRAW
 	for (int i = 40; i < MAX_X; i++)
 	{
@@ -104,26 +104,28 @@ void draw()
 		{
 			len = 200;
 		}
-		M5.Lcd.drawLine(i, MAX_Y, i, 31, BLACK);      // LINE EARSE
+		M5.Lcd.drawLine(i, MAX_Y, i, 31, BLACK);		  // LINE EARSE
 		M5.Lcd.drawLine(i, MAX_Y, i, MAX_Y - len, GREEN); // LINE DRAW
 		if (i < MAX_X - 1)
 		{
 			pkts[i] = pkts[i + 1];
 		}
-		M5.Lcd.setTextColor(RED);
-		M5.Lcd.drawString("Ch-", 57, 210, 2);
-		M5.Lcd.drawString("Exit", 148, 210, 2);
-		M5.Lcd.drawString("Ch+", 247, 210, 2);
 	}
+	M5.Lcd.setTextColor(RED);
+	M5.Lcd.drawString("Ch-", 57, 210, 2);
+	M5.Lcd.drawString("Exit", 148, 210, 2);
+	M5.Lcd.drawString("Ch+", 247, 210, 2);
 }
 // ===== main program ================================================
 void Monitor_run()
 {
 	WiFi.disconnect();
 	WiFi.mode(WIFI_MODE_NULL);
+	WiFi.begin();
 	esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE);
 	M5.Lcd.fillScreen(BLACK);
-	M5.Lcd.setTextColor(WHITE, BLACK);;
+	M5.Lcd.setTextColor(WHITE, BLACK);
+	;
 	int s = 10, a = 0;
 	for (int ypos = MAX_Y; ypos > 120; ypos = ypos - s)
 	{
@@ -168,7 +170,6 @@ void Monitor_run()
 			rssiSum = 0;
 		}
 	}
-	WiFi.disconnect();
 	M5.Lcd.setTextFont(1);
 	preferences.begin("WiFi-mode", false);
 	WiFi_Mode = preferences.getInt("mode", 0);
