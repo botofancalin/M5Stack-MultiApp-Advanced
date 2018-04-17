@@ -17,7 +17,7 @@ void getvolume()
 
 void setVolume(int *v)
 {
-    float volume = *v / 33.3f; // volme max value can be 3.99
+    float volume = *v / 49.9f; // volme max value can be 3.99
     out->SetGain(volume);
 }
 
