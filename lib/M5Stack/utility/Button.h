@@ -15,8 +15,6 @@
 // #else
 // #include <WProgram.h> 
 // #endif
-
-static bool action = false;
 class Button
 {
     public:

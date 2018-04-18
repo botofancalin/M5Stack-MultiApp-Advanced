@@ -85,7 +85,7 @@ void plotNeedle(float value, byte ms_delay)
             ms_delay += ms_delay / 5;
 
         // Wait before next update
-        delay(ms_delay);
+        vTaskDelay(ms_delay / portTICK_PERIOD_MS);
     }
 }
 
@@ -276,7 +276,7 @@ void meters_setup()
     M5.Lcd.drawCentreString("Max Voltage: 3.3v", 160, 120, 4);
     M5.Lcd.drawCentreString("Lower Linear meters show voltage history", 160, 170, 2);
     M5.Lcd.drawCentreString("Press Key A to Exit", 160, 190, 2);
-    delay(5000);
+    vTaskDelay(5000 / portTICK_PERIOD_MS);
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setRotation(3);
     analogMeter(); // Draw analogue meter

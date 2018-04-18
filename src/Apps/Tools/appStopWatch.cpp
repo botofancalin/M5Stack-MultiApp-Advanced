@@ -58,7 +58,6 @@ void appStopWatch()
                 tmp_run = HIGH;
             }
         }
-        action = true;
     }
     M5.update();
 }

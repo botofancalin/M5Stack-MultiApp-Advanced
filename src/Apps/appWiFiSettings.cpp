@@ -3,7 +3,7 @@
 void AP_Mode()
 {
     WiFi.disconnect();
-    delay(200);
+    vTaskDelay(200 / portTICK_PERIOD_MS);
     WiFi.mode(WIFI_MODE_AP);
     WiFi_Mode = WIFI_MODE_AP;
     WiFi.begin("M5Stack");
@@ -63,7 +63,7 @@ void appWiFiSetup()
             if (MyMenu.getListString() == "WiFi STA")
             {
                 MyMenu.windowClr();
-                delay(200);
+                vTaskDelay(200 / portTICK_PERIOD_MS);
                 STA_Mode();
                 while (!M5.BtnA.wasPressed())
                 {
@@ -76,7 +76,7 @@ void appWiFiSetup()
             if (MyMenu.getListString() == "WiFi AP + STA")
             {
                 MyMenu.windowClr();
-                delay(200);
+                vTaskDelay(200 / portTICK_PERIOD_MS);
                 APSTA_Mode();
                 while (!M5.BtnA.wasPressed())
                 {
@@ -89,7 +89,7 @@ void appWiFiSetup()
             if (MyMenu.getListString() == "WiFi AP")
             {
                 MyMenu.windowClr();
-                delay(200);
+                vTaskDelay(200 / portTICK_PERIOD_MS);
                 AP_Mode();
                 while (!M5.BtnA.wasPressed())
                 {
@@ -102,26 +102,26 @@ void appWiFiSetup()
             if (MyMenu.getListString() == "Connect by WPS Button")
             {
                 MyMenu.windowClr();
-                delay(200);
+                vTaskDelay(200 / portTICK_PERIOD_MS);
                 Wps_run(true);
                 WiFi_Mode = WIFI_MODE_STA;
             }
             if (MyMenu.getListString() == "Connect by WPS Pin Code")
             {
                 MyMenu.windowClr();
-                delay(200);
+                vTaskDelay(200 / portTICK_PERIOD_MS);
                 Wps_run(false);
                 WiFi_Mode = WIFI_MODE_STA;
             }
             if (MyMenu.getListString() == "WiFi OFF")
             {
                 MyMenu.windowClr();
-                delay(200);
+                vTaskDelay(200 / portTICK_PERIOD_MS);
                 WiFi.disconnect();
                 WiFi.mode(WIFI_MODE_NULL);
                 WiFi_Mode = WIFI_MODE_NULL;
                 M5.Lcd.drawString("WiFi Turned OFF", 5, 50, 2);
-                delay(1000);
+                vTaskDelay(1000 / portTICK_PERIOD_MS);
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
             }

@@ -14,10 +14,10 @@ void WiFiScanner_run()
 
     M5.Lcd.drawCentreString(F("SCANNING....."), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
 
-    delay(500);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
     WiFi.mode(WIFI_MODE_STA);
     WiFi.disconnect();
-    delay(500);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
 
     while (!M5.BtnA.wasPressed())
     {

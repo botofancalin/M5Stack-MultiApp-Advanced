@@ -37,7 +37,7 @@ uint8_t trig_edge = TRIG_E_UP;
 uint8_t trig_ch = 0;
 uint8_t menu = 19;
 uint16_t data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
-int sample = 0;		  // index for double buffer
+int sample = 0;			   // index for double buffer
 bool Start = true;
 bool exitprg = false;
 int phase = 0;
@@ -68,7 +68,6 @@ void DrawText()
 	M5.Lcd.drawString(String("Tlv:" + String(trig_lv)), 270, 120);
 	M5.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130);
 	M5.Lcd.drawString("Exit", 270, 140);
-	action = true;
 }
 
 void CheckSW()
@@ -341,7 +340,7 @@ void LedC_Task(void *parameter)
 		{
 			phaseStep = -phaseStep;
 		}
-		delay(30);
+		vTaskDelay(30 / portTICK_PERIOD_MS);
 	}
 	vTaskDelete(NULL);
 }

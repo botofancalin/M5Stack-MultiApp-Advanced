@@ -101,7 +101,6 @@ uint8_t Button::isReleased(void)
  *----------------------------------------------------------------------*/
 uint8_t Button::wasPressed(void)
 {
-    action = true;
     return _state && _changed;
 }
 

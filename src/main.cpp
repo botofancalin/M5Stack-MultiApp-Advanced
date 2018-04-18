@@ -5,23 +5,8 @@ unsigned long lastcheck = 0;
 int SignalStrength = 0;
 bool OtaRunning = false;
 
-void PowerSaver(void *parameter)
-{
-	for (;;)
-	{
-		action = false;
-		vTaskDelay(30000 / portTICK_PERIOD_MS);
-		if (!action)
-		{
-			M5.powerOFF();
-		}
-	}
-	vTaskDelete(NULL);
-}
-
 void setup()
 {
-	action = true;
 	M5.begin();
 	Wire.begin();
 	dacWrite(25, 0); // Speaker OFF
@@ -57,15 +42,6 @@ void setup()
 	MyMenu.addMenuItem(2, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
 	MyMenu.show();
-
-	xTaskCreatePinnedToCore(
-		PowerSaver,   /* Task function. */
-		"PowerSaver", /* name of the task, a name just for humans */
-		8192,		  /* Stack size of task */
-		NULL,		  /* parameter of the task */
-		1,			  /* priority of the task */
-		NULL,		  /* Task handle to keep track of the created task */
-		0);			  /* cpu core number where the task is assigned*/
 }
 
 void loop()

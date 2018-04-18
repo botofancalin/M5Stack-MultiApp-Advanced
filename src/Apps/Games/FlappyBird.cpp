@@ -277,7 +277,7 @@ void game_loop()
         M5.Lcd.drawNumber(flappy_bird_score, TFTW2, 4);
     }
     // add a small delay to show how the player lost
-    delay(1200);
+    vTaskDelay(1200 / portTICK_PERIOD_MS);
 }
 
 void game_init()
