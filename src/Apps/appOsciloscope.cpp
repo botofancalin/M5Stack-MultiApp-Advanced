@@ -68,6 +68,7 @@ void DrawText()
 	M5.Lcd.drawString(String("Tlv:" + String(trig_lv)), 270, 120);
 	M5.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130);
 	M5.Lcd.drawString("Exit", 270, 140);
+	action = true;
 }
 
 void CheckSW()

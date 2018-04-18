@@ -106,6 +106,7 @@ void drawTimeline()
         M5.Lcd.fillRect(xPos, yClear + 2, widthMark, heightMark, 59620);
         M5.Lcd.fillRect(width + 50, y - 4, 70, 10, BLACK);
         M5.Lcd.drawNumber((pos_), width + 50, y - 7, 2);
+        action = true;
     }
 }
 

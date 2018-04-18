@@ -33,6 +33,7 @@ void Dht_Run()
                 M5.Lcd.fillCircle(189, 160, 20, BLUE);
                 oldtemperature = temperature;
                 oldhumidity = humidity;
+                action = true;
             }
             past = start;
         }

@@ -168,6 +168,7 @@ void Monitor_run()
 			tmpPacketCounter = 0;
 			deauths = 0;
 			rssiSum = 0;
+			action = true;
 		}
 	}
 	M5.Lcd.setTextFont(1);
