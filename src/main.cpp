@@ -27,6 +27,7 @@ void setup()
 	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps, appReturn);
 	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
 	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
+	MyMenu.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", 0, Sleep, appSleep);
 
 	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOsciloscope);
 	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
@@ -38,7 +39,6 @@ void setup()
 	MyMenu.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, Sysinfo, appSysInfo);
 	MyMenu.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, WifiConn, appWiFiSetup);
 	MyMenu.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, Backlight, appCfgBrigthness);
-	MyMenu.addMenuItem(2, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
 	MyMenu.addMenuItem(2, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
 	MyMenu.show();
