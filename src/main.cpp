@@ -27,7 +27,7 @@ void setup()
 	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps, appReturn);
 	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
 	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
-	MyMenu.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", 0, Sleep, appSleep);
+	MyMenu.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
 
 	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOsciloscope);
 	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
