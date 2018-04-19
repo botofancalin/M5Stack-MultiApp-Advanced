@@ -29,15 +29,15 @@ uint8_t range0 = RANGE_MIN;
 uint8_t range1 = RANGE_MIN;
 uint8_t ch0_mode = MODE_ON;
 uint8_t ch1_mode = MODE_OFF;
-int ch0_off = 0;
-int ch1_off = 0;
+unsigned int ch0_off = 0;
+unsigned int ch1_off = 0;
 uint8_t trig_mode = TRIG_AUTO;
-uint8_t trig_lv = 40;
+uint16_t trig_lv = 40;
 uint8_t trig_edge = TRIG_E_UP;
 uint8_t trig_ch = 0;
 uint8_t menu = 19;
-uint16_t data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
-int sample = 0;			   // index for double buffer
+unsigned int data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
+unsigned int sample = 0;			   // index for double buffer
 bool Start = true;
 bool exitprg = false;
 int phase = 0;
@@ -307,7 +307,7 @@ void ClearAndDrawDot(int i)
 	DrawGrid(i);
 }
 
-inline int adRead(uint8_t ch, uint8_t mode, int off)
+inline unsigned int adRead(uint8_t ch, uint8_t mode, int off)
 {
 	int a = analogRead(ch);
 	a = (((a + off) * VREF[(ch == ad_ch0) ? range0 : range1]) / 10000UL) + 35;
@@ -329,7 +329,7 @@ void ledcAnalogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255)
 // Signal generator pin 2
 void LedC_Task(void *parameter)
 {
-	ledcSetup(0, 50, 13);
+	ledcSetup(0, 500, 13);
 	ledcAttachPin(2, 0);
 
 	for (;;)
@@ -366,7 +366,7 @@ void appOsciloscope()
 		if (trig_mode != TRIG_SCAN)
 		{
 			unsigned long st = millis();
-			uint8_t oad;
+			unsigned int oad;
 			if (trig_ch == 0)
 			{
 				oad = adRead(ad_ch0, ch0_mode, ch0_off);
@@ -377,7 +377,7 @@ void appOsciloscope()
 			}
 			for (;;)
 			{
-				uint8_t ad;
+				unsigned int ad;
 				if (trig_ch == 0)
 				{
 					ad = adRead(ad_ch0, ch0_mode, ch0_off);
