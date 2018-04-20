@@ -312,7 +312,7 @@ void ClearAndDrawDot(int i)
 inline unsigned int adRead(const uint8_t *ch, uint8_t *mode, int *off)
 {
 	int a = analogRead(*ch);
-	a = (((a + *off) * VREF[(*ch == ad_ch0) ? range0 : range1]) / 10000UL) + 35;
+	a = (((a + *off) * VREF[(*ch == ad_ch0) ? range0 : range1]) / 10000) + 35;
 	a = ((a >= LCD_HEIGHT) ? LCD_HEIGHT : a);
 	if (*mode == MODE_INV)
 	{
@@ -331,7 +331,7 @@ void ledcAnalogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255)
 // Signal generator pin 2
 void LedC_Task(void *parameter)
 {
-	ledcSetup(0, 50, 13);
+	ledcSetup(0, 500, 13);
 	ledcAttachPin(2, 0);
 
 	for (;;)
@@ -353,9 +353,9 @@ void Synusoide_Task(void *parameter)
 {
 	for (;;)
 	{
-		for (int i = 0; i < 360; i++)
+		for (int MyAngle = 0; MyAngle < 256; MyAngle++)
 		{
-			dacWrite(26, (120 + (sin((i * 3.14) / 180) * (120 - (i / 100)))));
+			dacWrite(26, (((sin(MyAngle * (2 * PI) / 256)) * 120) + 128));
 		}
 	}
 	vTaskDelete(NULL);

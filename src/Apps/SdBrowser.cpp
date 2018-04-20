@@ -31,7 +31,6 @@ void listDir(fs::FS &fs, String dirName, int levels)
     {
         if (!strstr((file.name()), ignored))
         {
-            Serial.println(file.name());
             if (file.isDirectory())
             {
                 if (levels)
