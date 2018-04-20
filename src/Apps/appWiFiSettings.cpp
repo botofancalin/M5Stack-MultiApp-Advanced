@@ -33,6 +33,54 @@ void APSTA_Mode()
     M5.Lcd.drawString("Will use the sored SSID", 5, 70, 2);
 }
 
+void SmartConfig()
+{
+    int i = 0;
+    WiFi.mode(WIFI_AP_STA);
+    WiFi.beginSmartConfig();
+    M5.Lcd.drawString("Waiting for SmartConfig", 5, 30, 2);
+    while (!WiFi.smartConfigDone())
+    {
+        M5.Lcd.setTextColor(WHITE);
+        M5.Lcd.drawNumber(i, 5, 50, 2);
+        //vTaskDelay(500 / portTICK_PERIOD_MS);
+        delay(500);
+        M5.Lcd.setTextColor(BLACK);
+        M5.Lcd.drawNumber(i, 5, 50, 2);
+        if (i == 119)
+        {
+            M5.Lcd.setTextColor(WHITE);
+            M5.Lcd.drawString("SmartConfig NOT received!", 5, 70, 2);
+            STA_Mode();
+            return;
+        }
+        i++;
+    }
+    M5.Lcd.setTextColor(WHITE);
+    M5.Lcd.drawString("SmartConfig received", 5, 70, 2);
+    M5.Lcd.drawString("Waiting for WiFi", 5, 90, 2);
+    i = 0;
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        M5.Lcd.setTextColor(WHITE);
+        M5.Lcd.drawNumber(i, 5, 110, 2);
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        M5.Lcd.setTextColor(BLACK);
+        M5.Lcd.drawNumber(i, 5, 110, 2);
+        if (i == 59)
+        {
+            STA_Mode();
+            M5.Lcd.setTextColor(WHITE);
+            M5.Lcd.drawString("Wifi Not Found!", 5, 130, 2);
+            return;
+        }
+        i++;
+    }
+    M5.Lcd.setTextColor(WHITE);
+    M5.Lcd.drawString("WiFi Connected", 5, 130, 2);
+    M5.Lcd.drawString("IP: " + WiFi.localIP().toString(), 5, 150, 2);
+}
+
 void appWiFiSetup()
 {
     MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
@@ -44,11 +92,11 @@ void appWiFiSetup()
 
     MyMenu.clearList();
     MyMenu.setListCaption("WiFi");
+    MyMenu.addList("WiFi SmartConfig");
     MyMenu.addList("Connect by WPS Button");
     MyMenu.addList("Connect by WPS Pin Code");
     MyMenu.addList("WiFi STA");
     MyMenu.addList("WiFi AP");
-    MyMenu.addList("WiFi AP + STA");
     MyMenu.addList("WiFi OFF");
     MyMenu.showList();
 
@@ -63,25 +111,17 @@ void appWiFiSetup()
             if (MyMenu.getListString() == "WiFi STA")
             {
                 MyMenu.windowClr();
-                vTaskDelay(200 / portTICK_PERIOD_MS);
                 STA_Mode();
-                while (!M5.BtnA.wasPressed())
-                {
-                    M5.update();
-                }
+                vTaskDelay(2000 / portTICK_PERIOD_MS);
                 MyMenu.windowClr();
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
             }
-            if (MyMenu.getListString() == "WiFi AP + STA")
+            if (MyMenu.getListString() == "WiFi SmartConfig")
             {
                 MyMenu.windowClr();
-                vTaskDelay(200 / portTICK_PERIOD_MS);
-                APSTA_Mode();
-                while (!M5.BtnA.wasPressed())
-                {
-                    M5.update();
-                }
+                SmartConfig();
+                vTaskDelay(2000 / portTICK_PERIOD_MS);
                 MyMenu.windowClr();
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
@@ -89,12 +129,8 @@ void appWiFiSetup()
             if (MyMenu.getListString() == "WiFi AP")
             {
                 MyMenu.windowClr();
-                vTaskDelay(200 / portTICK_PERIOD_MS);
                 AP_Mode();
-                while (!M5.BtnA.wasPressed())
-                {
-                    M5.update();
-                }
+                vTaskDelay(2000 / portTICK_PERIOD_MS);
                 MyMenu.windowClr();
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
@@ -121,7 +157,7 @@ void appWiFiSetup()
                 WiFi.mode(WIFI_MODE_NULL);
                 WiFi_Mode = WIFI_MODE_NULL;
                 M5.Lcd.drawString("WiFi Turned OFF", 5, 50, 2);
-                vTaskDelay(1000 / portTICK_PERIOD_MS);
+                vTaskDelay(2000 / portTICK_PERIOD_MS);
                 MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
                 MyMenu.showList();
             }

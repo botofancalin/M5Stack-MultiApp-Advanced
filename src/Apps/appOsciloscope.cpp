@@ -29,24 +29,25 @@ uint8_t range0 = RANGE_MIN;
 uint8_t range1 = RANGE_MIN;
 uint8_t ch0_mode = MODE_ON;
 uint8_t ch1_mode = MODE_OFF;
-unsigned int ch0_off = 0;
-unsigned int ch1_off = 0;
+int ch0_off = 0;
+int ch1_off = 0;
 uint8_t trig_mode = TRIG_AUTO;
 uint16_t trig_lv = 40;
-uint8_t trig_edge = TRIG_E_UP;
+uint8_t trig_edge = TRIG_E_DN;
 uint8_t trig_ch = 0;
 uint8_t menu = 19;
 unsigned int data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
-unsigned int sample = 0;			   // index for double buffer
+unsigned int sample = 0;	   // index for double buffer
 bool Start = true;
 bool exitprg = false;
 int phase = 0;
 int phaseStep = 5;
 
-TaskHandle_t LedC_Gen;
+TaskHandle_t LedC_Gen = NULL;
+TaskHandle_t Syn_Gen = NULL;
 
 #define CH1COLOR YELLOW
-#define CH2COLOR CYAN
+#define CH2COLOR MAGENTA
 #define GREY 0x7BEF
 ///////////////////////////////////////////////////////////////////////////////////////////////
 void DrawText()
@@ -68,6 +69,10 @@ void DrawText()
 	M5.Lcd.drawString(String("Tlv:" + String(trig_lv)), 270, 120);
 	M5.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130);
 	M5.Lcd.drawString("Exit", 270, 140);
+	M5.Lcd.setTextColor(WHITE, BLACK);
+	M5.Lcd.drawString("<", 60, 220, 2);
+	M5.Lcd.drawString("Menu", 145, 220, 2);
+	M5.Lcd.drawString(">", 252, 220, 2);
 }
 
 void CheckSW()
@@ -234,10 +239,7 @@ void DrawGrid()
 		}
 	}
 	CheckSW();
-	M5.Lcd.setTextColor(WHITE, BLACK);
-	M5.Lcd.drawString("<", 60, 220, 2);
-	M5.Lcd.drawString("Menu", 145, 220, 2);
-	M5.Lcd.drawString(">", 252, 220, 2);
+	DrawText();
 }
 
 void DrawGrid(int x)
@@ -279,7 +281,7 @@ void ClearAndDrawGraph()
 			M5.Lcd.drawLine(x, LCD_HEIGHT - data[sample + 1][x], x + 1, LCD_HEIGHT - data[sample + 1][x + 1], CH2COLOR);
 		}
 	}
-	CheckSW();
+	DrawGrid();
 }
 
 void ClearAndDrawDot(int i)
@@ -307,12 +309,12 @@ void ClearAndDrawDot(int i)
 	DrawGrid(i);
 }
 
-inline unsigned int adRead(uint8_t ch, uint8_t mode, int off)
+inline unsigned int adRead(const uint8_t *ch, uint8_t *mode, int *off)
 {
-	int a = analogRead(ch);
-	a = (((a + off) * VREF[(ch == ad_ch0) ? range0 : range1]) / 10000UL) + 35;
+	int a = analogRead(*ch);
+	a = (((a + *off) * VREF[(*ch == ad_ch0) ? range0 : range1]) / 10000UL) + 35;
 	a = ((a >= LCD_HEIGHT) ? LCD_HEIGHT : a);
-	if (mode == MODE_INV)
+	if (*mode == MODE_INV)
 	{
 		return LCD_HEIGHT - a;
 	}
@@ -329,7 +331,7 @@ void ledcAnalogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255)
 // Signal generator pin 2
 void LedC_Task(void *parameter)
 {
-	ledcSetup(0, 500, 13);
+	ledcSetup(0, 50, 13);
 	ledcAttachPin(2, 0);
 
 	for (;;)
@@ -340,7 +342,21 @@ void LedC_Task(void *parameter)
 		{
 			phaseStep = -phaseStep;
 		}
-		vTaskDelay(30 / portTICK_PERIOD_MS);
+		vTaskDelay(20 / portTICK_PERIOD_MS);
+	}
+	vTaskDelete(NULL);
+}
+
+// Make a sinusoide generator task on core 0
+// Signal generator pin 26
+void Synusoide_Task(void *parameter)
+{
+	for (;;)
+	{
+		for (int i = 0; i < 360; i++)
+		{
+			dacWrite(26, (120 + (sin((i * 3.14) / 180) * (120 - (i / 100)))));
+		}
 	}
 	vTaskDelete(NULL);
 }
@@ -350,16 +366,29 @@ void appOsciloscope()
 	exitprg = false;
 	M5.Lcd.fillScreen(BLACK);
 	DrawGrid();
-	DrawText();
 
-	xTaskCreatePinnedToCore(
-		LedC_Task,   /* Task function. */
-		"LedC_Task", /* name of the task, a name just for humans */
-		8192,		 /* Stack size of task */
-		NULL,		 /* parameter of the task */
-		1,			 /* priority of the task */
-		&LedC_Gen,   /* Task handle to keep track of the created task */
-		0);			 /* cpu core number where the task is assigned*/
+	if (LedC_Gen == NULL)
+	{
+		xTaskCreatePinnedToCore(
+			LedC_Task,   /* Task function. */
+			"LedC_Task", /* name of the task, a name just for humans */
+			8192,		 /* Stack size of task */
+			NULL,		 /* parameter of the task */
+			1,			 /* priority of the task */
+			&LedC_Gen,   /* Task handle to keep track of the created task */
+			0);			 /* cpu core number where the task is assigned*/
+	}
+	if (Syn_Gen == NULL)
+	{
+		xTaskCreatePinnedToCore(
+			Synusoide_Task,   /* Task function. */
+			"Synusoide_Task", /* name of the task, a name just for humans */
+			8192,			  /* Stack size of task */
+			NULL,			  /* parameter of the task */
+			1,				  /* priority of the task */
+			&Syn_Gen,		  /* Task handle to keep track of the created task */
+			0);				  /* cpu core number where the task is assigned*/
+	}
 
 	while (1)
 	{
@@ -369,22 +398,22 @@ void appOsciloscope()
 			unsigned int oad;
 			if (trig_ch == 0)
 			{
-				oad = adRead(ad_ch0, ch0_mode, ch0_off);
+				oad = adRead(&ad_ch0, &ch0_mode, &ch0_off);
 			}
 			else
 			{
-				oad = adRead(ad_ch1, ch1_mode, ch1_off);
+				oad = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 			}
 			for (;;)
 			{
 				unsigned int ad;
 				if (trig_ch == 0)
 				{
-					ad = adRead(ad_ch0, ch0_mode, ch0_off);
+					ad = adRead(&ad_ch0, &ch0_mode, &ch0_off);
 				}
 				else
 				{
-					ad = adRead(ad_ch1, ch1_mode, ch1_off);
+					ad = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 				}
 
 				if (trig_edge == TRIG_E_UP)
@@ -428,7 +457,7 @@ void appOsciloscope()
 			{
 				for (int i = 0; i < SAMPLES; i++)
 				{
-					data[sample][i] = adRead(ad_ch0, ch0_mode, ch0_off);
+					data[sample][i] = adRead(&ad_ch0, &ch0_mode, &ch0_off);
 				}
 				for (int i = 0; i < SAMPLES; i++)
 				{
@@ -439,8 +468,8 @@ void appOsciloscope()
 			{
 				for (int i = 0; i < SAMPLES; i++)
 				{
-					data[sample][i] = adRead(ad_ch0, ch0_mode, ch0_off);
-					data[sample + 1][i] = adRead(ad_ch1, ch1_mode, ch1_off);
+					data[sample][i] = adRead(&ad_ch0, &ch0_mode, &ch0_off);
+					data[sample + 1][i] = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 				}
 			}
 			else if (rate >= 2 && rate <= 4) // .5ms, 1ms or 2ms sampling
@@ -455,14 +484,11 @@ void appOsciloscope()
 						;
 					}
 					st += r;
-					data[sample][i] = adRead(ad_ch0, ch0_mode, ch0_off);
-					data[sample + 1][i] = adRead(ad_ch1, ch1_mode, ch1_off);
+					data[sample][i] = adRead(&ad_ch0, &ch0_mode, &ch0_off);
+					data[sample + 1][i] = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 				}
 			}
 			ClearAndDrawGraph();
-			CheckSW();
-			DrawGrid();
-			DrawText();
 		}
 		else if (Start) // 5ms - 500ms sampling
 		{
@@ -501,7 +527,7 @@ void appOsciloscope()
 					break;
 				}
 				st += r_[rate - 5];
-				if (st - micros() > r_[rate - 5]) // sampling rate has been changed to uint8_ter interval
+				if (st - micros() > r_[rate - 5])
 				{
 					st = micros();
 				}
@@ -510,12 +536,11 @@ void appOsciloscope()
 					i--;
 					continue;
 				}
-				data[sample][i] = adRead(ad_ch0, ch0_mode, ch0_off);
-				data[sample + 1][i] = adRead(ad_ch1, ch1_mode, ch1_off);
+				data[sample][i] = adRead(&ad_ch0, &ch0_mode, &ch0_off);
+				data[sample + 1][i] = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 				ClearAndDrawDot(i);
 			}
 			DrawGrid();
-			DrawText();
 		}
 		else
 		{
@@ -528,6 +553,11 @@ void appOsciloscope()
 		}
 	}
 	vTaskDelete(LedC_Gen);
+	vTaskDelete(Syn_Gen);
+	LedC_Gen = NULL;
+	Syn_Gen = NULL;
+	dacWrite(26, 0);
+	ledcDetachPin(2);
 	M5.Lcd.fillScreen(BLACK);
 	MyMenu.show();
 }
