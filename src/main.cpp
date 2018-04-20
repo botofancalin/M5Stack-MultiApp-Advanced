@@ -24,6 +24,7 @@ void setup()
 	M5.lcd.setBrightness(preferences.getUShort("Brightness", 95));
 	preferences.end();
 
+	//The main menu. Add main menu items here
 	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps, appReturn);
 	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
 	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);

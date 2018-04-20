@@ -7,11 +7,15 @@ DHTesp dht;
 
 void Dht_Run()
 {
+    // puth the items here from Arduino "Setup" function
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.drawCentreString("Pin 17 to DHT Signal Pin", 155, 120, 4);
     vTaskDelay(5000 / portTICK_PERIOD_MS);
     dht.setup(dhtPin, DHTesp::AUTO_DETECT);
     MyMenu.drawAppMenu(F("DHT Reader"), F("ESC"), F(""), F(""));
+    //"Setup" end
+    
+    // Add Arduino "loop" items in the while loop below
     while (!M5.BtnA.wasPressed())
     {
         unsigned long start = millis();

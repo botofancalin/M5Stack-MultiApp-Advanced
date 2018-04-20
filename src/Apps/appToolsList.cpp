@@ -8,8 +8,8 @@ void appListTools()
     {
         M5.update();
     }
-    // add the your app menu list entry here
     MyMenu.clearList();
+    // add the your app menu list entry here
     MyMenu.setListCaption("TOOLS");
     MyMenu.addList("WIFI PACKET MONITOR");
     MyMenu.addList("WIFI SCANNER");
@@ -25,8 +25,19 @@ void appListTools()
         {
             MyMenu.nextList();
         }
-        if (M5.BtnB.wasPressed()) 
+        if (M5.BtnB.wasPressed())
         {
+            //The list items functions
+            if (MyMenu.getListString() == "DHT TEMP & HUMIDITY")
+            {
+                M5.update();
+                // The function to run
+                Dht_Run();
+                M5.Lcd.setRotation(0);
+                M5.Lcd.fillScreen(0);
+                MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+                MyMenu.showList();
+            }
             if (MyMenu.getListString() == "WIFI SCANNER")
             {
                 M5.update();
@@ -74,15 +85,6 @@ void appListTools()
                 {
                     meters_run();
                 }
-                M5.Lcd.setRotation(0);
-                M5.Lcd.fillScreen(0);
-                MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
-            }
-            if (MyMenu.getListString() == "DHT TEMP & HUMIDITY")
-            {
-                M5.update();
-                Dht_Run();
                 M5.Lcd.setRotation(0);
                 M5.Lcd.fillScreen(0);
                 MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
