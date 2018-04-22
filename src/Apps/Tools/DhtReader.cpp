@@ -1,12 +1,11 @@
-#include "../../apps.h"
-
-unsigned int dhtPin = 17;
-unsigned long past = 0;
-float temperature, humidity, oldtemperature, oldhumidity;
-DHTesp dht;
+#include "../../Commons.h"
 
 void Dht_Run()
 {
+    unsigned int dhtPin = 17;
+    unsigned long past = 0;
+    float temperature, humidity, oldtemperature, oldhumidity;
+    DHTesp dht;
     // puth the items here from Arduino "Setup" function
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.drawCentreString("Pin 17 to DHT Signal Pin", 155, 120, 4);
@@ -14,7 +13,7 @@ void Dht_Run()
     dht.setup(dhtPin, DHTesp::AUTO_DETECT);
     MyMenu.drawAppMenu(F("DHT Reader"), F("ESC"), F(""), F(""));
     //"Setup" end
-    
+
     // Add Arduino "loop" items in the while loop below
     while (!M5.BtnA.wasPressed())
     {

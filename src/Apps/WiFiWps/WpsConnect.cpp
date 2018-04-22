@@ -1,4 +1,10 @@
-#include "../../apps.h"
+
+extern "C" {
+#include "esp_wifi.h"
+#include "esp_wps.h"
+}
+
+#include "WpsConnect.h"
 
 esp_wps_config_t config;
 

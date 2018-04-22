@@ -1,4 +1,5 @@
-#include "../../apps.h"
+#include "../../Wrappers.h"
+#include "EEPROM.h"
 
 #define TFTW 320  // screen width
 #define TFTH 240  // screen height
@@ -22,6 +23,8 @@
 #define FLOORH 30 // floor height (from bottom of the screen)
 // grass size
 #define GRASSH 4 // grass height (inside floor, starts at floor y)
+
+#define EEPROM_SIZE 64
 
 int maxflappy_bird_score = 0;
 // background

@@ -8,6 +8,7 @@
         "array": "cpp",
         "functional": "cpp",
         "type_traits": "cpp",
-        "initializer_list": "cpp"
+        "initializer_list": "cpp",
+        "resources.h": "c"
     }
 }

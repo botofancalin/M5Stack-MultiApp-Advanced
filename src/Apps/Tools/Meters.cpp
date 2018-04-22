@@ -1,4 +1,4 @@
-#include "../../apps.h"
+#include "../../Commons.h"
 
 #define M_SIZE 1.3333
 #define GREY 0x5AEB
@@ -92,7 +92,7 @@ void plotNeedle(float value, byte ms_delay)
 // #########################################################################
 //  Draw a linear meter on the screen
 // #########################################################################
-void plotLinear(char *label, int x, int y)
+void plotLinear(String label, int x, int y)
 {
     int w = 36;
     M5.Lcd.drawRect(x, y, w, 155, GREY);
@@ -272,10 +272,10 @@ void meters_setup()
 {
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setTextColor(WHITE,BLACK);
-    M5.Lcd.drawCentreString("Input pin: 35", 160, 70, 4);
-    M5.Lcd.drawCentreString("Max Voltage: 3.3v", 160, 120, 4);
-    M5.Lcd.drawCentreString("Lower Linear meters show voltage history", 160, 170, 2);
-    M5.Lcd.drawCentreString("Press Key A to Exit", 160, 190, 2);
+    M5.Lcd.drawCentreString(String("Input pin: 35"), 160, 70, 4);
+    M5.Lcd.drawCentreString(String("Max Voltage: 3.3v"), 160, 120, 4);
+    M5.Lcd.drawCentreString(String("Lower Linear meters show voltage history"), 160, 170, 2);
+    M5.Lcd.drawCentreString(String("Press Key A to Exit"), 160, 190, 2);
     vTaskDelay(5000 / portTICK_PERIOD_MS);
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setRotation(3);

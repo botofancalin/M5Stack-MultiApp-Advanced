@@ -1,56 +1,7 @@
-#include "../apps.h"
+#include "Oscilloscope.h"
 
-const int LCD_WIDTH = 320;
-const int LCD_HEIGHT = 240;
-const int SAMPLES = 320;
-const uint8_t DOTS_DIV = 30;
-const uint8_t ad_ch0 = 35; // Analog 35 pin for channel 0
-const uint8_t ad_ch1 = 36; // Analog 36 pin for channel 1
-const int VREF[] = {250, 500, 1250, 2500, 5000};
-const uint8_t MILLIVOL_per_dot[] = {33, 17, 6, 3, 2};
-const uint8_t MODE_ON = 0;
-const uint8_t MODE_INV = 1;
-const uint8_t MODE_OFF = 2;
-const char *Modes[] = {"NORM", "INV", "OFF"};
-const uint8_t TRIG_AUTO = 0;
-const uint8_t TRIG_NORM = 1;
-const uint8_t TRIG_SCAN = 2;
-const char *TRIG_Modes[] = {"Auto", "Norm", "Scan"};
-const uint8_t TRIG_E_UP = 0;
-const uint8_t TRIG_E_DN = 1;
-#define RATE_MIN 0
-#define RATE_MAX 12
-const char *Rates[] = {"  F1", "  F2", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s"};
-int rate = 2;
-#define RANGE_MIN 0
-#define RANGE_MAX 4
-const char *Ranges[] = {" 1V", "0.5V", "0.2V", "0.1V", "50mV"};
-uint8_t range0 = RANGE_MIN;
-uint8_t range1 = RANGE_MIN;
-uint8_t ch0_mode = MODE_ON;
-uint8_t ch1_mode = MODE_OFF;
-int ch0_off = 0;
-int ch1_off = 0;
-uint8_t trig_mode = TRIG_AUTO;
-uint16_t trig_lv = 40;
-uint8_t trig_edge = TRIG_E_DN;
-uint8_t trig_ch = 0;
-uint8_t menu = 19;
-unsigned int data[4][SAMPLES]; // keep twice of the number of channels to make it a double buffer
-unsigned int sample = 0;	   // index for double buffer
-bool Start = true;
-bool exitprg = false;
-int phase = 0;
-int phaseStep = 5;
-
-TaskHandle_t LedC_Gen = NULL;
-TaskHandle_t Syn_Gen = NULL;
-
-#define CH1COLOR YELLOW
-#define CH2COLOR MAGENTA
-#define GREY 0x7BEF
 ///////////////////////////////////////////////////////////////////////////////////////////////
-void DrawText()
+void OscilloscopeClass::DrawText()
 {
 	M5.Lcd.setTextColor(WHITE);
 	M5.Lcd.setTextSize(1);
@@ -75,7 +26,7 @@ void DrawText()
 	M5.Lcd.drawString(">", 252, 220, 2);
 }
 
-void CheckSW()
+void OscilloscopeClass::CheckSW()
 {
 	M5.update();
 	if (M5.BtnB.wasPressed())
@@ -218,49 +169,49 @@ void CheckSW()
 	DrawText();
 }
 
-void DrawGrid()
+void OscilloscopeClass::DrawGrid()
 {
 	for (int x = 0; x <= SAMPLES; x += 2) // Horizontal Line
 	{
 		for (int y = 0; y <= LCD_HEIGHT; y += DOTS_DIV)
 		{
-			M5.Lcd.drawPixel(x, y, GREY);
+			M5.Lcd.drawPixel(x, y, OSCGREY);
 		}
 		if (LCD_HEIGHT == 240)
 		{
-			M5.Lcd.drawPixel(x, LCD_HEIGHT - 1, GREY);
+			M5.Lcd.drawPixel(x, LCD_HEIGHT - 1, OSCGREY);
 		}
 	}
 	for (int x = 0; x <= SAMPLES; x += DOTS_DIV) // Vertical Line
 	{
 		for (int y = 0; y <= LCD_HEIGHT; y += 2)
 		{
-			M5.Lcd.drawPixel(x, y, GREY);
+			M5.Lcd.drawPixel(x, y, OSCGREY);
 		}
 	}
 	CheckSW();
 	DrawText();
 }
 
-void DrawGrid(int x)
+void OscilloscopeClass::DrawGrid(int x)
 {
 	if ((x % 2) == 0)
 	{
 		for (int y = 0; y <= LCD_HEIGHT; y += DOTS_DIV)
 		{
-			M5.Lcd.drawPixel(x, y, GREY);
+			M5.Lcd.drawPixel(x, y, OSCGREY);
 		}
 	}
 	if ((x % DOTS_DIV) == 0)
 	{
 		for (int y = 0; y <= LCD_HEIGHT; y += 2)
 		{
-			M5.Lcd.drawPixel(x, y, GREY);
+			M5.Lcd.drawPixel(x, y, OSCGREY);
 		}
 	}
 }
 
-void ClearAndDrawGraph()
+void OscilloscopeClass::ClearAndDrawGraph()
 {
 	int clear = 0;
 
@@ -284,7 +235,7 @@ void ClearAndDrawGraph()
 	DrawGrid();
 }
 
-void ClearAndDrawDot(int i)
+void OscilloscopeClass::ClearAndDrawDot(int i)
 {
 	int clear = 0;
 
@@ -309,7 +260,7 @@ void ClearAndDrawDot(int i)
 	DrawGrid(i);
 }
 
-inline unsigned int adRead(const uint8_t *ch, uint8_t *mode, int *off)
+inline unsigned int OscilloscopeClass::adRead(const uint8_t *ch, uint8_t *mode, int *off)
 {
 	int a = analogRead(*ch);
 	a = (((a + *off) * VREF[(*ch == ad_ch0) ? range0 : range1]) / 10000) + 35;
@@ -331,7 +282,9 @@ void ledcAnalogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255)
 // Signal generator pin 2
 void LedC_Task(void *parameter)
 {
-	ledcSetup(0, 500, 13);
+	int phase = 0;
+	int phaseStep = 5;
+	ledcSetup(0, 50, 13);
 	ledcAttachPin(2, 0);
 
 	for (;;)
@@ -353,15 +306,16 @@ void Synusoide_Task(void *parameter)
 {
 	for (;;)
 	{
-		for (int MyAngle = 0; MyAngle < 256; MyAngle++)
+		for (int MyAngle = 0; MyAngle < 255; MyAngle++)
 		{
 			dacWrite(26, (((sin(MyAngle * (2 * PI) / 256)) * 120) + 128));
+			delayMicroseconds(10);
 		}
 	}
 	vTaskDelete(NULL);
 }
 
-void appOsciloscope()
+void OscilloscopeClass::Run()
 {
 	exitprg = false;
 	M5.Lcd.fillScreen(BLACK);
@@ -372,7 +326,7 @@ void appOsciloscope()
 		xTaskCreatePinnedToCore(
 			LedC_Task,   /* Task function. */
 			"LedC_Task", /* name of the task, a name just for humans */
-			8192,		 /* Stack size of task */
+			1024,		 /* Stack size of task */
 			NULL,		 /* parameter of the task */
 			1,			 /* priority of the task */
 			&LedC_Gen,   /* Task handle to keep track of the created task */
@@ -383,7 +337,7 @@ void appOsciloscope()
 		xTaskCreatePinnedToCore(
 			Synusoide_Task,   /* Task function. */
 			"Synusoide_Task", /* name of the task, a name just for humans */
-			8192,			  /* Stack size of task */
+			1024,			  /* Stack size of task */
 			NULL,			  /* parameter of the task */
 			1,				  /* priority of the task */
 			&Syn_Gen,		  /* Task handle to keep track of the created task */
@@ -474,14 +428,14 @@ void appOsciloscope()
 			}
 			else if (rate >= 2 && rate <= 4) // .5ms, 1ms or 2ms sampling
 			{
-				const unsigned int r_[] = {5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
+				const unsigned long r_[] = {5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
 				unsigned long st = micros();
-				unsigned int r = r_[rate - 2];
+				unsigned long r = r_[rate - 2];
 				for (int i = 0; i < SAMPLES; i++)
 				{
 					while ((st - micros()) < r)
 					{
-						;
+						portYIELD();
 					}
 					st += r;
 					data[sample][i] = adRead(&ad_ch0, &ch0_mode, &ch0_off);
@@ -552,6 +506,14 @@ void appOsciloscope()
 			break;
 		}
 	}
+}
+
+OscilloscopeClass::OscilloscopeClass()
+{
+}
+
+OscilloscopeClass::~OscilloscopeClass()
+{
 	vTaskDelete(LedC_Gen);
 	vTaskDelete(Syn_Gen);
 	LedC_Gen = NULL;

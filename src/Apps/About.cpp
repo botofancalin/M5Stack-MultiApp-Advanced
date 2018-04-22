@@ -1,13 +1,7 @@
-#include "../apps.h"
+#include "About.h"
 
-void appAbout()
+void AboutClass::Run()
 {
-    MyMenu.drawAppMenu(F("ABOUT"), F(""), F("ESC"), F(""));
-
-    while (M5.BtnB.wasPressed())
-    {
-        M5.update();
-    }
     MyMenu.windowClr();
     M5.Lcd.drawCentreString(F("Made by"), M5.Lcd.width() / 2, (M5.Lcd.height() / 2) - 50, 4);
     M5.Lcd.drawCentreString(F("Botofan Calin"), M5.Lcd.width() / 2, (M5.Lcd.height() / 2) - 15, 4);
@@ -16,5 +10,15 @@ void appAbout()
     {
         M5.update();
     }
+}
+
+AboutClass::AboutClass()
+{
+    MyMenu.drawAppMenu(F("ABOUT"), F(""), F("ESC"), F(""));
+    M5.update();
+}
+
+AboutClass::~AboutClass()
+{
     MyMenu.show();
 }

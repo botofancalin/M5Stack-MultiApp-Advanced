@@ -18,6 +18,9 @@
 #define M5SAM_LIST_MAX_LABEL_SIZE 64
 #define M5SAM_LIST_PAGE_LABELS 6
 
+static int WiFi_Mode;
+static int vol, old_vol;
+
 class M5SAM
 {
 public:

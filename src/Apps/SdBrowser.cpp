@@ -1,20 +1,6 @@
-#include "../apps.h"
+#include "SdBrowser.h"
 
-const char *ignored = "System Volume Information";
-bool repaint = false;
-bool inmenu = false;
-int appsCount = 0;
-int levels = 1;
-
-struct FileInfo
-{
-    String fileName; // heap
-    int fileSize;
-};
-FileInfo fileinfo;
-std::vector<FileInfo> fileVector;
-
-void listDir(fs::FS &fs, String dirName, int levels)
+void SdBrowserClass::listDir(fs::FS &fs, String dirName, int levels)
 {
     File root = fs.open(dirName);
     if (!root)
@@ -49,9 +35,10 @@ void listDir(fs::FS &fs, String dirName, int levels)
         }
         file = root.openNextFile();
     }
+    file.close();
 }
 
-void aSortFiles()
+void SdBrowserClass::aSortFiles()
 {
     bool swapped;
     String name1, name2;
@@ -84,7 +71,7 @@ void aSortFiles()
     } while (swapped);
 }
 
-void buildMyMenu()
+void SdBrowserClass::buildMyMenu()
 {
     MyMenu.clearList();
     MyMenu.setListCaption("Files");
@@ -95,11 +82,9 @@ void buildMyMenu()
     }
 }
 
-void appBrowser()
+void SdBrowserClass::Run()
 {
     appsCount = 0;
-    M5.update();
-    MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
     listDir(SD, "/", levels);
     aSortFiles();
     buildMyMenu();
@@ -145,7 +130,8 @@ void appBrowser()
             }
             else if (FileName.endsWith(".mp3"))
             {
-                mp3Player(&FileName);
+                Mp3PlayerClass Mp3PlayerObj;
+                Mp3PlayerObj.Play(&FileName);
             }
             else if (!inmenu)
             {
@@ -162,6 +148,16 @@ void appBrowser()
         }
         M5.update();
     }
+}
+
+SdBrowserClass::SdBrowserClass()
+{
+    M5.update();
+    MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
+}
+
+SdBrowserClass::~SdBrowserClass()
+{
     fileVector.clear();
     fileVector.shrink_to_fit();
     MyMenu.clearList();

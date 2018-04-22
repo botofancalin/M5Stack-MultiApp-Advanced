@@ -1,17 +1,11 @@
-#include "../apps.h"
+#include "CfgBrightness.h"
 
-void appCfgBrigthness()
+void CfgBrightnessClass::Run()
 {
     preferences.begin("Brightness", false);
-    unsigned short tmp_brigth = preferences.getUShort("Brightness", 95);
-    unsigned short tmp_lbrigth = 0;
+    tmp_brigth = preferences.getUShort("Brightness", 95);
+    tmp_lbrigth = 0;
 
-    MyMenu.drawAppMenu(F("DISPLAY BRIGHTNESS"), F("-"), F("OK"), F("+"));
-
-    while (M5.BtnB.wasPressed())
-    {
-        M5.update();
-    }
     while (!M5.BtnB.wasPressed())
     {
         if (M5.BtnA.wasPressed() && tmp_brigth >= 16)
@@ -33,5 +27,15 @@ void appCfgBrigthness()
         M5.update();
     }
     preferences.end();
+}
+
+CfgBrightnessClass::CfgBrightnessClass()
+{
+    MyMenu.drawAppMenu(F("DISPLAY BRIGHTNESS"), F("-"), F("OK"), F("+"));
+    M5.update();
+}
+
+CfgBrightnessClass::~CfgBrightnessClass()
+{
     MyMenu.show();
 }

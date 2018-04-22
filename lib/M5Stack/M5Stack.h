@@ -85,6 +85,7 @@
 
 // #define MPU9250_INSDE
 
+
 #include <Arduino.h>
 #include "WiFi.h"
 #include "WiFiClient.h"
@@ -94,6 +95,7 @@
 #include "FS.h"
 #include "SD.h"
 #include "SPIFFS.h"
+#include "Preferences.h"
 
 #include "utility/Display.h"
 #include "utility/Config.h"

@@ -1,6 +1,6 @@
-#include "../apps.h"
+#include "WiFiSettings.h"
 
-void AP_Mode()
+void WifiSettingsClass::AP_Mode()
 {
     WiFi.disconnect();
     vTaskDelay(200 / portTICK_PERIOD_MS);
@@ -13,7 +13,7 @@ void AP_Mode()
     M5.Lcd.drawString("IP Address: " + WiFi.softAPIP().toString(), 5, 90, 2);
 }
 
-void STA_Mode()
+void WifiSettingsClass::STA_Mode()
 {
     WiFi.disconnect();
     WiFi.mode(WIFI_MODE_STA);
@@ -23,7 +23,7 @@ void STA_Mode()
     M5.Lcd.drawString("Will Connect to sored SSID", 5, 70, 2);
 }
 
-void APSTA_Mode()
+void WifiSettingsClass::APSTA_Mode()
 {
     WiFi.disconnect();
     WiFi.mode(WIFI_MODE_APSTA);
@@ -33,7 +33,7 @@ void APSTA_Mode()
     M5.Lcd.drawString("Will use the sored SSID", 5, 70, 2);
 }
 
-void SmartConfig()
+void WifiSettingsClass::SmartConfig()
 {
     int i = 0;
     WiFi.mode(WIFI_AP_STA);
@@ -43,7 +43,6 @@ void SmartConfig()
     {
         M5.Lcd.setTextColor(WHITE);
         M5.Lcd.drawNumber(i, 5, 50, 2);
-        //vTaskDelay(500 / portTICK_PERIOD_MS);
         delay(500);
         M5.Lcd.setTextColor(BLACK);
         M5.Lcd.drawNumber(i, 5, 50, 2);
@@ -79,17 +78,11 @@ void SmartConfig()
     M5.Lcd.setTextColor(WHITE);
     M5.Lcd.drawString("WiFi Connected", 5, 130, 2);
     M5.Lcd.drawString("IP: " + WiFi.localIP().toString(), 5, 150, 2);
+    WiFi_Mode = WIFI_MODE_STA;
 }
 
-void appWiFiSetup()
+void WifiSettingsClass::Run()
 {
-    MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
-
-    while (M5.BtnB.wasPressed())
-    {
-        M5.update();
-    }
-
     MyMenu.clearList();
     MyMenu.setListCaption("WiFi");
     MyMenu.addList("WiFi SmartConfig");
@@ -167,5 +160,15 @@ void appWiFiSetup()
     preferences.begin("WiFi-mode", false);
     preferences.putInt("mode", WiFi_Mode);
     preferences.end();
+}
+
+WifiSettingsClass::WifiSettingsClass()
+{
+    MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
+    M5.update();
+}
+
+WifiSettingsClass::~WifiSettingsClass()
+{
     MyMenu.show();
 }

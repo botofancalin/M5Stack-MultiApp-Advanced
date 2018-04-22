@@ -1,27 +1,19 @@
-#include "../../apps.h"
+#include "Mp3Player.h"
 
-AudioGeneratorMP3 *mp3;
-AudioFileSourceSD *file;
-AudioOutputI2S *out;
-AudioFileSourceID3 *id3;
-
-int vol;
-int old_vol;
-
-void getvolume()
+void Mp3PlayerClass::getvolume()
 {
     preferences.begin("Mp3-Volume", false);
     vol = preferences.getFloat("volume", 15.0f);
     preferences.end();
 }
 
-void setVolume(int *v)
+void Mp3PlayerClass::setVolume(int *v)
 {
     float volume = *v / 49.9f; // volme max value can be 3.99
     out->SetGain(volume);
 }
 
-void drawSpectrum(int a, int b, int c, int d, int e, int f, int g)
+void Mp3PlayerClass::drawSpectrum(int a, int b, int c, int d, int e, int f, int g)
 {
     int x = 12;
     int y = 60;
@@ -71,8 +63,7 @@ void drawSpectrum(int a, int b, int c, int d, int e, int f, int g)
     M5.Lcd.fillRect(gX, gY, width, gH, LIGHTGREY); //0x051d
 }
 
-unsigned long genSpectrum_previousMillis = 0;
-void genSpectrum()
+void Mp3PlayerClass::genSpectrum()
 {
     unsigned long currentMillis = millis();
     if (currentMillis - genSpectrum_previousMillis > 100)
@@ -83,7 +74,7 @@ void genSpectrum()
 }
 
 unsigned long drawTimeline_previousMillis = 0;
-void drawTimeline()
+void Mp3PlayerClass::drawTimeline()
 {
     unsigned long currentMillis = millis();
     if (currentMillis - drawTimeline_previousMillis > 250)
@@ -109,10 +100,8 @@ void drawTimeline()
     }
 }
 
-void mp3Player(String *fileName)
+void Mp3PlayerClass::Play(String *fileName)
 {
-    M5.update();
-    MyMenu.drawAppMenu(F("Mp3Player"), F("VOL-"), F("EXIT"), F("VOL+"));
     MyMenu.windowClr();
     M5.Lcd.setTextColor(CYAN);
     M5.Lcd.drawCentreString(*fileName, 158, 140, 2);
@@ -121,8 +110,8 @@ void mp3Player(String *fileName)
     file = new AudioFileSourceSD((*fileName).c_str());
     id3 = new AudioFileSourceID3(file);
     out = new AudioOutputI2S(0, 1);
-    out->SetChannels(2);
     mp3 = new AudioGeneratorMP3();
+    out->SetChannels(2);
     mp3->begin(id3, out);
     setVolume(&vol);
     old_vol = static_cast<int>(vol);
@@ -169,15 +158,27 @@ void mp3Player(String *fileName)
     out->stop();
     id3->close();
     file->close();
-    delete mp3;
-    delete out;
-    delete file;
     mp3 = NULL;
     file = NULL;
     out = NULL;
+    id3 = NULL;
+    delete mp3;
+    delete out;
+    delete file;
+    delete id3;
     dacWrite(25, 0);
     dacWrite(26, 0);
     MyMenu.windowClr();
+}
+
+Mp3PlayerClass::Mp3PlayerClass()
+{
+    M5.update();
+    MyMenu.drawAppMenu(F("Mp3Player"), F("VOL-"), F("EXIT"), F("VOL+"));
+}
+
+Mp3PlayerClass::~Mp3PlayerClass()
+{
     MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
     MyMenu.showList();
 }
