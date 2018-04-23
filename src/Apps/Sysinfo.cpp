@@ -36,7 +36,6 @@ void SysinfoClass::page_0()
     M5.Lcd.drawString(F("IP ADDRESS:"), 10, 160, 2);
     M5.Lcd.drawString((WiFi.localIP().toString()), 120, 160, 2);
 
-    String wifi_m_mode[] = {"OFF", "STA", "AP", "AP STA", "MAX"};
     M5.Lcd.drawString(F("WIFI MODE:"), 10, 180, 2);
     M5.Lcd.drawString(wifi_m_mode[WiFi.getMode()], 120, 180, 2);
 }
@@ -58,17 +57,18 @@ void SysinfoClass::page_1()
     M5.Lcd.drawString(F("SPIFFS USED:"), 10, 100, 2);
     M5.Lcd.drawNumber(SPIFFS.usedBytes(), 120, 100, 2);
 
-    String SD_Type[] = {"NONE", "MMC", "SD", "SDHC", "UNKNOWN"};
     M5.Lcd.drawString(F("SD CARD TYPE:"), 10, 120, 2);
     M5.Lcd.drawString(SD_Type[type], 120, 120, 2);
 
     if (type != 0)
     {
+        sdSize = SD.cardSize();
+        sdUsed = SD.usedBytes();
         M5.Lcd.drawString(F("SD CARD SIZE:"), 10, 140, 2);
-        M5.Lcd.drawNumber(SD.cardSize(), 120, 140, 2);
+        M5.Lcd.drawString(String(sdSize), 120, 140, 2);
 
         M5.Lcd.drawString(F("SD BYTES USED:"), 10, 160, 2);
-        M5.Lcd.drawNumber(SD.usedBytes(), 120, 160, 2);
+        M5.Lcd.drawString(String(sdUsed), 120, 160, 2);
     }
 }
 

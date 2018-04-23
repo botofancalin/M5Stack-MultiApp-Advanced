@@ -12,7 +12,7 @@ class SdBrowserClass
     void Run();
 
   private:
-    const char *ignored = "System Volume Information";
+    const char * const ignored = "System Volume Information";
     bool repaint = false;
     bool inmenu = false;
     int appsCount = 0;

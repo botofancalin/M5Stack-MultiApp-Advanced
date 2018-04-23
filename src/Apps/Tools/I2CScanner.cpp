@@ -1,64 +1,64 @@
-#include "../../Commons.h"
+#include "I2CScanner.h"
 
-void appI2CScanner()
+void I2CScannerClass::Run()
 {
-    byte error, address;
-    int nDevices;
-    byte ridx = 0;
-    byte lidx = 0;
-    boolean scanrun = HIGH;
-
+    M5.update();
     MyMenu.drawAppMenu(F("I2C SCANNER"), F("ESC"), F("SCAN"), F(""));
 
-    while (1)
+    while (!M5.BtnA.wasPressed())
     {
-        while (M5.BtnA.wasPressed())
+        if (scanrun == HIGH)
         {
-            return;
+            scanrun = LOW;
+            nDevices = 0;
+            for (address = 1; address < 127; address++)
+            {
+                ridx++;
+                if (ridx == 17)
+                {
+                    ridx = 1;
+                    lidx++;
+                }
+                Wire.beginTransmission(address);
+                error = Wire.endTransmission();
+                if (error == 0)
+                {
+                    M5.Lcd.drawString(String(address, HEX), 0 + (ridx * 18), 45 + (lidx * 20), 2);
+                    nDevices++;
+                }
+                else if (error == 4)
+                {
+                    M5.Lcd.drawString(F("ER"), 0 + (ridx * 18), 45 + (lidx * 20), 2);
+                }
+                else
+                {
+                    M5.Lcd.drawString(F("--"), 0 + (ridx * 18), 45 + (lidx * 20), 2);
+                }
+            }
+            M5.update();
         }
-        while (!M5.BtnA.wasPressed())
+        else
         {
-            if (scanrun == HIGH)
+            if (M5.BtnB.wasPressed())
             {
-                scanrun = LOW;
-                nDevices = 0;
-                for (address = 1; address < 127; address++)
-                {
-                    ridx++;
-                    if (ridx == 17)
-                    {
-                        ridx = 1;
-                        lidx++;
-                    }
-                    Wire.beginTransmission(address);
-                    error = Wire.endTransmission();
-                    if (error == 0)
-                    {
-                        M5.Lcd.drawString(String(address, HEX), 0 + (ridx * 18), 45 + (lidx * 20), 2);
-                        nDevices++;
-                    }
-                    else if (error == 4)
-                    {
-                        M5.Lcd.drawString(F("ER"), 0 + (ridx * 18), 45 + (lidx * 20), 2);
-                    }
-                    else
-                    {
-                        M5.Lcd.drawString(F("--"), 0 + (ridx * 18), 45 + (lidx * 20), 2);
-                    }
-                }
-                M5.update();
+                MyMenu.windowClr();
+                ridx = 0;
+                lidx = 0;
+                scanrun = HIGH;
             }
-            else
-            {
-                if (M5.BtnB.wasPressed())
-                {
-                    MyMenu.windowClr();
-                    ridx = 0;
-                    lidx = 0;
-                    scanrun = HIGH;
-                }
-                M5.update();
-            }
+            M5.update();
         }
     }
+}
+
+I2CScannerClass::I2CScannerClass()
+{
+}
+
+I2CScannerClass::~I2CScannerClass()
+{
+    M5.Lcd.setRotation(0);
+                M5.Lcd.fillScreen(0);
+                MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+                MyMenu.showList();
 }

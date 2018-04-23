@@ -1,23 +1,15 @@
-#include "../../Commons.h"
+#include "WifiPacketMonitor.h"
 
-#define MAX_CH 14
-#define SNAP_LEN 2324 // max len of each recieved packet
-#define MAX_X 315	 // 128
-#define MAX_Y 230	 //  51
+int rssiSum = 0;
+unsigned int tmpPacketCounter = 0;
+unsigned int deauths = 0; // deauth frames per second
 
-uint32_t lastDrawTime;
-uint32_t tmpPacketCounter;
-uint32_t pkts[MAX_X]; // here the packets per second will be saved
-uint32_t deauths = 0; // deauth frames per second
-uint8_t ch = 1;		  // current 802.11 channel
-int rssiSum;
-
-esp_err_t event_handler(void *ctx, system_event_t *event)
+esp_err_t WifiPacketMonitorClass::event_handler(void *ctx, system_event_t *event)
 {
 	return ESP_OK;
 }
 
-double getMultiplicator()
+double WifiPacketMonitorClass::getMultiplicator()
 {
 	uint32_t maxVal = 1;
 	for (int i = 0; i < MAX_X; i++)
@@ -62,7 +54,7 @@ void wifi_promiscuous(void *buf, wifi_promiscuous_pkt_type_t type)
 	rssiSum += ctrl.rssi;
 }
 
-void setChannel(int newChannel)
+void WifiPacketMonitorClass::setChannel(int newChannel)
 {
 	ch = newChannel;
 	if (ch > MAX_CH)
@@ -75,14 +67,13 @@ void setChannel(int newChannel)
 	}
 	esp_wifi_set_promiscuous(false);
 	esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE);
-	esp_wifi_set_promiscuous_rx_cb(&wifi_promiscuous);
+	esp_wifi_set_promiscuous_rx_cb(wifi_promiscuous);
 	esp_wifi_set_promiscuous(true);
 }
 
-void draw()
+void WifiPacketMonitorClass::draw()
 {
 	double multiplicator = getMultiplicator();
-	int len, rssi;
 	if (pkts[MAX_X - 1] > 0)
 	{
 		rssi = rssiSum / (int)pkts[MAX_X - 1];
@@ -117,16 +108,15 @@ void draw()
 	M5.Lcd.drawString("Ch+", 247, 210, 2);
 }
 // ===== main program ================================================
-void Monitor_run()
+void WifiPacketMonitorClass::Run()
 {
+	M5.update();
 	WiFi.disconnect();
 	WiFi.mode(WIFI_MODE_NULL);
 	WiFi.begin();
 	esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE);
 	M5.Lcd.fillScreen(BLACK);
 	M5.Lcd.setTextColor(WHITE, BLACK);
-	;
-	int s = 10, a = 0;
 	for (int ypos = MAX_Y; ypos > 120; ypos = ypos - s)
 	{
 		M5.Lcd.setTextDatum(MR_DATUM);
@@ -135,10 +125,9 @@ void Monitor_run()
 	}
 	M5.Lcd.setTextDatum(TL_DATUM);
 	M5.Lcd.fillRect(0, 0, 320, 20, BLUE);
-	esp_wifi_set_promiscuous_rx_cb(&wifi_promiscuous);
+	esp_wifi_set_promiscuous_rx_cb(wifi_promiscuous);
 	esp_wifi_set_promiscuous(true);
-	uint32_t currentTime;
-	while (1)
+	while (!M5.BtnB.wasPressed())
 	{
 		currentTime = millis();
 		{
@@ -154,10 +143,6 @@ void Monitor_run()
 				ch++;
 				setChannel(ch);
 				draw();
-			}
-			if (M5.BtnB.wasPressed())
-			{
-				break;
 			}
 		}
 		if (currentTime - lastDrawTime > 2000)
@@ -179,5 +164,16 @@ void Monitor_run()
 		WiFi.begin();
 	}
 	preferences.end();
-	return;
+}
+
+WifiPacketMonitorClass::WifiPacketMonitorClass()
+{
+}
+
+WifiPacketMonitorClass::~WifiPacketMonitorClass()
+{
+	M5.Lcd.setRotation(0);
+	M5.Lcd.fillScreen(0);
+	MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+	MyMenu.showList();
 }

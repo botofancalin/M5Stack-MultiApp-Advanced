@@ -1,6 +1,5 @@
 #include "Wrappers.h"
 #include "Resources.h"
-#include "Commons.h"
 
 unsigned long lastcheck = 0;
 int SignalStrength = 0;

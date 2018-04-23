@@ -102,10 +102,6 @@
 #include "utility/Button.h"
 #include "utility/Speaker.h"
 #include "utility/M5Timer.h"
-#ifdef MPU9250_INSDE
-#include "utility/MPU9250.h"
-#include "utility/quaternionFilters.h"
-#endif
 
 extern "C"
 {
@@ -136,11 +132,6 @@ class M5Stack {
     // UART
     HardwareSerial Serial0 = HardwareSerial(0);
     HardwareSerial Serial2 = HardwareSerial(2);
-
-    // MPU9250
-#ifdef MPU9250_INSDE
-    MPU9250 IMU = MPU9250();
-#endif
 
  private:
     uint8_t _wakeupPin;

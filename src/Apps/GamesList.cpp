@@ -1,7 +1,7 @@
 #include "GamesList.h"
 
 // the game list menu
-void GamesListClass::Run()
+void appGamesList()
 {
     M5.update();
     MyMenu.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
@@ -47,13 +47,5 @@ void GamesListClass::Run()
         }
         M5.update();
     }
-}
-
-GamesListClass::GamesListClass()
-{
-}
-
-GamesListClass::~GamesListClass()
-{
     MyMenu.show();
 }

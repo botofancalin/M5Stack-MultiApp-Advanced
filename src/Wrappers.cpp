@@ -52,8 +52,8 @@ void appWebServer()
     WebServerObj.Run();
 }
 
-void appGamesList()
-{
-    GamesListClass GamesListObj;
-    GamesListObj.Run();
-}
+// void appGamesList()
+// {
+//     GamesListClass GamesListObj;
+//     GamesListObj.Run();
+// }

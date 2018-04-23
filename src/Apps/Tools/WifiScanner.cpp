@@ -1,23 +1,14 @@
-#include "../../Commons.h"
+#include "WifiScanner.h"
 
-void WiFiScanner_run()
+void WifiScannerClass::Run()
 {
-    int wifi_count = 0;
-    bool wifi_showlock = LOW;
-    short list_lines = 5;
-    int list_page = 0;
-    int list_pages = 0;
-    int list_lastpagelines = 0;
-    String Encryption = "Unknown";
-
+    M5.update();
     MyMenu.drawAppMenu(F("WiFi SCANNER"), F("ESC"), F("SCAN"), F("PAGE"));
-
     M5.Lcd.drawCentreString(F("SCANNING....."), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
-
-    vTaskDelay(500 / portTICK_PERIOD_MS);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
     WiFi.mode(WIFI_MODE_STA);
     WiFi.disconnect();
-    vTaskDelay(500 / portTICK_PERIOD_MS);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
 
     while (!M5.BtnA.wasPressed())
     {
@@ -275,4 +266,16 @@ void WiFiScanner_run()
     }
     preferences.end();
     return;
+}
+
+WifiScannerClass::WifiScannerClass()
+{
+}
+
+WifiScannerClass::~WifiScannerClass()
+{
+    M5.Lcd.setRotation(0);
+    M5.Lcd.fillScreen(0);
+    MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+    MyMenu.showList();
 }

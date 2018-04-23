@@ -39,11 +39,6 @@ void M5Stack::begin()
     // Set wakeup button
     setWakeupButton(BUTTON_A_PIN);
 
-    // MPU9250
-#ifdef MPU9250_INSDE
-    Wire.begin();
-#endif
-
     Serial.println("OK");
 }
 
