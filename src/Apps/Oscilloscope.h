@@ -1,6 +1,3 @@
-#ifndef Oscilloscope_h
-#define Oscilloscope_h
-
 #include "M5StackSAM.h"
 #define CH1COLOR YELLOW
 #define CH2COLOR MAGENTA
@@ -66,5 +63,3 @@ private:
   void ClearAndDrawDot(int i);
   inline unsigned int adRead(const uint8_t *ch, uint8_t *mode, int *off);
 };
-
-#endif

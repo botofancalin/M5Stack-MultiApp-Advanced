@@ -1,6 +1,3 @@
-#ifndef CfgBrightness_h
-#define CfgBrightness_h
-
 #include "M5StackSAM.h"
 
 class CfgBrightnessClass
@@ -15,4 +12,3 @@ private:
     unsigned short tmp_brigth;
     unsigned short tmp_lbrigth;
 };
-#endif

@@ -1,5 +1,3 @@
-#ifndef WebServer_h
-#define WebServer_h
 #include "M5StackSAM.h"
 #include "WebServer.h"
 
@@ -14,7 +12,3 @@ public:
 private:
     
 };
-
-
-
-#endif

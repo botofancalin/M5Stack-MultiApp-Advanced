@@ -1,5 +1,3 @@
-#ifndef wifisettings_h
-#define wifisettings_h
 #include "M5StackSAM.h"
 #include "WifiWps/WpsConnect.h"
 
@@ -17,5 +15,3 @@ private:
     void APSTA_Mode();
     void SmartConfig();
 };
-
-#endif

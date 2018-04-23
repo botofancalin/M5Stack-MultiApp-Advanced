@@ -1,6 +1,3 @@
-#ifndef mp3player_h
-#define mp3player_h
-
 #include "M5StackSAM.h"
 #include "AudioFileSourceSD.h"
 #include "AudioFileSourceID3.h"
@@ -44,5 +41,3 @@ class Mp3PlayerClass
     AudioOutputI2S *out;
     AudioFileSourceID3 *id3;
 };
-
-#endif

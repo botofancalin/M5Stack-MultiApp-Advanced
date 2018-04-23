@@ -1,5 +1,3 @@
-#ifndef Sysinfo_h
-#define Sysinfo_h
 #include "M5StackSAM.h"
 
 #define PAGEMAX 1
@@ -34,5 +32,3 @@ private:
   void page_1();
   void drawpage(int page);
 };
-
-#endif

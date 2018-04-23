@@ -1,5 +1,3 @@
-#ifndef SdBrowser_h
-#define SdBrowser_h
 #include "M5StackSAM.h"
 #include "Tools/Mp3Player.h"
 
@@ -30,5 +28,3 @@ class SdBrowserClass
     void aSortFiles();
     void buildMyMenu();
 };
-
-#endif // !SdBrowser
