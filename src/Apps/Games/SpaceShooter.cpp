@@ -12,81 +12,11 @@
 // Controller   : Buttons A = LEFT, B = RIGHT, C = START || SHOOTING
 // Github:https://macsbug.wordpress.com/2018/01/12/esp32-spaceshooter-with-m5stack/
 //===================================================================
-#include "../../Wrappers.h"
-//============================= game variables =========================
-unsigned long offsetM;
-unsigned long offsetT;
-unsigned long offsetF;
-unsigned long offsetB;
-unsigned long offsetA;
-unsigned long offsetAF;
-unsigned long offsetAB;
-unsigned long offsetS;
-int threshold;
-bool startPrinted;
-bool beginGame;
-bool beginGame2;
-bool play;
-int alien_shooter_score;
-int alien_shooter_scoreInc;
-int level;
-//---------------------Player---------------------------------------
-int shipX;
-int shipY;
-int oldShipX;
-int oldShipY;
-int changeShipX;
-int changeShipY;
-int shipSpeed;
-bool doSplode;
-bool fire;
-int fFireX[5];
-int fFireY[5];
-int fFireAge[5];
-//--------------------------Aliens----------------------------------
-bool alienLive[18];
-int alienLiveCount;
-int alienX;
-int alienY;
-int oldAlienX;
-int oldAlienY;
-int changeAlienX;
-int changeAlienY;
-int alienSpeed;
-int oldAlienSpeed;
-int aFireX[5];
-int aFireY[5];
-bool aFireAge[5];
-int chanceOfFire;
-//================================ bitmaps ========================
-//your starship
-const int shipImgW = 14;
-const int shipImgH = 16;
-char shipImg[] = "ZZZZZZWWZZZZZZZZZZZYWWYZZZZZZZZZZWWWWZZZZZZZZZZ"
-                 "WWWWZZZZZZZZZWWWWWWZZZZZZZZWWWWWWZZZZZYZZWWWWWWZZYZZYZZWWWWWWZZ"
-                 "YZWWZZWWBBWWZZWWWWZZWBBBBWZZWWWWZWWBBBBWWZWWWWZWWWWWWWWZWWWWWWW"
-                 "WWWWWWWWWWRWWWWWWWWWWRWZZWWWWWWWWWWZZZZZWRRWWRRWZZZ";
-//flames
-const int flamesImgW = 12;
-const int flamesImgH = 6;
-char flamesImg[] = "RZZZZZZZZZZRRZRYYRRYYRZRRZRYYRRYYRZRZZRYRZZRY"
-                   "RZZZZZRZZZZRZZZZZZRZZZZRZZZ";
-//alien
-const int alienImgW = 14;
-const int alienImgH = 11;
-char alienImg[] = "GGGZZZZZZZZGGGZZZGZZZZZZGZZZZZGGGGGGGGGGZZZGGG"
-                  "GGGGGGGGGZGGGZGGGGGGZGGGGGGZZGGGGZZGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
-                  "GGGGZZZGGZZGGZZZGZGGZGGZZGGZGGZZZZZZGZZGZZZZZ";
-//ship 'sploded
-const int splodedImgW = 14;
-const int splodedImgH = 16;
-char splodedImg[] = "ZZZZZZWWZZZZZZZZZZRYWWYRZZZYZZZRRWWRRRRZRWYZ"
-                    "RRRRRYYRRRZWYZRYRYYRYYRRRZWWRYYYRYYYYYRZWWRYYRYRYYYYRRWWRYYYRWR"
-                    "YBRRZRRRYRRWWWRYRWZZRYYRRBBWRYRWWZZRYYBBBRRYBWWRZZRYYYRRYYZZWZR"
-                    "RWRYYRBYRZZWZZRYBRYYYYYRRZZRWWYYYWWRRRZZZZWRRWWRRRWZZZ";
+#include "SpaceShooter.h"
+
 //=============================== setup && loop ==================
 
-void initVars()
+void SpaceShooterClass::initVars()
 {
   //============================= game variables =========================
   offsetM = 0;
@@ -136,7 +66,7 @@ void initVars()
 }
 //==================================================================
 
-void drawBitmap(char img[], int imgW, int imgH, int x, int y, int scale)
+void SpaceShooterClass::drawBitmap(char img[], int imgW, int imgH, int x, int y, int scale)
 {
   uint16_t cellColor;
   char curPix;
@@ -174,7 +104,7 @@ void drawBitmap(char img[], int imgW, int imgH, int x, int y, int scale)
   }
 }
 //==================================================================
-void drawalien_shooter_score(bool win)
+void SpaceShooterClass::drawalien_shooter_score(bool win)
 {
   M5.Lcd.setTextColor(WHITE);
   M5.Lcd.setTextSize(2);
@@ -187,7 +117,7 @@ void drawalien_shooter_score(bool win)
     M5.Lcd.drawString("GAME OVER", 53, 40);
   }
   for (; millis() - offsetM <= 1000;)
-  M5.Lcd.drawString("Score: " + String(alien_shooter_score), 80, 89);
+    M5.Lcd.drawString("Score: " + String(alien_shooter_score), 80, 89);
   offsetM = millis();
   for (; millis() - offsetM <= 1000;)
   {
@@ -195,7 +125,7 @@ void drawalien_shooter_score(bool win)
   M5.Lcd.drawString("Level: " + String(level), 80, 128);
 }
 // functions =======================================================
-void gameOver()
+void SpaceShooterClass::gameOver()
 {
   play = false;
   if (doSplode)
@@ -222,7 +152,7 @@ void gameOver()
   }
 }
 //==================================================================
-void levelUp()
+void SpaceShooterClass::levelUp()
 {
   play = false;
   memset(alienLive, true, 18);
@@ -279,15 +209,15 @@ void levelUp()
   play = true;
 }
 //==================================================================
-int findAlienX(int num) { return alienX + 42 * (num % 6); }
+int SpaceShooterClass::findAlienX(int num) { return alienX + 42 * (num % 6); }
 //==================================================================
-int findAlienY(int num) { return alienY + 33 * (num / 6); }
+int SpaceShooterClass::findAlienY(int num) { return alienY + 33 * (num / 6); }
 //==================================================================
-int findOldAlienX(int num) { return oldAlienX + 42 * (num % 6); }
+int SpaceShooterClass::findOldAlienX(int num) { return oldAlienX + 42 * (num % 6); }
 //==================================================================
-int findOldAlienY(int num) { return oldAlienY + 33 * (num / 6); }
+int SpaceShooterClass::findOldAlienY(int num) { return oldAlienY + 33 * (num / 6); }
 //==================================================================
-bool alienShot(int num)
+bool SpaceShooterClass::alienShot(int num)
 {
   for (int i; i < 5; i++)
   {
@@ -303,7 +233,7 @@ bool alienShot(int num)
   return false;
 }
 //==================================================================
-bool onPlayer(int num)
+bool SpaceShooterClass::onPlayer(int num)
 {
   if (findAlienX(num) - shipX < 24 && findAlienX(num) - shipX > -28 && findAlienY(num) - shipY < 32 &&
       findAlienY(num) - shipY > -22)
@@ -317,7 +247,7 @@ bool onPlayer(int num)
   }
 }
 //==================================================================
-bool exceedBoundary(int num)
+bool SpaceShooterClass::exceedBoundary(int num)
 {
   if (findAlienY(num) > 218)
   {
@@ -329,7 +259,7 @@ bool exceedBoundary(int num)
   }
 }
 //==================================================================
-void moveAliens()
+void SpaceShooterClass::moveAliens()
 {
   for (int i = 0; i < 18; i++)
   {
@@ -350,7 +280,7 @@ void moveAliens()
   }
 }
 //---------------------------Player---------------------------------
-void fireDaLazer()
+void SpaceShooterClass::fireDaLazer()
 {
   int bulletNo = -1;
   for (int i = 0; i < 4; i++)
@@ -370,7 +300,7 @@ void fireDaLazer()
   fire = false;
 }
 //==================================================================
-void keepFirinDaLazer(int bulletNo)
+void SpaceShooterClass::keepFirinDaLazer(int bulletNo)
 {
   M5.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 4, BLACK);
   fFireY[bulletNo] -= 8;
@@ -378,13 +308,13 @@ void keepFirinDaLazer(int bulletNo)
   fFireAge[bulletNo] += 1;
 }
 //==================================================================
-void stopFirinDaLazer(int bulletNo)
+void SpaceShooterClass::stopFirinDaLazer(int bulletNo)
 {
   M5.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 4, BLACK);
   fFireAge[bulletNo] = 0;
 }
 //==================================================================
-void moveShip()
+void SpaceShooterClass::moveShip()
 {
   if (shipX + changeShipX < 288 && shipX + changeShipX > 6 && changeShipX != 0)
   {
@@ -403,7 +333,7 @@ void moveShip()
   }
 }
 //=========================== button functions =====================
-void up()
+void SpaceShooterClass::up()
 {
   if (millis() - offsetT >= 50 && play)
   {
@@ -413,7 +343,7 @@ void up()
   }
 }
 //==================================================================
-void down()
+void SpaceShooterClass::down()
 {
   if (millis() - offsetT >= 50 && play)
   {
@@ -423,7 +353,7 @@ void down()
   }
 }
 //==================================================================
-void left()
+void SpaceShooterClass::left()
 {
   if (millis() - offsetT >= 50 && play)
   {
@@ -433,7 +363,7 @@ void left()
   }
 }
 //==================================================================
-void right()
+void SpaceShooterClass::right()
 {
   if (millis() - offsetT >= 50 && play)
   {
@@ -443,7 +373,7 @@ void right()
   }
 }
 //==================================================================
-void select()
+void SpaceShooterClass::select()
 {
   if (millis() - offsetF >= 500 && play)
   {
@@ -457,17 +387,17 @@ void select()
 }
 
 //==================================================================
-void spaceShoot_run()
+void SpaceShooterClass::spaceShoot_run()
 {
-	initVars();
-	memset(alienLive, true, 18);
-	memset(aFireX, 0, 5);
-	memset(aFireY, 0, 5);
-	memset(aFireAge, 0, 5);
-	M5.Lcd.fillScreen(BLACK);
-	M5.Lcd.setTextColor(0x5E85);
-	M5.Lcd.setTextSize(3);
-	randomSeed(analogRead(A0));
+  initVars();
+  memset(alienLive, true, 18);
+  memset(aFireX, 0, 5);
+  memset(aFireY, 0, 5);
+  memset(aFireAge, 0, 5);
+  M5.Lcd.fillScreen(BLACK);
+  M5.Lcd.setTextColor(0x5E85);
+  M5.Lcd.setTextSize(3);
+  randomSeed(analogRead(A0));
   while (1)
   {
     if (M5.BtnA.isPressed())
@@ -596,8 +526,16 @@ void spaceShoot_run()
   }
 }
 
-void spaceShootest_run()
+void SpaceShooterClass::Run()
 {
   spaceShoot_run();
   gameOver();
+}
+
+SpaceShooterClass::SpaceShooterClass()
+{
+}
+
+SpaceShooterClass::~SpaceShooterClass()
+{
 }

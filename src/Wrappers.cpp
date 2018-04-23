@@ -45,3 +45,15 @@ void appWiFiSetup()
     WifiSettingsClass WifiSettingsObj;
     WifiSettingsObj.Run();
 }
+
+void appWebServer()
+{
+    WebServerClass WebServerObj;
+    WebServerObj.Run();
+}
+
+void appGamesList()
+{
+    GamesListClass GamesListObj;
+    GamesListObj.Run();
+}

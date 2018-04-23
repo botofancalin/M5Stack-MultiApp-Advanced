@@ -7,6 +7,8 @@
 #include "Apps/SdBrowser.h"
 #include "Apps/Sysinfo.h"
 #include "Apps/WiFiSettings.h"
+#include "Apps/MyWebServer.h"
+#include "Apps/GamesList.h"
 
 void appReturn();
 void appSleep();
@@ -16,7 +18,7 @@ void appOscilloscope();
 void appSdBrowser();
 void appSysInfo();
 void appWiFiSetup();
-
-
+void appWebServer();
+void appGamesList();
 
 #endif

@@ -1,15 +1,10 @@
-#include "../Commons.h"
+#include "GamesList.h"
 
 // the game list menu
-void appListGames()
+void GamesListClass::Run()
 {
+    M5.update();
     MyMenu.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
-
-    while (M5.BtnB.wasPressed())
-    {
-        M5.update();
-    }
-
     MyMenu.clearList();
     MyMenu.setListCaption("GAMES");
 
@@ -31,7 +26,8 @@ void appListGames()
             {
                 M5.update();
                 // The game function
-                spaceShootest_run();
+                SpaceShooterClass SpaceShooterObj;
+                SpaceShooterObj.Run();
                 M5.Lcd.fillScreen(0);
 				M5.Lcd.setTextSize(1);
                 MyMenu.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
@@ -40,8 +36,9 @@ void appListGames()
              if (MyMenu.getListString() == "FLAPPY BIRD")
             {
                 M5.update();
-                // The game function
-                flappypird_run();
+                // The game object
+                FlappyBirdClass FlappyBirdObj;
+                FlappyBirdObj.Run();
                 M5.Lcd.fillScreen(0);
 				M5.Lcd.setTextSize(1);
                 MyMenu.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
@@ -50,5 +47,13 @@ void appListGames()
         }
         M5.update();
     }
+}
+
+GamesListClass::GamesListClass()
+{
+}
+
+GamesListClass::~GamesListClass()
+{
     MyMenu.show();
 }

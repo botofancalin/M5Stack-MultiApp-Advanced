@@ -36,7 +36,7 @@ void setup()
 	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
 	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
 	MyMenu.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, Tools, appListTools);
-	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, Games, appListGames);
+	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, Games, appGamesList);
 	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, Browser, appSdBrowser);
 	MyMenu.addMenuItem(1, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
