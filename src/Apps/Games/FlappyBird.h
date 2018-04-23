@@ -26,12 +26,12 @@
 
 // bird sprite
 // bird sprite colors (Cx name for values to keep the array readable)
-// #define C0 BCKGRDCOL
-// #define C1 M5.Lcd.color565(195, 165, 75)
-// #define C2 BIRDCOL
-// #define C3 WHITE
-// #define C4 RED
-// #define C5 M5.Lcd.color565(251, 216, 114)
+#define C0 BCKGRDCOL
+#define C1 M5.Lcd.color565(195, 165, 75)
+#define C2 BIRDCOL
+#define C3 WHITE
+#define C4 RED
+#define C5 M5.Lcd.color565(251, 216, 114)
 
 #define EEPROM_SIZE 64
 
@@ -69,13 +69,6 @@ class FlappyBirdClass
     // grass (col2 is the stripe color)
     const unsigned int GRASSCOL = M5.Lcd.color565(141, 225, 87);
     const unsigned int GRASSCOL2 = M5.Lcd.color565(156, 239, 88);
-
-    const unsigned int C0 = BCKGRDCOL;
-    const unsigned int C1 = M5.Lcd.color565(195, 165, 75);
-    const unsigned int C2 = BIRDCOL;
-    const unsigned int C3 = WHITE;
-    const unsigned int C4 = RED;
-    const unsigned int C5 = M5.Lcd.color565(251, 216, 114);
 
     unsigned int birdcol[128] =
         {C0, C0, C1, C1, C1, C1, C1, C0, C0, C0, C1, C1, C1, C1, C1, C0,
