@@ -1,5 +1,7 @@
 #include "Wrappers.h"
 
+// Wrapper funtctions for Apps classes instances calls
+
 void appReturn()
 {
 }
@@ -52,8 +54,8 @@ void appWebServer()
     WebServerObj.Run();
 }
 
-// void appGamesList()
-// {
-//     GamesListClass GamesListObj;
-//     GamesListObj.Run();
-// }
+void appGamesList()
+{
+    GamesListClass GamesListObj;
+    GamesListObj.Run();
+}

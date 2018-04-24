@@ -1,5 +1,12 @@
 #include "Games/FlappyBird.h"
 #include "Games/SpaceShooter.h"
 
-void appGamesList();
+class GamesListClass
+{
+  public:
+    GamesListClass();
+    ~GamesListClass();
+    void Run();
+  private:
+};
 

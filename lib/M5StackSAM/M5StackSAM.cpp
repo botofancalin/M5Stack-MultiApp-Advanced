@@ -1,7 +1,5 @@
 #include "M5StackSAM.h"
 
-M5SAM MyMenu = M5SAM();
-
 M5SAM::M5SAM()
 {
   levelIDX = 0;
@@ -270,3 +268,9 @@ void M5SAM::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, Strin
   M5.Lcd.drawCentreString(inbtnBttl, 126 + 30, M5.Lcd.height() - 28 + 6, 2);
   M5.Lcd.drawCentreString(inbtnCttl, 221 + 30, M5.Lcd.height() - 28 + 6, 2);
 }
+
+M5SAM::~M5SAM()
+{
+}
+
+M5SAM MyMenu;

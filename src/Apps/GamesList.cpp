@@ -1,7 +1,7 @@
 #include "GamesList.h"
 
 // the game list menu
-void appGamesList()
+void GamesListClass::Run()
 {
     M5.update();
     MyMenu.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
@@ -25,27 +25,26 @@ void appGamesList()
             if (MyMenu.getListString() == "ALIEN SHOOTER")
             {
                 M5.update();
-                // The game function
+                // The game object with member call
                 SpaceShooterClass SpaceShooterObj;
                 SpaceShooterObj.Run();
-                M5.Lcd.fillScreen(0);
-				M5.Lcd.setTextSize(1);
-                MyMenu.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
-                MyMenu.showList();
             }
              if (MyMenu.getListString() == "FLAPPY BIRD")
             {
                 M5.update();
-                // The game object
                 FlappyBirdClass FlappyBirdObj;
                 FlappyBirdObj.Run();
-                M5.Lcd.fillScreen(0);
-				M5.Lcd.setTextSize(1);
-                MyMenu.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
-                MyMenu.showList();
             }
         }
         M5.update();
-    }
+    } 
+}
+
+GamesListClass::GamesListClass()
+{
+}
+
+GamesListClass::~GamesListClass()
+{
     MyMenu.show();
 }

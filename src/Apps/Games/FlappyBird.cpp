@@ -221,15 +221,11 @@ void FlappyBirdClass::game_start()
     M5.Lcd.setTextColor(WHITE);
     M5.Lcd.setTextSize(3);
     // half width - num char * char width in pixels
-    //M5.Lcd.setCursor(TFTW2 - (6 * 9), TFTH2 - 16);
     M5.Lcd.drawString("FLAPPY", TFTW2 - (6 * 9), TFTH2 - 16);
     M5.Lcd.setTextSize(3);
-    //M5.Lcd.setCursor(TFTW2 - (6 * 9), TFTH2 + 8);
     M5.Lcd.drawString("-BIRD-", TFTW2 - (6 * 9), TFTH2 + 8);
     M5.Lcd.setTextSize(2);
-   // M5.Lcd.setCursor(10, TFTH2 - 36);
     M5.Lcd.drawString("M5Stack", 10, TFTH2 - 36);
-   // M5.Lcd.setCursor(TFTW2 - (17 * 9), TFTH2 + 36);
     M5.Lcd.drawString("Mod by Calin", TFTW2 - (17 * 9), TFTH2 + 36);
     while (1)
     {
@@ -275,9 +271,9 @@ void FlappyBirdClass::game_over()
     M5.Lcd.drawString("Score: " + String(flappy_bird_score), 10, 10);
     M5.Lcd.drawString("press button", TFTW2 - (12 * 6), TFTH2 + 18);
     M5.Lcd.drawString("Max Score:" + String(maxflappy_bird_score), 10, 28);
-    M5.Lcd.drawString("ScoreR", 30,221);
-    M5.Lcd.drawString("Start", 132,221);
-    M5.Lcd.drawString("Exit", 232,221);
+    M5.Lcd.drawString("ScoreR", 30, 221);
+    M5.Lcd.drawString("Start", 132, 221);
+    M5.Lcd.drawString("Exit", 232, 221);
     while (1)
     {
         if (M5.BtnA.wasPressed())
@@ -299,7 +295,7 @@ void FlappyBirdClass::game_over()
 
 void FlappyBirdClass::Run()
 {
-    // put your main code here, to run repeatedly:
+    // put your main code here
     game_start();
     game_loop();
     game_over();
@@ -311,4 +307,8 @@ FlappyBirdClass::FlappyBirdClass()
 
 FlappyBirdClass::~FlappyBirdClass()
 {
+    M5.Lcd.fillScreen(0);
+    M5.Lcd.setTextSize(1);
+    MyMenu.drawAppMenu(F("GAMES"), F("ESC"), F("SELECT"), F("LIST"));
+    MyMenu.showList();
 }

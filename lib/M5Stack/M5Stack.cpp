@@ -5,7 +5,6 @@
 
 void M5Stack::begin()
 {
-
     // UART
     Serial.begin(115200);
     Serial.flush();
@@ -77,6 +76,14 @@ void M5Stack::powerOFF()
     USE_SERIAL.println("On deep sleep mode.");
     esp_deep_sleep_start();
     USE_SERIAL.println("On power OFF fail!");
+}
+
+M5Stack::M5Stack()
+{
+}
+
+M5Stack::~M5Stack()
+{
 }
 
 M5Stack M5;

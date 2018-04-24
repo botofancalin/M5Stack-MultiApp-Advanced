@@ -25,6 +25,7 @@ class M5SAM
 {
 public:
   M5SAM();
+  ~M5SAM();
   void up();
   void down();
   void execute();

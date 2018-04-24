@@ -501,7 +501,7 @@ void OscilloscopeClass::Run()
 			CheckSW();
 		}
 		M5.update();
-		if (exitprg)
+		if (exitprg) // endless loop exit condition
 		{
 			break;
 		}
