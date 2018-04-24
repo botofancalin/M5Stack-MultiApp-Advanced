@@ -20,7 +20,7 @@ class WebRadioClass
     
     const char *URL = "http://astreaming.europafm.ro:8000/europafm_mp3_64k";
     
-    const int preallocateBufferSize = 16 * 1024;
+    const int preallocateBufferSize = 32768;
     //const int preallocateCodecSize = 16384; // AAC+SBR codec max mem needed
     void *preallocateBuffer = NULL;
     //void *preallocateCodec = NULL;

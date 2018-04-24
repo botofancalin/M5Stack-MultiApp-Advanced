@@ -32,16 +32,16 @@ void MDCallback(void *cbData, const char *type, bool isUnicode, const char *stri
 }
 
 // Called when there's a warning or error (like a buffer underflow or decode hiccup)
+String _e1;
 void StatusCallback(void *cbData, int code, const char *string)
 {
+	String e1 = string;
 	const char *ptr = reinterpret_cast<const char *>(cbData);
-	String _e1, e1 = string;
-	M5.Lcd.setCursor(0, 100);
 	M5.Lcd.setTextColor(BLACK);
-	M5.Lcd.print(_e1);
-	M5.Lcd.setCursor(0, 100);
+	M5.Lcd.drawCentreString(_e1, 160, 140, 2);
+
 	M5.Lcd.setTextColor(WHITE);
-	M5.Lcd.print(e1);
+	M5.Lcd.drawCentreString(e1, 160, 140, 2);
 	_e1 = e1;
 }
 
@@ -49,7 +49,10 @@ void WebRadioClass::Run()
 {
 	M5.update();
 	MyMenu.drawAppMenu(F("WebRadio"), F("Vol-"), F("Stop"), F("Vol+"));
-
+	M5.Lcd.setTextColor(ORANGE);
+	M5.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
+	M5.Lcd.setTextColor(WHITE);
+	
 	while (play)
 	{
 		if (M5.BtnA.wasPressed() && vol > 0)
@@ -82,9 +85,9 @@ void WebRadioClass::Run()
 			//preallocateCodec = malloc(preallocateCodecSize);
 
 			file = new AudioFileSourceICYStream(URL);
-			//file->RegisterMetadataCB(MDCallback, (void *)"ICY");
+			file->RegisterMetadataCB(MDCallback, (void *)"ICY");
 			buff = new AudioFileSourceBuffer(file, preallocateBuffer, preallocateBufferSize);
-			//buff->RegisterStatusCB(StatusCallback, (void *)"buffer");
+			buff->RegisterStatusCB(StatusCallback, (void *)"buffer");
 			out = new AudioOutputI2S(0, true);
 			mp3 = new AudioGeneratorMP3();
 			//mp3->RegisterStatusCB(StatusCallback, (void *)"mp3");
