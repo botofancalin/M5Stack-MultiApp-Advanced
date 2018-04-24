@@ -11,6 +11,7 @@
 #include "Apps/GamesList.h"
 #include "Apps/ToolsList.h"
 #include "Apps/Tools/appOta.h"
+#include "Apps/WebRadio.h"
 
 void appReturn();
 void appSleep();
@@ -22,6 +23,7 @@ void appSysInfo();
 void appWiFiSetup();
 void appWebServer();
 void appGamesList();
+void appWebRadio();
 
 void appOta();
 

@@ -59,3 +59,9 @@ void appGamesList()
     GamesListClass GamesListObj;
     GamesListObj.Run();
 }
+
+void appWebRadio()
+{
+    WebRadioClass WebRadioObj;
+    WebRadioObj.Run();
+}
