@@ -27,17 +27,17 @@ void setup()
 	preferences.end();
 
 	//The main menu. Add main menu items here
-	MyMenu.addMenuItem(0, "WebRadio", "<", "OK", ">", -1, WebRadio, appWebRadio);
-	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps, appReturn);
+	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps1, appReturn);
 	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
 	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
 	MyMenu.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
 
 	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
+	MyMenu.addMenuItem(1, "WEBRADIO", "<", "OK", ">", -1, WebRadio, appWebRadio);
 	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
+	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, Browser, appSdBrowser);
 	MyMenu.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, Tools, appListTools);
 	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, Games, appGamesList);
-	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, Browser, appSdBrowser);
 	MyMenu.addMenuItem(1, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
 	MyMenu.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, Sysinfo, appSysInfo);
