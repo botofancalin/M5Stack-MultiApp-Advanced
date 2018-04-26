@@ -187,7 +187,8 @@ void M5SAM::execute()
   }
 }
 
-void M5SAM::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, signed char goto_level, const uint8_t *Menu_Img, void (*function)())
+void M5SAM::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, 
+const char *btnC_title, signed char goto_level, const uint8_t *Menu_Img, void (*function)())
 {
   uint32_t mCnt = menuCount[levelID];
   menuList[levelID] = (MenuCommandCallback *)realloc(menuList[levelID], (mCnt + 1) * sizeof(MenuCommandCallback));
@@ -246,7 +247,8 @@ void M5SAM::btnRestore()
   M5.Lcd.setTextColor(menutextcolor, windowcolor);
 }
 
-void M5SAM::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor, unsigned int inwindowcolor, const uint8_t *iMenuImg, unsigned int intxtcolor)
+void M5SAM::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor, 
+unsigned int inwindowcolor, const uint8_t *iMenuImg, unsigned int intxtcolor)
 {
   lastBtnTittle[0] = inbtnAttl;
   lastBtnTittle[1] = inbtnBttl;
