@@ -257,7 +257,7 @@ void WifiScannerClass::Run()
             M5.update();
         }
     }
-    preferences.begin("WiFi-mode", false);
+    preferences.begin("WiFi", false);
     WiFi_Mode = preferences.getInt("mode", 0);
     WiFi.mode(wifi_mode_t(WiFi_Mode));
     if (WiFi_Mode != 0)

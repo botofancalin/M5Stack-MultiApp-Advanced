@@ -14,16 +14,14 @@ class WebRadioClass
   private:
     void getvolume();
     void setVolume(int *v);
-   // void MDCallback(void *cbData, const char *type, bool isUnicode, const char *string);
-   // void StatusCallback(void *cbData, int code, const char *string);
-
+    void FreeResources();
     
     const char *URL = "http://astreaming.europafm.ro:8000/europafm_mp3_64k";
     
-    const int preallocateBufferSize = 16347;
-    //const int preallocateCodecSize = 85332; // AAC+SBR codec max mem needed
-    void *preallocateBuffer = NULL;
-    //void *preallocateCodec = NULL;
+    const int preallocateBufferSize = 16384;
+    int SignalStrength;
+    unsigned long now;
+    unsigned long lastcheck;
     bool play = true;
     bool upd = true;
 

@@ -8,10 +8,9 @@ bool OtaRunning = false;
 void setup()
 {
 	M5.begin();
-	Wire.begin();
 	dacWrite(25, 0); // Speaker OFF
 
-	preferences.begin("WiFi-mode", false);
+	preferences.begin("WiFi", false);
 	WiFi_Mode = preferences.getInt("mode", 0);
 	preferences.end();
 	WiFi.mode(wifi_mode_t(WiFi_Mode));
@@ -22,8 +21,8 @@ void setup()
 
 	//MyMenu.setColorSchema(OLIVE,WHITE,BLACK);
 
-	preferences.begin("Brightness", false);
-	M5.lcd.setBrightness(preferences.getUShort("Brightness", 95));
+	preferences.begin("Br", false);
+	M5.lcd.setBrightness(preferences.getUShort("l", 95));
 	preferences.end();
 
 	//The main menu. Add main menu items here

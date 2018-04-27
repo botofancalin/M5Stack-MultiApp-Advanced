@@ -1,25 +1,5 @@
 #include "FlappyBird.h"
 
-void FlappyBirdClass::EEPROM_Write(int *num, int MemPos)
-{
-    byte ByteArray[2];
-    memcpy(ByteArray, num, 2);
-    for (int x = 0; x < 2; x++)
-    {
-        EEPROM.write((MemPos * 2) + x, ByteArray[x]);
-    }
-}
-
-void FlappyBirdClass::EEPROM_Read(int *num, int MemPos)
-{
-    byte ByteArray[2];
-    for (int x = 0; x < 2; x++)
-    {
-        ByteArray[x] = EEPROM.read((MemPos * 2) + x);
-    }
-    memcpy(num, ByteArray, 2);
-}
-
 // ---------------
 // game loop
 // ---------------
@@ -242,7 +222,9 @@ void FlappyBirdClass::game_start()
 
 void FlappyBirdClass::resetMaxflappy_bird_score()
 {
-    EEPROM_Write(&maxflappy_bird_score, 16);
+    preferences.begin("Fpsc",false);
+    preferences.putInt("sc",flappy_bird_score);
+    preferences.end();
 }
 
 // ---------------
@@ -251,17 +233,19 @@ void FlappyBirdClass::resetMaxflappy_bird_score()
 void FlappyBirdClass::game_over()
 {
     M5.Lcd.fillScreen(BLACK);
-    EEPROM_Read(&maxflappy_bird_score, 16);
+    preferences.begin("Fpsc",false);
+    maxflappy_bird_score = preferences.getInt("sc", 0);
 
     if (flappy_bird_score > maxflappy_bird_score)
     {
-        EEPROM_Write(&flappy_bird_score, 16);
+        preferences.putInt("sc",flappy_bird_score);
         maxflappy_bird_score = flappy_bird_score;
         M5.Lcd.setTextColor(RED);
         M5.Lcd.setTextSize(2);
         //M5.Lcd.setCursor(TFTW2 - (13 * 6), TFTH2 - 26);
         M5.Lcd.drawString("NEW HIGHSCORE", TFTW2 - (13 * 6), TFTH2 - 26);
     }
+    preferences.end();
 
     M5.Lcd.setTextColor(WHITE);
     M5.Lcd.setTextSize(3);

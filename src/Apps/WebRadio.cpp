@@ -1,15 +1,37 @@
 #include "WebRadio.h"
+#define MYFONT &FreeSerif12pt7b
+
+void WebRadioClass::FreeResources()
+{
+	preferences.begin("Vol", false);
+	preferences.putFloat("v", vol);
+	preferences.end();
+	mp3->stop();
+	out->stop();
+	buff->close();
+	file->close();
+	mp3 = NULL;
+	file = NULL;
+	out = NULL;
+	buff = NULL;
+	delete mp3;
+	delete out;
+	delete file;
+	delete buff;
+	dacWrite(25, 0);
+	dacWrite(26, 0);
+}
 
 void WebRadioClass::getvolume()
 {
-	preferences.begin("Mp3-Volume", false);
-	vol = preferences.getFloat("volume", 15.0f);
+	preferences.begin("Vol", false);
+	vol = preferences.getFloat("v", 15.0f);
 	preferences.end();
 }
 
 void WebRadioClass::setVolume(int *v)
 {
-	float volume = *v / 49.9f; // volme max value can be 3.99
+	float volume = *v / 71.4f; // volme max value can be 3.99
 	out->SetGain(volume);
 }
 String _s2, _s3;
@@ -22,11 +44,12 @@ void MDCallback(void *cbData, const char *type, bool isUnicode, const char *stri
 	s3.replace(s2, "");
 	s2.replace("/", "");
 	M5.Lcd.setTextColor(BLACK);
-	M5.Lcd.drawCentreString(_s3, 160, 30, 4);
-	M5.Lcd.drawCentreString(_s2, 160, 60, 4);
-	M5.Lcd.setTextColor(YELLOW);
-	M5.Lcd.drawCentreString(s3, 160, 30, 4);
-	M5.Lcd.drawCentreString(s2, 160, 60, 4);
+	M5.Lcd.setFreeFont(MYFONT);
+	M5.Lcd.drawCentreString(_s3, 160, 35, 1);
+	M5.Lcd.drawCentreString(_s2, 160, 60, 1);
+	M5.Lcd.setTextColor(ORANGE);
+	M5.Lcd.drawCentreString(s3, 160, 35, 1);
+	M5.Lcd.drawCentreString(s2, 160, 60, 1);
 	_s2 = s2;
 	_s3 = s3;
 }
@@ -52,56 +75,69 @@ void WebRadioClass::Run()
 	M5.Lcd.setTextColor(ORANGE);
 	M5.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
 	M5.Lcd.setTextColor(WHITE);
-	
-	while (play)
+
+	if (WiFi.isConnected())
 	{
-		if (M5.BtnA.wasPressed() && vol > 0)
+		while (play)
 		{
-			vol -= 5;
-			setVolume(&vol);
-		}
-		if (M5.BtnC.wasPressed() && vol < 100)
-		{
-			vol += 5;
-			setVolume(&vol);
-		}
-		if (M5.BtnB.wasPressed())
-		{
-			play = !play;
-		}
-		if (vol != old_vol)
-		{
-			M5.Lcd.setTextColor(ORANGE);
-			M5.Lcd.fillRect(120, 190, 80, 14, BLACK);
-			M5.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
-			M5.Lcd.setTextColor(WHITE);
-			old_vol = vol;
-		}
-		M5.update();
+			unsigned long now = millis();
+			if (now - lastcheck >= 1000)
+			{
 
-		if (upd)
-		{
-			preallocateBuffer = malloc(preallocateBufferSize);
-			//preallocateCodec = malloc(preallocateCodecSize);
+				M5.Lcd.setTextColor(WHITE, 15);
+				SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
+				M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
+				lastcheck = now;
+			}
+			if (M5.BtnA.wasPressed() && vol > 0)
+			{
+				vol -= 5;
+				setVolume(&vol);
+			}
+			if (M5.BtnC.wasPressed() && vol < 100)
+			{
+				vol += 5;
+				setVolume(&vol);
+			}
+			if (M5.BtnB.pressedFor(2000))
+			{
+				play = !play;
+			}
+			if (vol != old_vol)
+			{
+				M5.Lcd.setTextColor(ORANGE);
+				M5.Lcd.fillRect(120, 190, 80, 14, BLACK);
+				M5.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
+				M5.Lcd.setTextColor(WHITE);
+				old_vol = vol;
+			}
+			M5.update();
 
-			file = new AudioFileSourceICYStream(URL);
-			file->RegisterMetadataCB(MDCallback, (void *)"ICY");
-			buff = new AudioFileSourceBuffer(file, preallocateBuffer, preallocateBufferSize);
-			buff->RegisterStatusCB(StatusCallback, (void *)"buffer");
-			out = new AudioOutputI2S(0, true);
-			mp3 = new AudioGeneratorMP3();
-			//mp3->RegisterStatusCB(StatusCallback, (void *)"mp3");
-			mp3->begin(buff, out);
-			setVolume(&vol);
-			old_vol = vol;
-			upd = false;
+			if (upd)
+			{
+				file = new AudioFileSourceICYStream(URL);
+				file->RegisterMetadataCB(MDCallback, (void *)"ICY");
+				buff = new AudioFileSourceBuffer(file, preallocateBufferSize);
+				buff->RegisterStatusCB(StatusCallback, (void *)"buffer");
+				out = new AudioOutputI2S(0, 1);
+				mp3 = new AudioGeneratorMP3();
+				mp3->begin(buff, out);
+				setVolume(&vol);
+				old_vol = vol;
+				upd = false;
+			}
+			else
+			{
+				mp3->loop();
+			}
 		}
-		else
-		{
-			mp3->loop();
-		}
-		//Serial.println(buff->getFillLevel());
-		//Serial.println(buff->getPos());
+		FreeResources();
+	}
+	else
+	{
+		M5.Lcd.setTextColor(WHITE);
+		M5.Lcd.drawCentreString("Wifi Not Connected!", 160, 60, 2);
+		delay(3000);
 	}
 }
 
@@ -111,24 +147,5 @@ WebRadioClass::WebRadioClass()
 
 WebRadioClass::~WebRadioClass()
 {
-	preferences.begin("Mp3-Volume", false);
-	preferences.putFloat("volume", vol);
-	preferences.end();
-	free(preallocateBuffer);
-	//free(preallocateCodec);
-	mp3->stop();
-	out->stop();
-	buff->close();
-	file->close();
-	mp3 = NULL;
-	file = NULL;
-	out = NULL;
-	buff = NULL;
-	delete mp3;
-	delete out;
-	delete file;
-	delete buff;
-	dacWrite(25, 0);
-	dacWrite(26, 0);
 	MyMenu.show();
 }

@@ -1,5 +1,4 @@
 #include "M5StackSAM.h"
-#include "EEPROM.h"
 
 #define TFTW 320  // screen width
 #define TFTH 240  // screen height
@@ -32,8 +31,6 @@
 #define C3 WHITE
 #define C4 RED
 #define C5 M5.Lcd.color565(251, 216, 114)
-
-#define EEPROM_SIZE 64
 
 // ---------------
 // draw pixel
@@ -105,6 +102,4 @@ class FlappyBirdClass
     void game_start();
     void game_init();
     void game_loop();
-    void EEPROM_Read(int *num, int MemPos);
-    void EEPROM_Write(int *num, int MemPos);
 };

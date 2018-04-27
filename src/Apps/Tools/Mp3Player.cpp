@@ -2,14 +2,14 @@
 
 void Mp3PlayerClass::getvolume()
 {
-    preferences.begin("Mp3-Volume", false);
-    vol = preferences.getFloat("volume", 15.0f);
+    preferences.begin("Vol", false);
+    vol = preferences.getFloat("v", 15.0f);
     preferences.end();
 }
 
 void Mp3PlayerClass::setVolume(int *v)
 {
-    float volume = *v / 49.9f; // volme max value can be 3.99
+    float volume = *v / 71.4f; // volme max value can be 3.99
     out->SetGain(volume);
 }
 
@@ -141,8 +141,8 @@ void Mp3PlayerClass::Play(String *fileName)
         }
         M5.update();
     }
-    preferences.begin("Mp3-Volume", false);
-    preferences.putFloat("volume", vol);
+    preferences.begin("Vol", false);
+    preferences.putFloat("v", vol);
     preferences.end();
     mp3->stop();
     out->stop();
