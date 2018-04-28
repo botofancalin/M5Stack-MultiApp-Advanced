@@ -2,8 +2,8 @@
 
 void Mp3PlayerClass::getvolume()
 {
-    preferences.begin("Vol", false);
-    vol = preferences.getFloat("v", 15.0f);
+    preferences.begin("Volume", false);
+    vol = preferences.getFloat("vol", 15.0f);
     preferences.end();
 }
 
@@ -100,7 +100,7 @@ void Mp3PlayerClass::Play(String *fileName)
     file = new AudioFileSourceSD((*fileName).c_str());
     id3 = new AudioFileSourceID3(file);
     out = new AudioOutputI2S(0, 1);
-    mp3 = new AudioGeneratorMP3a();
+    mp3 = new AudioGeneratorMP3();
     out->SetChannels(2);
     mp3->begin(id3, out);
     setVolume(&vol);
@@ -141,21 +141,21 @@ void Mp3PlayerClass::Play(String *fileName)
         }
         M5.update();
     }
-    preferences.begin("Vol", false);
-    preferences.putFloat("v", vol);
+    preferences.begin("Volume", false);
+    preferences.putFloat("vol", vol);
     preferences.end();
     mp3->stop();
     out->stop();
     id3->close();
     file->close();
     mp3 = NULL;
-    file = NULL;
     out = NULL;
     id3 = NULL;
+    file = NULL;
     delete mp3;
     delete out;
-    delete file;
     delete id3;
+    delete file;
     dacWrite(25, 0);
     dacWrite(26, 0);
     MyMenu.windowClr();

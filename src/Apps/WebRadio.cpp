@@ -1,31 +1,10 @@
 #include "WebRadio.h"
 #define MYFONT &FreeSerif12pt7b
 
-void WebRadioClass::FreeResources()
-{
-	preferences.begin("Vol", false);
-	preferences.putFloat("v", vol);
-	preferences.end();
-	mp3->stop();
-	out->stop();
-	buff->close();
-	file->close();
-	mp3 = NULL;
-	file = NULL;
-	out = NULL;
-	buff = NULL;
-	delete mp3;
-	delete out;
-	delete file;
-	delete buff;
-	dacWrite(25, 0);
-	dacWrite(26, 0);
-}
-
 void WebRadioClass::getvolume()
 {
-	preferences.begin("Vol", false);
-	vol = preferences.getFloat("v", 15.0f);
+	preferences.begin("Volume", false);
+	vol = preferences.getFloat("vol", 15.0f);
 	preferences.end();
 }
 
@@ -71,6 +50,7 @@ void StatusCallback(void *cbData, int code, const char *string)
 void WebRadioClass::Run()
 {
 	M5.update();
+	getvolume();
 	MyMenu.drawAppMenu(F("WebRadio"), F("Vol-"), F("Stop"), F("Vol+"));
 	M5.Lcd.setTextColor(ORANGE);
 	M5.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
@@ -115,12 +95,13 @@ void WebRadioClass::Run()
 
 			if (upd)
 			{
+				preallocateBuffer = malloc(preallocateBufferSize);
 				file = new AudioFileSourceICYStream(URL);
 				file->RegisterMetadataCB(MDCallback, (void *)"ICY");
-				buff = new AudioFileSourceBuffer(file, preallocateBufferSize);
+				buff = new AudioFileSourceBuffer(file, preallocateBuffer, preallocateBufferSize);
 				buff->RegisterStatusCB(StatusCallback, (void *)"buffer");
 				out = new AudioOutputI2S(0, 1);
-				mp3 = new AudioGeneratorMP3a();
+				mp3 = new AudioGeneratorMP3();
 				mp3->begin(buff, out);
 				setVolume(&vol);
 				old_vol = vol;
@@ -131,7 +112,24 @@ void WebRadioClass::Run()
 				mp3->loop();
 			}
 		}
-		FreeResources();
+		preferences.begin("Volume", false);
+		preferences.putFloat("vol", vol);
+		preferences.end();
+		free(preallocateBuffer);
+		mp3->stop();
+		out->stop();
+		buff->close();
+		file->close();
+		mp3 = NULL;
+		file = NULL;
+		out = NULL;
+		buff = NULL;
+		delete mp3;
+		delete out;
+		delete file;
+		delete buff;
+		dacWrite(25, 0);
+		dacWrite(26, 0);
 	}
 	else
 	{
