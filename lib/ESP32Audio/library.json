@@ -1,5 +1,12 @@
 {
-    "name": "ESP8266Audio",
+    "name": "ESP32Audio",
     "description": "Audio file format and I2S DAC library",
-    "keywords": "ESP32, MP3, WAV, MOD, FLAC, I2S, DAC",
+    "keywords": "ESP32, MP3, WAV, MOD, FLAC, I2S, DAC, Delta-Sigma",
+    "authors": [
+        {
+            "maintainer": true
+        }
+    ],
+    "version": "1.0",
+    "frameworks": "Arduino"
 }
