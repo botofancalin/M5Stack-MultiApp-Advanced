@@ -40,7 +40,7 @@ private:
   int trig_edge = TRIG_E_DN;
   int trig_ch = 0;
   int menu = 19;
-  int rate = 2;
+  int rate = 1;
   int trig_lv = 40;
   int ch0_off = 0;
   int ch1_off = 0;

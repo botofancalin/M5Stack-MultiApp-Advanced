@@ -188,7 +188,7 @@ void M5SAM::execute()
 }
 
 void M5SAM::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, 
-const char *btnC_title, signed char goto_level, const uint8_t *Menu_Img, void (*function)())
+const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
 {
   uint32_t mCnt = menuCount[levelID];
   menuList[levelID] = (MenuCommandCallback *)realloc(menuList[levelID], (mCnt + 1) * sizeof(MenuCommandCallback));
@@ -248,7 +248,7 @@ void M5SAM::btnRestore()
 }
 
 void M5SAM::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor, 
-unsigned int inwindowcolor, const uint8_t *iMenuImg, unsigned int intxtcolor)
+unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
 {
   lastBtnTittle[0] = inbtnAttl;
   lastBtnTittle[1] = inbtnBttl;
@@ -260,7 +260,7 @@ unsigned int inwindowcolor, const uint8_t *iMenuImg, unsigned int intxtcolor)
   M5.Lcd.fillRoundRect(0, 29, M5.Lcd.width(), M5.Lcd.height() - 28 - 28, 3, inwindowcolor);
   if (iMenuImg != NULL)
   {
-    M5.Lcd.drawJpg(iMenuImg, (sizeof(iMenuImg)/sizeof(iMenuImg[0])), 0, 30);
+    M5.Lcd.drawJpg((uint8_t*)iMenuImg, (sizeof(iMenuImg)/sizeof(iMenuImg[0])), 0, 30);
   }
 
   M5.Lcd.setTextColor(intxtcolor);

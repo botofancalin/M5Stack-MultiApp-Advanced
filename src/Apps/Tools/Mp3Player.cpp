@@ -100,7 +100,7 @@ void Mp3PlayerClass::Play(String *fileName)
     file = new AudioFileSourceSD((*fileName).c_str());
     id3 = new AudioFileSourceID3(file);
     out = new AudioOutputI2S(0, 1);
-    mp3 = new AudioGeneratorMP3();
+    mp3 = new AudioGeneratorMP3a();
     out->SetChannels(2);
     mp3->begin(id3, out);
     setVolume(&vol);

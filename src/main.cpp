@@ -9,15 +9,11 @@ void setup()
 {
 	M5.begin();
 	dacWrite(25, 0); // Speaker OFF
-
 	preferences.begin("WiFi", false);
 	WiFi_Mode = preferences.getInt("mode", 0);
 	preferences.end();
 	WiFi.mode(wifi_mode_t(WiFi_Mode));
-	if (WiFi_Mode == WIFI_MODE_STA)
-	{
-		WiFi.begin();
-	}
+	WiFi.begin();
 
 	//MyMenu.setColorSchema(OLIVE,WHITE,BLACK);
 

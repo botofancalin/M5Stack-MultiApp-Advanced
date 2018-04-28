@@ -158,7 +158,7 @@ void WifiSettingsClass::Run()
         M5.update();
     }
     preferences.begin("WiFi", false);
-    preferences.putInt("mode", WiFi_Mode);
+    preferences.putInt("mode", (int)WiFi.getMode());
     preferences.end();
 }
 

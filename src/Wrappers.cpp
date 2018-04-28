@@ -9,7 +9,7 @@ void appReturn()
 void appSleep()
 {
     preferences.begin("WiFi", false);
-    preferences.putInt("mode", WiFi_Mode);
+    preferences.putInt("mode", (int)WiFi.getMode());
     preferences.end();
     M5.setWakeupButton(BUTTON_B_PIN);
     M5.powerOFF();

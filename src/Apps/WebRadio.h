@@ -1,8 +1,8 @@
 #include "M5StackSAM.h"
 #include "AudioFileSourceICYStream.h"
 #include "AudioFileSourceBuffer.h"
-#include "AudioGeneratorMP3.h"
-#include "AudioOutputI2SNoDAC.h"
+#include "AudioGeneratorMP3a.h"
+#include "AudioOutputI2S.h"
 
 class WebRadioClass
 {
@@ -25,7 +25,7 @@ class WebRadioClass
     bool play = true;
     bool upd = true;
 
-    AudioGeneratorMP3 *mp3;
+    AudioGeneratorMP3a *mp3;
     AudioFileSourceICYStream *file;
     AudioFileSourceBuffer *buff;
     AudioOutputI2S *out;

@@ -282,20 +282,13 @@ void ledcAnalogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255)
 // Signal generator pin 2
 void LedC_Task(void *parameter)
 {
-	int phase = 0;
-	int phaseStep = 5;
-	ledcSetup(0, 50, 13);
+	ledcSetup(0, 500, 13);
 	ledcAttachPin(2, 0);
 
 	for (;;)
 	{
-		ledcAnalogWrite(0, phase);
-		phase = phase + phaseStep;
-		if (phase <= 0 || phase >= 255)
-		{
-			phaseStep = -phaseStep;
-		}
-		vTaskDelay(20 / portTICK_PERIOD_MS);
+		ledcAnalogWrite(0, 128);
+		taskYIELD();
 	}
 	vTaskDelete(NULL);
 }
@@ -308,8 +301,8 @@ void Synusoide_Task(void *parameter)
 	{
 		for (int MyAngle = 0; MyAngle < 255; MyAngle++)
 		{
-			dacWrite(26, (((sin(MyAngle * (2 * PI) / 256)) * 120) + 128));
-			delayMicroseconds(10);
+			dacWrite(26, (((sin(MyAngle * (6.28f) / 256)) * 120) + 128));
+			taskYIELD();
 		}
 	}
 	vTaskDelete(NULL);

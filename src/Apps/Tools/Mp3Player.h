@@ -1,7 +1,7 @@
 #include "M5StackSAM.h"
 #include "AudioFileSourceSD.h"
 #include "AudioFileSourceID3.h"
-#include "AudioGeneratorMP3.h"
+#include "AudioGeneratorMP3a.h"
 #include "AudioOutputI2S.h"
 
 class Mp3PlayerClass
@@ -36,7 +36,7 @@ class Mp3PlayerClass
     void genSpectrum();
     void drawTimeline();
 
-    AudioGeneratorMP3 *mp3;
+    AudioGeneratorMP3a *mp3;
     AudioFileSourceSD *file;
     AudioOutputI2S *out;
     AudioFileSourceID3 *id3;

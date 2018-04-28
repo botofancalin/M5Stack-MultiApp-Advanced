@@ -120,7 +120,7 @@ void WebRadioClass::Run()
 				buff = new AudioFileSourceBuffer(file, preallocateBufferSize);
 				buff->RegisterStatusCB(StatusCallback, (void *)"buffer");
 				out = new AudioOutputI2S(0, 1);
-				mp3 = new AudioGeneratorMP3();
+				mp3 = new AudioGeneratorMP3a();
 				mp3->begin(buff, out);
 				setVolume(&vol);
 				old_vol = vol;

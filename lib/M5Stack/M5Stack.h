@@ -42,8 +42,6 @@
 #include "utility/Display.h"
 #include "utility/Config.h"
 #include "utility/Button.h"
-#include "utility/Speaker.h"
-#include "utility/M5Timer.h"
 
 extern "C"
 {
@@ -66,9 +64,6 @@ class M5Stack {
     Button BtnA = Button(BUTTON_A_PIN, true, DEBOUNCE_MS);
     Button BtnB = Button(BUTTON_B_PIN, true, DEBOUNCE_MS);
     Button BtnC = Button(BUTTON_C_PIN, true, DEBOUNCE_MS);
-
-    // SPEAKER
-    SPEAKER Speaker;
 
     // LCD
     ILI9341 Lcd = ILI9341();

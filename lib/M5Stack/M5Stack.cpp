@@ -14,9 +14,6 @@ void M5Stack::begin()
     pinMode(SCL, OUTPUT);
     digitalWrite(SDA, 1);
 
-    // TONE
-    //Speaker.begin();
-
     // Setup the button with an internal pull-up
     pinMode(BUTTON_A_PIN, INPUT_PULLUP);
     pinMode(BUTTON_B_PIN, INPUT_PULLUP);
@@ -48,9 +45,6 @@ void M5Stack::update()
     BtnA.read();
     BtnB.read();
     BtnC.read();
-
-    //Speaker update
-    //Speaker.update();
 }
 
 void M5Stack::setWakeupButton(uint8_t button)
