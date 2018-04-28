@@ -80,4 +80,5 @@ M5Stack::~M5Stack()
 {
 }
 
+Preferences preferences;
 M5Stack M5;

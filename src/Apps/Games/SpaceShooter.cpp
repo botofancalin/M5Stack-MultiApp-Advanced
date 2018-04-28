@@ -397,7 +397,7 @@ void SpaceShooterClass::spaceShoot_run()
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setTextColor(0x5E85);
   M5.Lcd.setTextSize(3);
-  randomSeed(analogRead(A0));
+  randomSeed(analogRead(2));
   while (1)
   {
     if (M5.BtnA.isPressed())

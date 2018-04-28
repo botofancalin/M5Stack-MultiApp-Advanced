@@ -76,6 +76,7 @@ class M5Stack {
     uint8_t _wakeupPin;
 };
 
+extern Preferences preferences;
 extern M5Stack M5;
 #define m5 M5
 #define lcd Lcd
