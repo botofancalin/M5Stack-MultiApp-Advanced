@@ -1,0 +1,5 @@
+{
+    "name": "ESP8266Audio",
+    "description": "Audio file format and I2S DAC library",
+    "keywords": "ESP32, MP3, WAV, MOD, FLAC, I2S, DAC",
+}
