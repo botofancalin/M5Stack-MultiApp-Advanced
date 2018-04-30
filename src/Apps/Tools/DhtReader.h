@@ -1,4 +1,3 @@
-#include "DHTesp.h"
 #include "M5StackSAM.h"
 
 class DhtReaderClass

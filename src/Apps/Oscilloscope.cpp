@@ -6,23 +6,22 @@ int Gen = 0;
 void OscilloscopeClass::DrawText()
 {
 	M5.Lcd.setTextColor(WHITE);
-	M5.Lcd.setTextSize(1);
 	M5.Lcd.fillRect(270, menu, 70, 10, BLUE);
 	(menu != 19) ? M5.Lcd.fillRect(270, menu - 10, 70, 10, BLACK) : M5.Lcd.fillRect(270, 149, 70, 10, BLACK);
-	M5.Lcd.drawString((Start ? "Stop" : "Run"), 270, 20);
-	M5.Lcd.drawString(String(String(Ranges[range0]) + "/DIV"), 270, 30);
-	M5.Lcd.drawString(String(String(Ranges[range1]) + "/DIV"), 270, 40);
-	M5.Lcd.drawString(String(String(Rates[rate]) + "/DIV"), 270, 50);
-	M5.Lcd.drawString(String(Modes[ch0_mode]), 270, 60);
-	M5.Lcd.drawString(String(Modes[ch1_mode]), 270, 70);
-	M5.Lcd.drawString(String("OFS1:" + String(ch0_off)), 270, 80);
-	M5.Lcd.drawString(String("OFS2:" + String(ch1_off)), 270, 90);
-	M5.Lcd.drawString(String(trig_ch == 0 ? "T:1" : "T:2"), 270, 100);
+	M5.Lcd.drawString((Start ? "Stop" : "Run"), 270, 20, 1);
+	M5.Lcd.drawString(String(String(Ranges[range0]) + "/DIV"), 270, 30, 1);
+	M5.Lcd.drawString(String(String(Ranges[range1]) + "/DIV"), 270, 40, 1);
+	M5.Lcd.drawString(String(String(Rates[rate]) + "/DIV"), 270, 50, 1);
+	M5.Lcd.drawString(String(Modes[ch0_mode]), 270, 60, 1);
+	M5.Lcd.drawString(String(Modes[ch1_mode]), 270, 70, 1);
+	M5.Lcd.drawString(String("OFS1:" + String(ch0_off)), 270, 80, 1);
+	M5.Lcd.drawString(String("OFS2:" + String(ch1_off)), 270, 90, 1);
+	M5.Lcd.drawString(String(trig_ch == 0 ? "T:1" : "T:2"), 270, 100, 1);
 	M5.Lcd.drawString(String(TRIG_Modes[trig_mode]), 270, 110);
-	M5.Lcd.drawString(String("Tlv:" + String(trig_lv - 30)), 270, 120);
-	M5.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130);
-	M5.Lcd.drawString(String("Gen:" + String(Generator[Gen])), 270, 140);
-	M5.Lcd.drawString("Exit", 270, 150);
+	M5.Lcd.drawString(String("Tlv:" + String(trig_lv - 30)), 270, 120, 1);
+	M5.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130, 1);
+	M5.Lcd.drawString(String("Gen:" + String(Generator[Gen])), 270, 140, 1);
+	M5.Lcd.drawString("Exit", 270, 150, 1);
 	M5.Lcd.setTextColor(WHITE, BLACK);
 	M5.Lcd.drawString("<", 60, 220, 2);
 	M5.Lcd.drawString("Menu", 145, 220, 2);
@@ -272,7 +271,7 @@ void OscilloscopeClass::ClearAndDrawDot(int i)
 // Signal generator pin 26
 void SigGen_Task(void *parameter)
 {
-	pinMode(26,OUTPUT);
+	pinMode(26, OUTPUT);
 	for (;;)
 	{
 		switch (Gen)
@@ -417,7 +416,7 @@ void OscilloscopeClass::Run()
 			}
 			else if (rate >= 2 && rate <= 6)
 			{
-				const unsigned long r_[] = {1000 / DOTS_DIV, 2000 / DOTS_DIV ,5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
+				const unsigned long r_[] = {1000 / DOTS_DIV, 2000 / DOTS_DIV, 5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
 				unsigned long st = micros();
 				unsigned long r = r_[rate - 2];
 				for (int i = 0; i < SAMPLES; i++)
@@ -451,9 +450,9 @@ void OscilloscopeClass::Run()
 					data[1][i] = data[3][i];
 				}
 			}
-			const unsigned long r_[] = {50000 / DOTS_DIV, 100000 / DOTS_DIV, 
-										200000 / DOTS_DIV, 500000 / DOTS_DIV, 
-										1000000 / DOTS_DIV, 2000000 / DOTS_DIV, 
+			const unsigned long r_[] = {50000 / DOTS_DIV, 100000 / DOTS_DIV,
+										200000 / DOTS_DIV, 500000 / DOTS_DIV,
+										1000000 / DOTS_DIV, 2000000 / DOTS_DIV,
 										5000000 / DOTS_DIV, 10000000 / DOTS_DIV};
 			unsigned long st = micros();
 			for (int i = 0; i < SAMPLES; i++)

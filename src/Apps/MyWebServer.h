@@ -1,5 +1,4 @@
 #include "M5StackSAM.h"
-#include "WebServer.h"
 
 class WebServerClass
 {

@@ -28,7 +28,7 @@ void M5Stack::begin()
     Lcd.setBrightness(50);
 
     // TF Card & SPIFFS
-    SD.begin(TFCARD_CS_PIN, SPI, 40000000);
+    SD.begin(TFCARD_CS_PIN, SPI, 27000000);
     vTaskDelay(10 / portTICK_RATE_MS);
     SPIFFS.begin();
 
@@ -60,7 +60,6 @@ void M5Stack::powerOFF()
     Lcd.sleep();
 
     // ESP32 into deep sleep
-    USE_SERIAL.printf("Enabling EXT0 wakeup on pins GPIO%d\n", _wakeupPin);
     esp_sleep_enable_ext0_wakeup((gpio_num_t)_wakeupPin, LOW);
 
     while (digitalRead(_wakeupPin) == LOW)

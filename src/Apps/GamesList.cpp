@@ -21,7 +21,6 @@ void GamesListClass::Run()
         }
         if (M5.BtnB.wasPressed())
         {
-            //The items from list must be found into this funtions.
             if (MyMenu.getListString() == "ALIEN SHOOTER")
             {
                 M5.update();

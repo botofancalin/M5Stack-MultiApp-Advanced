@@ -290,8 +290,6 @@ bool AudioGeneratorMP3::begin(AudioFileSource *source, AudioOutput *output)
 
 #undef stack
 extern "C" {
-#ifdef ESP32
-  //TODO - add ESP32 checks
   void stack(const char *s, const char *t, int i)
   {
   }
@@ -299,51 +297,5 @@ extern "C" {
   {
     return 8192;
   }
-#elif defined(ESP8266)
-  #include <cont.h>
-  extern cont_t g_cont;
-
-  void stack(const char *s, const char *t, int i)
-  {
-    (void) t;
-    (void) i;
-    register uint32_t *sp asm("a1");
-    int freestack = 4 * (sp - g_cont.stack);
-    int freeheap = ESP.getFreeHeap();
-    if ((freestack < 512) || (freeheap < 5120)) {
-      static int laststack, lastheap;
-      if (laststack!=freestack|| lastheap !=freeheap) {
-        Serial.printf_P(PSTR("%s: FREESTACK=%d, FREEHEAP=%d\n"), s, /*t, i,*/ freestack, /*cont_get_free_stack(&g_cont),*/ freeheap);
-      }
-      if (freestack < 256) {
-        Serial.printf_P(PSTR("out of stack!\n"));
-      }
-      if (freeheap < 1024) {
-        Serial.printf_P(PSTR("out of heap!\n"));
-      }
-      Serial.flush();
-      laststack = freestack;
-      lastheap = freeheap;
-    }
-  }
-
-  int stackfree()
-  {
-    register uint32_t *sp asm("a1");
-    int freestack = 4 * (sp - g_cont.stack);
-    return freestack;
-  }
-#else
-  void stack(const char *s, const char *t, int i)
-  {
-    (void) s;
-    (void) t;
-    (void) i;
-  }
-  int stackfree()
-  {
-    return 8192;
-  }
-#endif
 }
 

@@ -22,11 +22,7 @@
 #define _AUDIOFILESOURCEHTTPSTREAM_H
 
 #include <Arduino.h>
-#ifdef ESP32
-  #include <HTTPClient.h>
-#else
-  #include <ESP8266HTTPClient.h>
-#endif
+#include <HTTPClient.h>
 #include "AudioFileSource.h"
 
 class AudioFileSourceHTTPStream : public AudioFileSource

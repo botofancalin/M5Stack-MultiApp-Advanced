@@ -1,4 +1,5 @@
 #include "M5StackSAM.h"
+
 #define CH1COLOR YELLOW
 #define CH2COLOR MAGENTA
 #define OSCGREY 0x7BEF

@@ -42,8 +42,7 @@ void appListTools()
             }
             if (MyMenu.getListString() == "WIFI PACKET MONITOR")
             {
-               WifiPacketMonitorClass WifiPacketMonitorObj;
-               WifiPacketMonitorObj.Run();
+               Monitor_run();
             }
             if (MyMenu.getListString() == "STOPWATCH")
             {

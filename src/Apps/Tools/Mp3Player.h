@@ -1,8 +1,4 @@
 #include "M5StackSAM.h"
-#include "AudioFileSourceSD.h"
-#include "AudioFileSourceID3.h"
-#include "AudioGeneratorMP3.h"
-#include "AudioOutputI2S.h"
 
 class Mp3PlayerClass
 {
@@ -39,5 +35,4 @@ class Mp3PlayerClass
     AudioGeneratorMP3 *mp3;
     AudioFileSourceSD *file;
     AudioOutputI2S *out;
-    AudioFileSourceID3 *id3;
 };

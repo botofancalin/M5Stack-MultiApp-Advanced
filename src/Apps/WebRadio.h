@@ -1,10 +1,5 @@
 #include "M5StackSAM.h"
-#include "AudioFileSourceICYStream.h"
-#include "AudioFileSourceBuffer.h"
-#include "AudioGeneratorMP3a.h"
-#include "AudioGeneratorMP3.h"
-#include "AudioGeneratorAAC.h"
-#include "AudioOutputI2S.h"
+
 class WebRadioClass
 {
 public:
@@ -14,22 +9,22 @@ public:
   void Run();
 
 private:
-  AudioGenerator *decoder = NULL;
+  AudioGenerator *player = NULL;
   AudioFileSourceICYStream *file = NULL;
   AudioFileSourceBuffer *buff = NULL;
   AudioOutputI2S *out = NULL;
 
-  const int preallocateBufferSize = 5 * 1024;
+  const int preallocateBufferSize = 8192;
   const int preallocateCodecSize = 29192; // AAC+SBR codec max mem needed
   void *preallocateBuffer = NULL;
   void *preallocateCodec = NULL;
-  bool isAAC = false;
 
   std::vector<String> Name;
   std::vector<String> Link;
   String StationList, name, link, old_Station = "";
   int SignalStrength;
   unsigned int Station = 0;
+  unsigned int fillLvl, rawFillLvl = 1;
   unsigned long now;
   unsigned long lastcheck;
   bool play = true;

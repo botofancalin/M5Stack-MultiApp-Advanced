@@ -1,0 +1,5 @@
+EuropaFm=http://astreaming.europafm.ro:8000/europafm_mp3_64k;
+ProFm=http://edge126.rdsnet.ro:84/profm/profm.mp3;
+DigiFm=http://edge76.rdsnet.ro:84/digifm/digifm.mp3;
+Virgin Radio=http://astreaming.radio21.ro:8000/virgin_mp3_64k;
+Vibe FM=http://astreaming.vibefm.ro:8000/vibefm_mp3_64k;

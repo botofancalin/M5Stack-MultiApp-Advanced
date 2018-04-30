@@ -29,19 +29,30 @@
 
 
 #include <Arduino.h>
+#include <vector>
 #include "WiFi.h"
 #include "WiFiClient.h"
-#include "WiFiMulti.h"
+#include <ESPmDNS.h>
 #include <Wire.h>
 #include <SPI.h>
 #include "FS.h"
 #include "SD.h"
 #include "SPIFFS.h"
+#include "DHTesp.h"
 #include "Preferences.h"
+#include "ArduinoOTA.h"
+#include "WebServer.h"
+#include <Update.h>
+#include <HTTPClient.h>
 
 #include "utility/Display.h"
 #include "utility/Config.h"
 #include "utility/Button.h"
+#include "AudioFileSourceSD.h"
+#include "AudioFileSourceICYStream.h"
+#include "AudioFileSourceBuffer.h"
+#include "AudioGeneratorMP3.h"
+#include "AudioOutputI2S.h"
 
 extern "C"
 {
@@ -67,10 +78,6 @@ class M5Stack {
 
     // LCD
     ILI9341 Lcd = ILI9341();
-
-    // UART
-    HardwareSerial Serial0 = HardwareSerial(0);
-    HardwareSerial Serial2 = HardwareSerial(2);
 
  private:
     uint8_t _wakeupPin;

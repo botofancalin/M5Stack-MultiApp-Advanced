@@ -1,5 +1,6 @@
 #include "WebRadio.h"
 #define MDFONT &FreeSerif12pt7b
+#define STFONT &FreeSerif18pt7b
 
 void WebRadioClass::getvolume()
 {
@@ -16,11 +17,11 @@ void WebRadioClass::setVolume(int *v)
 
 void WebRadioClass::StopPlaying()
 {
-	if (decoder)
+	if (player)
 	{
-		decoder->stop();
-		delete decoder;
-		decoder = NULL;
+		player->stop();
+		delete player;
+		player = NULL;
 	}
 	if (buff)
 	{
@@ -47,27 +48,13 @@ void MDCallback(void *cbData, const char *type, bool isUnicode, const char *stri
 	s2.replace("/", "");
 	M5.Lcd.setTextColor(BLACK);
 	M5.Lcd.setFreeFont(MDFONT);
-	M5.Lcd.drawRightString(_s3, 315, 55, 1);
-	M5.Lcd.drawRightString(_s2, 315, 80, 1);
+	M5.Lcd.drawCentreString(_s3, 160, 80, 1);
+	M5.Lcd.drawCentreString(_s2, 160, 105, 1);
 	M5.Lcd.setTextColor(ORANGE);
-	M5.Lcd.drawRightString(s3, 315, 55, 1);
-	M5.Lcd.drawRightString(s2, 315, 80, 1);
+	M5.Lcd.drawCentreString(s3, 160, 80, 1);
+	M5.Lcd.drawCentreString(s2, 160, 105, 1);
 	_s2 = s2;
 	_s3 = s3;
-}
-
-// Called when there's a warning or error (like a buffer underflow or decode hiccup)
-String _e1;
-void StatusCallback(void *cbData, int code, const char *string)
-{
-	String e1 = string;
-	const char *ptr = reinterpret_cast<const char *>(cbData);
-	M5.Lcd.setTextColor(BLACK);
-	M5.Lcd.drawString(_e1, 5, 170, 2);
-
-	M5.Lcd.setTextColor(WHITE);
-	M5.Lcd.drawString(e1, 5, 170, 2);
-	_e1 = e1;
 }
 
 bool WebRadioClass::GetStations(fs::FS &fs, const char *path)
@@ -107,8 +94,7 @@ void WebRadioClass::Run()
 	getvolume();
 	MyMenu.drawAppMenu(F("WebRadio"), F("Vol-"), F("Next"), F("Vol+"));
 	M5.Lcd.setTextColor(ORANGE);
-	M5.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
-	M5.Lcd.setTextColor(WHITE);
+	M5.Lcd.drawCentreString("Long press 'NEXT' to Exit", 158, 190, 2);
 	preallocateBuffer = malloc(preallocateBufferSize);
 	preallocateCodec = malloc(preallocateCodecSize);
 	out = new AudioOutputI2S(0, 1);
@@ -158,34 +144,57 @@ void WebRadioClass::Run()
 				}
 				if (vol != old_vol)
 				{
-					M5.Lcd.setTextColor(ORANGE);
-					M5.Lcd.fillRect(120, 190, 80, 14, BLACK);
-					M5.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
-					M5.Lcd.setTextColor(WHITE);
+					M5.Lcd.HprogressBar(80, 170, 200, 15, GREEN, vol, true);
 					old_vol = vol;
 				}
 				M5.update();
 
 				if (upd)
 				{
+					M5.Lcd.setTextColor(RED);
+					M5.Lcd.drawString("Buffer %", 15, 148, 2);
+					M5.Lcd.HprogressBar(80, 150, 200, 15, RED, 0, true);
+					rawFillLvl = 0;
+					M5.Lcd.setTextColor(GREEN);
+					M5.Lcd.drawString("Volume", 15, 168, 2);
+					M5.Lcd.HprogressBar(80, 170, 200, 15, GREEN, vol, true);
+					M5.Lcd.setFreeFont(STFONT);
 					M5.Lcd.setTextColor(BLACK);
-					M5.Lcd.drawString(old_Station, 5, 35, 2);
-					M5.Lcd.setTextColor(WHITE);
-					M5.Lcd.drawString(Name[Station], 5, 35, 2);
+					M5.Lcd.drawCentreString(old_Station, 160, 35, 1);
+					M5.Lcd.setTextColor(PINK);
+					M5.Lcd.drawCentreString(Name[Station], 160, 35, 1);
 					old_Station = Name[Station];
 					file = new AudioFileSourceICYStream(Link[Station].c_str());
 					file->RegisterMetadataCB(MDCallback, (void *)"ICY");
 					buff = new AudioFileSourceBuffer(file, preallocateBuffer, preallocateBufferSize);
-					buff->RegisterStatusCB(StatusCallback, (void *)"buffer");
-					decoder = isAAC ? (AudioGenerator *)new AudioGeneratorAAC(preallocateCodec, preallocateCodecSize) : (AudioGenerator *)new AudioGeneratorMP3(preallocateCodec, preallocateCodecSize);
-					decoder->begin(buff, out);
+					player = new AudioGeneratorMP3(preallocateCodec, preallocateCodecSize);
+					player->begin(buff, out);
 					setVolume(&vol);
 					old_vol = vol;
 					upd = false;
 				}
 				else
 				{
-					decoder->loop();
+					player->loop();
+					if (rawFillLvl != buff->getFillLevel())
+					{
+						rawFillLvl = buff->getFillLevel();
+						fillLvl = map(rawFillLvl, 0, preallocateBufferSize, 0, 100);
+						M5.Lcd.HprogressBar(80, 150, 200, 15, RED, fillLvl, true);
+					}
+					if (!upd && !fillLvl)
+					{
+						StopPlaying();
+						if (Station < (unsigned int)(Link.size() - 1))
+						{
+							Station++;
+							upd = true;
+						}
+						else
+						{
+							break;
+						}
+					}
 				}
 			}
 			preferences.begin("Volume", false);

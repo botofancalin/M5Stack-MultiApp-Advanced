@@ -11,4 +11,5 @@ public:
 private:
     unsigned short tmp_brigth;
     unsigned short tmp_lbrigth;
+    int val;
 };

@@ -24,13 +24,8 @@
 #define WEBSERVER_H
 
 #include <functional>
-#ifdef ESP8266
-#define WebServer ESP8266WebServer
-#include <ESP8266WiFi.h>
-#else
 #include <WiFi.h>
 #define write_P write
-#endif
 
 enum HTTPMethod
 {
@@ -151,22 +146,6 @@ public:
   void sendContent_P(PGM_P content, size_t size);
 
   static String urlDecode(const String &text);
-
-#ifdef ESP8266
-  template <typename T>
-  size_t streamFile(T &file, const String &contentType)
-  {
-    setContentLength(file.size());
-    if (String(file.name()).endsWith(".gz") &&
-        contentType != "application/x-gzip" &&
-        contentType != "application/octet-stream")
-    {
-      sendHeader("Content-Encoding", "gzip");
-    }
-    send(200, contentType, "");
-    return _currentClient.write(file);
-  }
-#else
   template <typename T>
   size_t streamFile(T &file, const String &contentType)
   {
@@ -216,7 +195,6 @@ public:
     free(buf);
     return totalBytesOut;
   }
-#endif
 
 protected:
   void _addRequestHandler(RequestHandler *handler);

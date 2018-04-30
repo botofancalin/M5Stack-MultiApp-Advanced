@@ -2,7 +2,6 @@
 
 void appOta()
 {
-	ArduinoOTA.setHostname("My_M5Stack");
 	ArduinoOTA
 		.onStart([]() {
 			String type;
@@ -16,13 +15,12 @@ void appOta()
 			}
 
 			// NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-			M5.Lcd.setCursor(0, 60);
+			MyMenu.windowClr();
 			M5.Lcd.setTextColor(YELLOW);
-			M5.Lcd.setTextSize(2);
-			M5.Lcd.println("Start updating " + type);
+			M5.Lcd.drawString(String("Start updating " + type), 5, 60, 2);
 		})
 		.onEnd([]() {
-			M5.Lcd.println("Done");
+			M5.Lcd.drawString("Done", 5, 160, 2);
 		})
 		.onProgress([](unsigned int progress, unsigned int total) {
 			M5.Lcd.HprogressBar(20, 100, 280, 30, YELLOW, (progress / (total / 100)));

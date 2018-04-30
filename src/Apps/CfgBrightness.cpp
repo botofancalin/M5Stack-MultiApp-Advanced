@@ -2,8 +2,8 @@
 
 void CfgBrightnessClass::Run()
 {
-    preferences.begin("Br", false);
-    tmp_brigth = preferences.getUShort("l", 95);
+    preferences.begin("Brightnes", false);
+    tmp_brigth = preferences.getUShort("light", 95);
     tmp_lbrigth = 0;
 
     while (!M5.BtnB.wasPressed())
@@ -19,10 +19,11 @@ void CfgBrightnessClass::Run()
         if (tmp_lbrigth != tmp_brigth)
         {
             tmp_lbrigth = tmp_brigth;
-            preferences.putUShort("l", tmp_lbrigth);
+            preferences.putUShort("light", tmp_lbrigth);
             M5.Lcd.setBrightness(tmp_lbrigth);
             MyMenu.windowClr();
-            M5.Lcd.drawNumber(tmp_lbrigth, 120, 90, 6);
+            val = map(tmp_lbrigth, 16, 255, 0, 100);
+            M5.Lcd.HprogressBar(40, 110, 240, 30, YELLOW, val, true);
         }
         M5.update();
     }

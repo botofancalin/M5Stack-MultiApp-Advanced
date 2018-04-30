@@ -33,7 +33,7 @@ public:
   void setColorSchema(unsigned int inmenucolor, unsigned int inwindowcolor, unsigned int intextcolor);
   void drawAppMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl);
   void GoToLevel(uint32_t inlevel);
-  unsigned int getrgb(uint32_t inred, uint32_t ingrn, uint32_t inblue);
+  unsigned int getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue);
   void addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, 
   signed char goto_level, const char *Menu_Img, void (*function)());
   void show();

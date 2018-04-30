@@ -213,7 +213,7 @@ void M5SAM::windowClr()
   M5.Lcd.fillRoundRect(0, 29, M5.Lcd.width(), M5.Lcd.height() - 28 - 28, 3, windowcolor);
 }
 
-unsigned int M5SAM::getrgb(uint32_t inred, uint32_t ingrn, uint32_t inblue)
+unsigned int M5SAM::getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue)
 {
   inred = map(inred, 0, 255, 0, 31);
   ingrn = map(ingrn, 0, 255, 0, 63);

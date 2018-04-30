@@ -228,12 +228,8 @@ void WebServer::handleClient() {
 }
 
 void WebServer::close() {
-#ifdef ESP8266
-  _server.stop();
-#else
   // TODO add ESP32 WiFiServer::stop()
   _server.end();
-#endif
 }
 
 void WebServer::stop() {

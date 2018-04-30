@@ -1,9 +1,12 @@
 #include "Wrappers.h"
 #include "Resources.h"
 
+const int version = 2;
 unsigned long lastcheck = 0;
 int SignalStrength = 0;
 bool OtaRunning = false;
+
+M5StackServerOta SrververOta(&version);
 
 void setup()
 {
@@ -20,8 +23,8 @@ void setup()
 
 	//MyMenu.setColorSchema(OLIVE,WHITE,BLACK);
 
-	preferences.begin("Br", false);
-	M5.lcd.setBrightness(preferences.getUShort("l", 95));
+	preferences.begin("Brightnes", false);
+	M5.lcd.setBrightness(preferences.getUShort("light", 95));
 	preferences.end();
 
 	//The main menu. Add main menu items here
@@ -57,6 +60,13 @@ void loop()
 			M5.Lcd.setTextColor(WHITE, 15);
 			SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
 			M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
+			if (!OtaRunning)
+			{
+				SrververOta.checkForNewVersion();
+				appOta();
+				OtaRunning = true;
+				Serial.println("Ota function");
+			}
 		}
 		else if (WiFi_Mode == WIFI_MODE_APSTA)
 		{
@@ -67,12 +77,6 @@ void loop()
 		{
 			M5.Lcd.setTextColor(WHITE, 15);
 			M5.Lcd.drawRightString("Wifi OFF", 310, 5, 2);
-		}
-
-		if (!OtaRunning && WiFi_Mode > 0)
-		{
-			appOta();
-			OtaRunning = true;
 		}
 		lastcheck = now;
 	}

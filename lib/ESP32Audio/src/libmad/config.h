@@ -131,7 +131,7 @@ extern int stackfree();
 #undef STDC_HEADERS
 
 /* Version number of package */
-#define VERSION "0.15.1b-esp8266"
+#define VERSION "0.15.1b-esp32"
 
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */

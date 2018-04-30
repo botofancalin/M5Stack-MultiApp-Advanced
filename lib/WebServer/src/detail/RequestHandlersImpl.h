@@ -2,13 +2,7 @@
 #define REQUESTHANDLERSIMPL_H
 
 #include "RequestHandler.h"
-
-#ifdef ESP8266
-// Table of extension->MIME strings stored in PROGMEM, needs to be global due to GCC section typing rules
-static const struct {const char endsWith[16]; const char mimeType[32];} mimeTable[] ICACHE_RODATA_ATTR = {
-#else
 static const struct {const char endsWith[16]; const char mimeType[32];} mimeTable[] = {
-#endif
     { ".html", "text/html" },
     { ".htm", "text/html" },
     { ".css", "text/css" },
@@ -92,13 +86,6 @@ public:
     , _cache_header(cache_header)
     {
         _isFile = fs.exists(path);
-#ifdef ESP8266
-        DEBUGV("StaticRequestHandler: path=%s uri=%s isFile=%d, cache_header=%s\r\n", path, uri, _isFile, cache_header);
-#else
-#ifdef DEBUG_ESP_HTTP_SERVER
-        DEBUG_OUTPUT.printf("StaticRequestHandler: path=%s uri=%s isFile=%d, cache_header=%s\r\n", path, uri, _isFile, cache_header);
-#endif
-#endif
         _baseUriLength = _uri.length();
     }
 
@@ -116,14 +103,6 @@ public:
         if (!canHandle(requestMethod, requestUri))
             return false;
 
-#ifdef ESP8266
-        DEBUGV("StaticRequestHandler::handle: request=%s _uri=%s\r\n", requestUri.c_str(), _uri.c_str());
-#else
-#ifdef DEBUG_ESP_HTTP_SERVER
-        DEBUG_OUTPUT.printf("StaticRequestHandler::handle: request=%s _uri=%s\r\n", requestUri.c_str(), _uri.c_str());
-#endif
-#endif
-
         String path(_path);
 
         if (!_isFile) {
@@ -134,13 +113,6 @@ public:
             // Append whatever follows this URI in request to get the file path.
             path += requestUri.substring(_baseUriLength);
         }
-#ifdef ESP8266
-        DEBUGV("StaticRequestHandler::handle: path=%s, isFile=%d\r\n", path.c_str(), _isFile);
-#else
-#ifdef DEBUG_ESP_HTTP_SERVER
-        DEBUG_OUTPUT.printf("StaticRequestHandler::handle: path=%s, isFile=%d\r\n", path.c_str(), _isFile);
-#endif
-#endif
 
         String contentType = getContentType(path);
 
