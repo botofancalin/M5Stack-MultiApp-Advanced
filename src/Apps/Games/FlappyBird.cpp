@@ -266,7 +266,7 @@ void FlappyBirdClass::game_over()
         }
         if (M5.BtnB.wasPressed())
         {
-            break;
+            Run();
         }
         if (M5.BtnC.wasPressed())
         {

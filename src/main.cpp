@@ -13,7 +13,10 @@ void setup()
 	WiFi_Mode = preferences.getInt("mode", 0);
 	preferences.end();
 	WiFi.mode(wifi_mode_t(WiFi_Mode));
-	WiFi.begin();
+	if (WiFi_Mode > 0)
+	{
+		WiFi.begin();
+	}
 
 	//MyMenu.setColorSchema(OLIVE,WHITE,BLACK);
 

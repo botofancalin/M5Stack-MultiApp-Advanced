@@ -1,12 +1,14 @@
 #include "Oscilloscope.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
+int Gen = 0;
+
 void OscilloscopeClass::DrawText()
 {
 	M5.Lcd.setTextColor(WHITE);
 	M5.Lcd.setTextSize(1);
 	M5.Lcd.fillRect(270, menu, 70, 10, BLUE);
-	(menu != 19) ? M5.Lcd.fillRect(270, menu - 10, 70, 10, BLACK) : M5.Lcd.fillRect(270, 139, 70, 10, BLACK);
+	(menu != 19) ? M5.Lcd.fillRect(270, menu - 10, 70, 10, BLACK) : M5.Lcd.fillRect(270, 149, 70, 10, BLACK);
 	M5.Lcd.drawString((Start ? "Stop" : "Run"), 270, 20);
 	M5.Lcd.drawString(String(String(Ranges[range0]) + "/DIV"), 270, 30);
 	M5.Lcd.drawString(String(String(Ranges[range1]) + "/DIV"), 270, 40);
@@ -17,9 +19,10 @@ void OscilloscopeClass::DrawText()
 	M5.Lcd.drawString(String("OFS2:" + String(ch1_off)), 270, 90);
 	M5.Lcd.drawString(String(trig_ch == 0 ? "T:1" : "T:2"), 270, 100);
 	M5.Lcd.drawString(String(TRIG_Modes[trig_mode]), 270, 110);
-	M5.Lcd.drawString(String("Tlv:" + String(trig_lv)), 270, 120);
+	M5.Lcd.drawString(String("Tlv:" + String(trig_lv - 30)), 270, 120);
 	M5.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130);
-	M5.Lcd.drawString("Exit", 270, 140);
+	M5.Lcd.drawString(String("Gen:" + String(Generator[Gen])), 270, 140);
+	M5.Lcd.drawString("Exit", 270, 150);
 	M5.Lcd.setTextColor(WHITE, BLACK);
 	M5.Lcd.drawString("<", 60, 220, 2);
 	M5.Lcd.drawString("Menu", 145, 220, 2);
@@ -31,7 +34,7 @@ void OscilloscopeClass::CheckSW()
 	M5.update();
 	if (M5.BtnB.wasPressed())
 	{
-		(menu < 139) ? (menu += 10) : (menu = 19);
+		(menu < 149) ? (menu += 10) : (menu = 19);
 		return;
 	}
 	else if (M5.BtnA.wasPressed())
@@ -84,7 +87,7 @@ void OscilloscopeClass::CheckSW()
 			(trig_mode > TRIG_AUTO) ? (trig_mode--) : (trig_mode = TRIG_SCAN);
 			break;
 		case 119:
-			if (trig_lv > 0)
+			if (trig_lv > 30)
 			{
 				trig_lv--;
 			}
@@ -93,6 +96,9 @@ void OscilloscopeClass::CheckSW()
 			trig_edge = !trig_edge;
 			break;
 		case 139:
+			(Gen > 0) ? (Gen--) : (Gen = 4);
+			break;
+		case 149:
 			exitprg = !exitprg;
 			break;
 		}
@@ -148,7 +154,7 @@ void OscilloscopeClass::CheckSW()
 			(trig_mode < TRIG_SCAN) ? (trig_mode++) : (trig_mode = TRIG_AUTO);
 			break;
 		case 119:
-			if (trig_lv < 60)
+			if (trig_lv < 130)
 			{
 				trig_lv++;
 			}
@@ -157,6 +163,9 @@ void OscilloscopeClass::CheckSW()
 			trig_edge = !trig_edge;
 			break;
 		case 139:
+			(Gen < 4) ? (Gen++) : (Gen = 0);
+			break;
+		case 149:
 			exitprg = !exitprg;
 			break;
 		}
@@ -221,14 +230,14 @@ void OscilloscopeClass::ClearAndDrawGraph()
 	}
 	for (int x = 0; x < (SAMPLES - 1); x++)
 	{
-		M5.Lcd.drawLine(x, LCD_HEIGHT - data[clear][x], x + 1, LCD_HEIGHT - data[clear][x + 1], BLACK);
-		M5.Lcd.drawLine(x, LCD_HEIGHT - data[clear + 1][x], x + 1, LCD_HEIGHT - data[clear + 1][x + 1], BLACK);
 		if (ch0_mode != MODE_OFF)
 		{
+			M5.Lcd.drawLine(x, LCD_HEIGHT - data[clear][x], x + 1, LCD_HEIGHT - data[clear][x + 1], BLACK);
 			M5.Lcd.drawLine(x, LCD_HEIGHT - data[sample][x], x + 1, LCD_HEIGHT - data[sample][x + 1], CH1COLOR);
 		}
 		if (ch1_mode != MODE_OFF)
 		{
+			M5.Lcd.drawLine(x, LCD_HEIGHT - data[clear + 1][x], x + 1, LCD_HEIGHT - data[clear + 1][x + 1], BLACK);
 			M5.Lcd.drawLine(x, LCD_HEIGHT - data[sample + 1][x], x + 1, LCD_HEIGHT - data[sample + 1][x + 1], CH2COLOR);
 		}
 	}
@@ -247,62 +256,62 @@ void OscilloscopeClass::ClearAndDrawDot(int i)
 	{
 		clear = 2;
 	}
-	M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[clear][i - 1], i, LCD_HEIGHT - data[clear][i], BLACK);
-	M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[clear + 1][i - 1], i, LCD_HEIGHT - data[clear + 1][i], BLACK);
 	if (ch0_mode != MODE_OFF)
 	{
+		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[clear][i - 1], i, LCD_HEIGHT - data[clear][i], BLACK);
 		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[sample][i - 1], i, LCD_HEIGHT - data[sample][i], CH1COLOR);
 	}
 	if (ch1_mode != MODE_OFF)
 	{
+		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[clear + 1][i - 1], i, LCD_HEIGHT - data[clear + 1][i], BLACK);
 		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[sample + 1][i - 1], i, LCD_HEIGHT - data[sample + 1][i], CH2COLOR);
 	}
 	DrawGrid(i);
 }
 
-inline unsigned int OscilloscopeClass::adRead(const uint8_t *ch, uint8_t *mode, int *off)
-{
-	int a = analogRead(*ch);
-	a = (((a + *off) * VREF[(*ch == ad_ch0) ? range0 : range1]) / 10000) + 35;
-	a = ((a >= LCD_HEIGHT) ? LCD_HEIGHT : a);
-	if (*mode == MODE_INV)
-	{
-		return LCD_HEIGHT - a;
-	}
-	return a;
-}
-
-void ledcAnalogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255)
-{
-	uint32_t duty = (8191 / valueMax) * min(value, valueMax);
-	ledcWrite(channel, duty);
-}
-
-// Make a PWM generator task on core 0
-// Signal generator pin 2
-void LedC_Task(void *parameter)
-{
-	ledcSetup(0, 500, 13);
-	ledcAttachPin(2, 0);
-
-	for (;;)
-	{
-		ledcAnalogWrite(0, 128);
-		taskYIELD();
-	}
-	vTaskDelete(NULL);
-}
-
-// Make a sinusoide generator task on core 0
 // Signal generator pin 26
-void Synusoide_Task(void *parameter)
+void SigGen_Task(void *parameter)
 {
+	pinMode(26,OUTPUT);
 	for (;;)
 	{
-		for (int MyAngle = 0; MyAngle < 255; MyAngle++)
+		switch (Gen)
 		{
-			dacWrite(26, (((sin(MyAngle * (6.28f) / 256)) * 120) + 128));
-			taskYIELD();
+		case 0:
+			for (int MyAngle = 0; MyAngle < 256; MyAngle++)
+			{
+				dacWrite(26, (((sin(MyAngle * (6.28f) / 256)) * 120) + 128));
+				delayMicroseconds(20);
+			}
+			break;
+		case 1:
+			dacWrite(26, 0);
+			delay(5);
+			dacWrite(26, 255);
+			delay(5);
+			break;
+		case 2:
+			for (int i = 0; i < 256; i++)
+			{
+				dacWrite(26, i);
+				delayMicroseconds(20);
+			}
+			break;
+		case 3:
+			for (int i = 0; i < 256; i++)
+			{
+				dacWrite(26, i);
+				delayMicroseconds(10);
+			}
+			for (int i = 255; i > 0; i--)
+			{
+				dacWrite(26, i);
+				delayMicroseconds(10);
+			}
+			break;
+		default:
+			delay(10);
+			break;
 		}
 	}
 	vTaskDelete(NULL);
@@ -314,27 +323,16 @@ void OscilloscopeClass::Run()
 	M5.Lcd.fillScreen(BLACK);
 	DrawGrid();
 
-	if (LedC_Gen == NULL)
+	if (Sig_Gen == NULL)
 	{
 		xTaskCreatePinnedToCore(
-			LedC_Task,   /* Task function. */
-			"LedC_Task", /* name of the task, a name just for humans */
-			1024,		 /* Stack size of task */
-			NULL,		 /* parameter of the task */
-			1,			 /* priority of the task */
-			&LedC_Gen,   /* Task handle to keep track of the created task */
-			0);			 /* cpu core number where the task is assigned*/
-	}
-	if (Syn_Gen == NULL)
-	{
-		xTaskCreatePinnedToCore(
-			Synusoide_Task,   /* Task function. */
-			"Synusoide_Task", /* name of the task, a name just for humans */
-			1024,			  /* Stack size of task */
-			NULL,			  /* parameter of the task */
-			1,				  /* priority of the task */
-			&Syn_Gen,		  /* Task handle to keep track of the created task */
-			0);				  /* cpu core number where the task is assigned*/
+			SigGen_Task,		/* Task function. */
+			"Signal Generator", /* name of the task, a name just for humans */
+			1024,				/* Stack size of task */
+			NULL,				/* parameter of the task */
+			1,					/* priority of the task */
+			&Sig_Gen,			/* Task handle to keep track of the created task */
+			0);					/* cpu core number where the task is assigned*/
 	}
 
 	while (1)
@@ -342,42 +340,40 @@ void OscilloscopeClass::Run()
 		if (trig_mode != TRIG_SCAN)
 		{
 			unsigned long st = millis();
-			unsigned int oad;
 			if (trig_ch == 0)
 			{
-				oad = adRead(&ad_ch0, &ch0_mode, &ch0_off);
+				*oadp = adRead(&ad_ch0, &ch0_mode, &ch0_off);
 			}
 			else
 			{
-				oad = adRead(&ad_ch1, &ch1_mode, &ch1_off);
+				*oadp = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 			}
 			for (;;)
 			{
-				unsigned int ad;
 				if (trig_ch == 0)
 				{
-					ad = adRead(&ad_ch0, &ch0_mode, &ch0_off);
+					*adp = adRead(&ad_ch0, &ch0_mode, &ch0_off);
 				}
 				else
 				{
-					ad = adRead(&ad_ch1, &ch1_mode, &ch1_off);
+					*adp = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 				}
 
 				if (trig_edge == TRIG_E_UP)
 				{
-					if (ad >= trig_lv && ad > oad)
+					if (*adp >= trig_lv && *adp > *oadp)
 					{
 						break;
 					}
 				}
 				else
 				{
-					if (ad <= trig_lv && ad < oad)
+					if (*adp <= trig_lv && *adp < *oadp)
 					{
 						break;
 					}
 				}
-				oad = ad;
+				*oadp = *adp;
 				if (trig_mode == TRIG_SCAN)
 				{
 					break;
@@ -389,7 +385,7 @@ void OscilloscopeClass::Run()
 				CheckSW();
 			}
 		}
-		if (rate <= 4 && Start) // sample and draw depending on the sampling rate
+		if (rate <= 6 && Start) // sample and draw depending on the sampling rate
 		{
 			if (sample == 0) // change the index for the double buffer
 			{
@@ -419,9 +415,9 @@ void OscilloscopeClass::Run()
 					data[sample + 1][i] = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 				}
 			}
-			else if (rate >= 2 && rate <= 4) // .5ms, 1ms or 2ms sampling
+			else if (rate >= 2 && rate <= 6)
 			{
-				const unsigned long r_[] = {5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
+				const unsigned long r_[] = {1000 / DOTS_DIV, 2000 / DOTS_DIV ,5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
 				unsigned long st = micros();
 				unsigned long r = r_[rate - 2];
 				for (int i = 0; i < SAMPLES; i++)
@@ -455,26 +451,27 @@ void OscilloscopeClass::Run()
 					data[1][i] = data[3][i];
 				}
 			}
-			const unsigned long r_[] = {50000 / DOTS_DIV, 100000 / DOTS_DIV, 200000 / DOTS_DIV,
-										500000 / DOTS_DIV, 1000000 / DOTS_DIV, 2000000 / DOTS_DIV,
+			const unsigned long r_[] = {50000 / DOTS_DIV, 100000 / DOTS_DIV, 
+										200000 / DOTS_DIV, 500000 / DOTS_DIV, 
+										1000000 / DOTS_DIV, 2000000 / DOTS_DIV, 
 										5000000 / DOTS_DIV, 10000000 / DOTS_DIV};
 			unsigned long st = micros();
 			for (int i = 0; i < SAMPLES; i++)
 			{
-				while ((st - micros()) < r_[rate - 5])
+				while ((st - micros()) < r_[rate - 7])
 				{
 					CheckSW();
-					if (rate < 5)
+					if (rate < 7)
 					{
 						break;
 					}
 				}
-				if (rate < 5) // sampling rate has been changed
+				if (rate < 7) // sampling rate has been changed
 				{
 					break;
 				}
-				st += r_[rate - 5];
-				if (st - micros() > r_[rate - 5])
+				st += r_[rate - 7];
+				if (st - micros() > r_[rate - 7]) // sampling rate has been changed to shorter interval
 				{
 					st = micros();
 				}
@@ -507,12 +504,9 @@ OscilloscopeClass::OscilloscopeClass()
 
 OscilloscopeClass::~OscilloscopeClass()
 {
-	vTaskDelete(LedC_Gen);
-	vTaskDelete(Syn_Gen);
-	LedC_Gen = NULL;
-	Syn_Gen = NULL;
+	vTaskDelete(Sig_Gen);
+	Sig_Gen = NULL;
 	dacWrite(26, 0);
-	ledcDetachPin(2);
 	M5.Lcd.fillScreen(BLACK);
 	MyMenu.show();
 }
