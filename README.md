@@ -3,4 +3,4 @@
 ### Is made on PlatformIO but with some minor work it can be adapted to other IDE's
 ### Like VisualStudio+VisualMicro or Eclipse.
 
-** Oscilloscope**
+*** Oscilloscope ***
