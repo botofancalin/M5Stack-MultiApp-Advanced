@@ -11,20 +11,20 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
 ## The project include:
 - Dual Channel Oscilloscope
 - WebRadio
-+ Can play MP3 streams
-+ Web Radio streams are stored on SD Card on "RadioStations.txt" file
+  + Can play MP3 streams
+  + Web Radio streams are stored on SD Card on "RadioStations.txt" file
 - WebServer with web based SD File manager that support
-+ List SD Folders
-+ Create Folder
-+ Delete Folder
-+ Download files
-+ Upload Files
-+ Display Files Content (images, text, etc...)
+  + List SD Folders
+  + Create Folder
+  + Delete Folder
+  + Download files
+  + Upload Files
+  + Display Files Content (images, text, etc...)
 - SD Browser that support
-+ Display Jpeg files on the screen
-+ Resize Jpeg to fit to screen size
-+ Play MP3 Files using Mp3 Player App
-+ Display File properties for the files that can't be open with included apps
+  + Display Jpeg files on the screen
+  + Resize Jpeg to fit to screen size
+  + Play MP3 Files using Mp3 Player App
+  + Display File properties for the files that can't be open with included apps
 - Tools
 
 
