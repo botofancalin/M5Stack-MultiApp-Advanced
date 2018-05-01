@@ -35,7 +35,10 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     + DHT Sensor reader
       + Support any DHT sensor type
     - Stopwatch
-
+  - Games (just for fun)
+    + Space Shooter
+    + Flappy Bird
+-Return (to menu root)
 
 ![image](MultiAppImgs/Oscilloscope.jpg)
 
