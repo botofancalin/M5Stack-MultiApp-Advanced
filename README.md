@@ -53,7 +53,8 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     + Long press NEXT key to exit from Radio App
     + Display Volume Level
     + Display Data buffer state
-    + If the connection is lost or the buffer get empty, will try to recover the connection. If the connection can't be recovered, will connect to the next station on the list
+    + If the connection is lost or the buffer get empty, will try to recover the connection. 
+    + If the connection can't be recovered, will connect to the next station on the list
     + Can play MP3 streams
     + Web Radio streams are stored on SD Card on "RadioStations.txt" file
     + Support theoretically unlimited station list
