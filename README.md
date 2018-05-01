@@ -20,28 +20,28 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     
   ![image](MultiAppImgs/Oscilloscope.jpg)
   
-    + Oscilloscope Menu Structure:
-      + Stop / Run frame
-      + Sensitivity for each channel:
-        + 50mV, 100mV, 200mV, 500mV, 1V per Divizion
-      + Channel mode for each channel
-        + Normal, Inverted, Off
-      + Offset for each channel
-      + Trigger Switch
-        + Trigger from Channel 1 or Channel 2
-      + Trigger Mode
-        + Auto, Normal, Scan
-      + Trigger Level 0 - 100 %
-      + Trigger Edge
-        + Rising (UP)
-        + Falling (DN)
-      + Internal Signal Generator mode
-        + Wave signal
-        + Square signal
-        + Triangular Signal 1
-        + Triangular Signal 2
-        + Signal Generator OFF
-      + Exit Oscilloscope App
+    - Oscilloscope Menu Structure:
+      - Stop / Run frame
+      - Sensitivity for each channel:
+        - 50mV, 100mV, 200mV, 500mV, 1V per Divizion
+      - Channel mode for each channel
+        - Normal, Inverted, Off
+      - Offset for each channel
+      - Trigger Switch
+        - Trigger from Channel 1 or Channel 2
+      - Trigger Mode
+        - Auto, Normal, Scan
+      - Trigger Level 0 - 100 %
+      - Trigger Edge
+        - Rising (UP)
+        - Falling (DN)
+      - Internal Signal Generator mode
+        - Wave signal
+        - Square signal
+        - Triangular Signal 1
+        - Triangular Signal 2
+        - Signal Generator OFF
+      - Exit Oscilloscope App
       
 ![image](MultiAppImgs/Wave.jpg) ![image](MultiAppImgs/Square.jpg) ![image](MultiAppImgs/Saw1.jpg) ![image](MultiAppImgs/Saw2.jpg)
   
@@ -49,29 +49,31 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
   
   ![image](MultiAppImgs/WebRadio.jpg)
   
-    + Support Volume Adjustment
-    + Support Stations change on the fly
-    + Long press NEXT key to exit from Radio App
-    + Display Volume Level
-    + Display Data buffer state
-    + If the connection is lost or the buffer get empty, will try to recover the connection. 
-    + If the connection can't be recovered, will connect to the next station on the list
-    + Can play MP3 streams
-    + Web Radio streams are stored on SD Card on "RadioStations.txt" file
-    + Support theoretically unlimited station list
+    - Support Volume Adjustment
+    - Support Stations change on the fly
+    - Long press NEXT key to exit from Radio App
+    - Display Volume Level
+    - Display Data buffer state
+    - If the connection is lost or the buffer get empty, will try to recover the connection. 
+    - If the connection can't be recovered, will connect to the next station on the list
+    - Can play MP3 streams
+    - Web Radio streams are stored on SD Card on "RadioStations.txt" file
+    - Support theoretically unlimited station list
         - The stations must be defined on separate lines as follow: "StationName=StationLink;"
         
         
-  - WebServer with web based SD File manager that support
+  - WebServer with web based SD File manager
+    + Can run in the background once started
+    + You can use other apps when the webserver is running
     
    ![image](MultiAppImgs/WebServer.jpg)
     
-    + List SD Folders
-    + Create Folder
-    + Delete Folder
-    + Download files
-    + Upload Files
-    + Display Files Content (images, text, etc...)
+    - List SD Folders
+    - Create Folder
+    - Delete Folder
+    - Download files
+    - Upload Files
+    - Display Files Content (images, text, etc...)
     
     
   - SD Browser that support
