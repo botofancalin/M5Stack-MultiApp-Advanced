@@ -61,19 +61,19 @@
 static int WiFi_Mode;
 static int vol, old_vol;
 
-extern "C"
-{
+extern "C" {
 #include "esp_sleep.h"
 }
 
-class M5Stack {
+class M5Stack
+{
 
- public:
-     M5Stack();
-    ~M5Stack();
-    void begin();
-    void update();
-      void up();
+public:
+  M5Stack();
+  ~M5Stack();
+  void begin();
+  void update();
+  void up();
   void down();
   void execute();
   void windowClr();
@@ -81,8 +81,8 @@ class M5Stack {
   void drawAppMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl);
   void GoToLevel(uint32_t inlevel);
   unsigned int getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue);
-  void addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title, 
-  signed char goto_level, const char *Menu_Img, void (*function)());
+  void addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, const char *btnC_title,
+                   signed char goto_level, const char *Menu_Img, void (*function)());
   void show();
   void showList();
   void clearList();
@@ -94,24 +94,24 @@ class M5Stack {
   void btnRestore();
   String lastBtnTittle[3];
 
-    void setWakeupButton(uint8_t button);
-    void powerOFF();
+  void setWakeupButton(uint8_t button);
+  void powerOFF();
 
-    // Button API
-    #define DEBOUNCE_MS 5
-    Button BtnA = Button(BUTTON_A_PIN, true, DEBOUNCE_MS);
-    Button BtnB = Button(BUTTON_B_PIN, true, DEBOUNCE_MS);
-    Button BtnC = Button(BUTTON_C_PIN, true, DEBOUNCE_MS);
+// Button API
+#define DEBOUNCE_MS 5
+  Button BtnA = Button(BUTTON_A_PIN, true, DEBOUNCE_MS);
+  Button BtnB = Button(BUTTON_B_PIN, true, DEBOUNCE_MS);
+  Button BtnC = Button(BUTTON_C_PIN, true, DEBOUNCE_MS);
 
-    // LCD
-    ILI9341 Lcd = ILI9341();
+  // LCD
+  ILI9341 Lcd = ILI9341();
 
- private:
-    uint8_t _wakeupPin;
-    String listCaption;
+private:
+  uint8_t _wakeupPin;
+  String listCaption;
   void drawListItem(uint32_t inIDX, uint32_t postIDX);
-  void drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor, 
-  unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor);
+  void drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor,
+                unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor);
   struct MenuCommandCallback
   {
     char title[MENU_TITLE_MAX_SIZE + 1];

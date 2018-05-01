@@ -63,7 +63,6 @@ void loop()
 				SrververOta.checkForNewVersion();
 				appOta();
 				OtaRunning = true;
-				Serial.println("Ota function");
 			}
 		}
 		else if (WiFi_Mode == WIFI_MODE_APSTA)

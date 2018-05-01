@@ -190,8 +190,8 @@ void M5Stack::execute()
   }
 }
 
-void M5Stack::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title, 
-const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
+void M5Stack::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title,
+                          const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
 {
   uint32_t mCnt = menuCount[levelID];
   menuList[levelID] = (MenuCommandCallback *)realloc(menuList[levelID], (mCnt + 1) * sizeof(MenuCommandCallback));
@@ -250,8 +250,8 @@ void M5Stack::btnRestore()
   Lcd.setTextColor(menutextcolor, windowcolor);
 }
 
-void M5Stack::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor, 
-unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
+void M5Stack::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor,
+                       unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
 {
   lastBtnTittle[0] = inbtnAttl;
   lastBtnTittle[1] = inbtnBttl;
@@ -263,7 +263,7 @@ unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
   Lcd.fillRoundRect(0, 29, Lcd.width(), Lcd.height() - 28 - 28, 3, inwindowcolor);
   if (iMenuImg != NULL)
   {
-    Lcd.drawJpg((uint8_t*)iMenuImg, (sizeof(iMenuImg)/sizeof(iMenuImg[0])), 0, 30);
+    Lcd.drawJpg((uint8_t *)iMenuImg, (sizeof(iMenuImg) / sizeof(iMenuImg[0])), 0, 30);
   }
 
   Lcd.setTextColor(intxtcolor);
@@ -276,70 +276,70 @@ unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
 
 void M5Stack::begin()
 {
-    // UART
-    Serial.begin(115200);
-    Serial.flush();
-    Serial.print("M5Stack initializing...");
+  // UART
+  Serial.begin(115200);
+  Serial.flush();
+  Serial.print("M5Stack initializing...");
 
-    // I2C
-    pinMode(SCL, OUTPUT);
-    digitalWrite(SDA, 1);
+  // I2C
+  pinMode(SCL, OUTPUT);
+  digitalWrite(SDA, 1);
 
-    // Setup the button with an internal pull-up
-    pinMode(BUTTON_A_PIN, INPUT_PULLUP);
-    pinMode(BUTTON_B_PIN, INPUT_PULLUP);
-    pinMode(BUTTON_C_PIN, INPUT_PULLUP);
+  // Setup the button with an internal pull-up
+  pinMode(BUTTON_A_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_B_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_C_PIN, INPUT_PULLUP);
 
-    // M5 LCD INIT
-    Lcd.begin();
-    Lcd.fillScreen(BLACK);
-    Lcd.setCursor(0, 0);
-    Lcd.setTextColor(WHITE);
-    Lcd.setTextSize(1);
-    Lcd.setBrightness(50);
+  // M5 LCD INIT
+  Lcd.begin();
+  Lcd.fillScreen(BLACK);
+  Lcd.setCursor(0, 0);
+  Lcd.setTextColor(WHITE);
+  Lcd.setTextSize(1);
+  Lcd.setBrightness(50);
 
-    // TF Card & SPIFFS
-    SD.begin(TFCARD_CS_PIN, SPI, 40000000);
-    vTaskDelay(10 / portTICK_RATE_MS);
-    SPIFFS.begin();
+  // TF Card & SPIFFS
+  SD.begin(TFCARD_CS_PIN, SPI, 40000000);
+  vTaskDelay(10 / portTICK_RATE_MS);
+  SPIFFS.begin();
 
-    // Set wakeup button
-    setWakeupButton(BUTTON_A_PIN);
+  // Set wakeup button
+  setWakeupButton(BUTTON_A_PIN);
 
-    Serial.println("OK");
+  Serial.println("OK");
 }
 
 void M5Stack::update()
 {
 
-    //Button update
-    BtnA.read();
-    BtnB.read();
-    BtnC.read();
+  //Button update
+  BtnA.read();
+  BtnB.read();
+  BtnC.read();
 }
 
 void M5Stack::setWakeupButton(uint8_t button)
 {
-    _wakeupPin = button;
+  _wakeupPin = button;
 }
 
 void M5Stack::powerOFF()
 {
 
-    // power off the Lcd
-    Lcd.setBrightness(0);
-    Lcd.sleep();
+  // power off the Lcd
+  Lcd.setBrightness(0);
+  Lcd.sleep();
 
-    // ESP32 into deep sleep
-    esp_sleep_enable_ext0_wakeup((gpio_num_t)_wakeupPin, LOW);
+  // ESP32 into deep sleep
+  esp_sleep_enable_ext0_wakeup((gpio_num_t)_wakeupPin, LOW);
 
-    while (digitalRead(_wakeupPin) == LOW)
-    {
-        delay(10);
-    }
-    USE_SERIAL.println("On deep sleep mode.");
-    esp_deep_sleep_start();
-    USE_SERIAL.println("On power OFF fail!");
+  while (digitalRead(_wakeupPin) == LOW)
+  {
+    delay(10);
+  }
+  USE_SERIAL.println("On deep sleep mode.");
+  esp_deep_sleep_start();
+  USE_SERIAL.println("On power OFF fail!");
 }
 
 M5Stack::~M5Stack()
