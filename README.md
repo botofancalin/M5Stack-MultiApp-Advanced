@@ -33,6 +33,7 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
   + I2C Scanner
   + DHT Sensor reader
     + Support any DHT sensor type
+  - Stopwatch
 
 
 ![image](MultiAppImgs/Oscilloscope.jpg)
