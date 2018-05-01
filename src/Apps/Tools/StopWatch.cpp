@@ -3,7 +3,7 @@
 void StopWatchClass::Run()
 {
     M5.update();
-    MyMenu.drawAppMenu(F("STOPWATCH"), F("S/S"), F("ESC"), F("RES"));
+    M5.drawAppMenu(F("STOPWATCH"), F("S/S"), F("ESC"), F("RES"));
 
     M5.Lcd.drawString(F("MIN"), 40, 120, 2);
     M5.Lcd.drawString(F("SEC"), 170, 120, 2);
@@ -17,7 +17,7 @@ void StopWatchClass::Run()
         {
             tmp_sec = 0;
             tmp_min = 0;
-            MyMenu.windowClr();
+            M5.windowClr();
             M5.Lcd.drawString(F("MIN"), 40, 120, 2);
             M5.Lcd.drawString(F("SEC"), 170, 120, 2);
             M5.Lcd.drawFloat(tmp_sec, 1, 210, 100, 6);
@@ -37,7 +37,7 @@ void StopWatchClass::Run()
                 {
                     tmp_sec = 0;
                     tmp_min++;
-                    MyMenu.windowClr();
+                    M5.windowClr();
                     M5.Lcd.drawString(F("MIN"), 40, 120, 2);
                     M5.Lcd.drawString(F("SEC"), 170, 120, 2);
                     M5.Lcd.drawFloat(tmp_sec, 1, 210, 100, 6);
@@ -65,6 +65,6 @@ StopWatchClass::~StopWatchClass()
 {
     M5.Lcd.setRotation(0);
     M5.Lcd.fillScreen(0);
-    MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-    MyMenu.showList();
+    M5.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+    M5.showList();
 }

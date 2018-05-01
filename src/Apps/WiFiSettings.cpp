@@ -83,76 +83,76 @@ void WifiSettingsClass::SmartConfig()
 
 void WifiSettingsClass::Run()
 {
-    MyMenu.clearList();
-    MyMenu.setListCaption("WiFi");
-    MyMenu.addList("WiFi SmartConfig");
-    MyMenu.addList("Connect by WPS Button");
-    MyMenu.addList("Connect by WPS Pin Code");
-    MyMenu.addList("WiFi STA");
-    MyMenu.addList("WiFi AP");
-    MyMenu.addList("WiFi OFF");
-    MyMenu.showList();
+    M5.clearList();
+    M5.setListCaption("WiFi");
+    M5.addList("WiFi SmartConfig");
+    M5.addList("Connect by WPS Button");
+    M5.addList("Connect by WPS Pin Code");
+    M5.addList("WiFi STA");
+    M5.addList("WiFi AP");
+    M5.addList("WiFi OFF");
+    M5.showList();
 
     while (!M5.BtnA.wasPressed())
     {
         if (M5.BtnC.wasPressed())
         {
-            MyMenu.nextList();
+            M5.nextList();
         }
         if (M5.BtnB.wasPressed())
         {
-            if (MyMenu.getListString() == "WiFi STA")
+            if (M5.getListString() == "WiFi STA")
             {
-                MyMenu.windowClr();
+                M5.windowClr();
                 STA_Mode();
                 vTaskDelay(2000 / portTICK_PERIOD_MS);
-                MyMenu.windowClr();
-                MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
+                M5.windowClr();
+                M5.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
+                M5.showList();
             }
-            if (MyMenu.getListString() == "WiFi SmartConfig")
+            if (M5.getListString() == "WiFi SmartConfig")
             {
-                MyMenu.windowClr();
+                M5.windowClr();
                 SmartConfig();
                 vTaskDelay(2000 / portTICK_PERIOD_MS);
-                MyMenu.windowClr();
-                MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
+                M5.windowClr();
+                M5.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
+                M5.showList();
             }
-            if (MyMenu.getListString() == "WiFi AP")
+            if (M5.getListString() == "WiFi AP")
             {
-                MyMenu.windowClr();
+                M5.windowClr();
                 AP_Mode();
                 vTaskDelay(2000 / portTICK_PERIOD_MS);
-                MyMenu.windowClr();
-                MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
+                M5.windowClr();
+                M5.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
+                M5.showList();
             }
-            if (MyMenu.getListString() == "Connect by WPS Button")
+            if (M5.getListString() == "Connect by WPS Button")
             {
-                MyMenu.windowClr();
+                M5.windowClr();
                 vTaskDelay(200 / portTICK_PERIOD_MS);
                 Wps_run(true);
                 WiFi_Mode = WIFI_MODE_STA;
             }
-            if (MyMenu.getListString() == "Connect by WPS Pin Code")
+            if (M5.getListString() == "Connect by WPS Pin Code")
             {
-                MyMenu.windowClr();
+                M5.windowClr();
                 vTaskDelay(200 / portTICK_PERIOD_MS);
                 Wps_run(false);
                 WiFi_Mode = WIFI_MODE_STA;
             }
-            if (MyMenu.getListString() == "WiFi OFF")
+            if (M5.getListString() == "WiFi OFF")
             {
-                MyMenu.windowClr();
+                M5.windowClr();
                 vTaskDelay(200 / portTICK_PERIOD_MS);
                 WiFi.disconnect();
                 WiFi.mode(WIFI_MODE_NULL);
                 WiFi_Mode = WIFI_MODE_NULL;
                 M5.Lcd.drawString("WiFi Turned OFF", 5, 50, 2);
                 vTaskDelay(2000 / portTICK_PERIOD_MS);
-                MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
+                M5.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
+                M5.showList();
             }
         }
         M5.update();
@@ -164,11 +164,11 @@ void WifiSettingsClass::Run()
 
 WifiSettingsClass::WifiSettingsClass()
 {
-    MyMenu.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
+    M5.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));
     M5.update();
 }
 
 WifiSettingsClass::~WifiSettingsClass()
 {
-    MyMenu.show();
+    M5.show();
 }

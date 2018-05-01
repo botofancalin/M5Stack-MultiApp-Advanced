@@ -92,7 +92,7 @@ void WebRadioClass::Run()
 {
 	M5.update();
 	getvolume();
-	MyMenu.drawAppMenu(F("WebRadio"), F("Vol-"), F("Next"), F("Vol+"));
+	M5.drawAppMenu(F("WebRadio"), F("Vol-"), F("Next"), F("Vol+"));
 	M5.Lcd.setTextColor(ORANGE);
 	M5.Lcd.drawCentreString("Long press 'NEXT' to Exit", 158, 190, 2);
 	preallocateBuffer = malloc(preallocateBufferSize);
@@ -231,5 +231,5 @@ WebRadioClass::~WebRadioClass()
 	Name.shrink_to_fit();
 	Link.clear();
 	Link.shrink_to_fit();
-	MyMenu.show();
+	M5.show();
 }

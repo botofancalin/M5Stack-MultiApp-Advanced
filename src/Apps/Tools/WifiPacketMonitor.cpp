@@ -181,7 +181,7 @@ void Monitor_run()
 	preferences.end();
 	M5.Lcd.setRotation(0);
 	M5.Lcd.fillScreen(0);
-	MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-	MyMenu.showList();
+	M5.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+	M5.showList();
 	return;
 }

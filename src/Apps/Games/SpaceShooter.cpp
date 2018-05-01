@@ -540,6 +540,6 @@ SpaceShooterClass::~SpaceShooterClass()
 {
   M5.Lcd.fillScreen(0);
   M5.Lcd.setTextSize(1);
-  MyMenu.drawAppMenu(F("GAMES"), F("ESC"), F("SELECT"), F("LIST"));
-  MyMenu.showList();
+  M5.drawAppMenu(F("GAMES"), F("ESC"), F("SELECT"), F("LIST"));
+  M5.showList();
 }

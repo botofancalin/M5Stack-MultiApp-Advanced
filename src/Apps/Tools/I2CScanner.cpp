@@ -3,7 +3,7 @@
 void I2CScannerClass::Run()
 {
     M5.update();
-    MyMenu.drawAppMenu(F("I2C SCANNER"), F("ESC"), F("SCAN"), F(""));
+    M5.drawAppMenu(F("I2C SCANNER"), F("ESC"), F("SCAN"), F(""));
 
     while (!M5.BtnA.wasPressed())
     {
@@ -41,7 +41,7 @@ void I2CScannerClass::Run()
         {
             if (M5.BtnB.wasPressed())
             {
-                MyMenu.windowClr();
+                M5.windowClr();
                 ridx = 0;
                 lidx = 0;
                 scanrun = HIGH;
@@ -59,6 +59,6 @@ I2CScannerClass::~I2CScannerClass()
 {
     M5.Lcd.setRotation(0);
                 M5.Lcd.fillScreen(0);
-                MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-                MyMenu.showList();
+                M5.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+                M5.showList();
 }

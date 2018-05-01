@@ -4,31 +4,31 @@
 void GamesListClass::Run()
 {
     M5.update();
-    MyMenu.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
-    MyMenu.clearList();
-    MyMenu.setListCaption("GAMES");
+    M5.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
+    M5.clearList();
+    M5.setListCaption("GAMES");
 
     // The list items Add new items to list to be displayed
-    MyMenu.addList("ALIEN SHOOTER");
-    MyMenu.addList("FLAPPY BIRD");
-    MyMenu.showList();
+    M5.addList("ALIEN SHOOTER");
+    M5.addList("FLAPPY BIRD");
+    M5.showList();
 
     while (!M5.BtnA.wasPressed())
     {
         if (M5.BtnC.wasPressed())
         {
-            MyMenu.nextList();
+            M5.nextList();
         }
         if (M5.BtnB.wasPressed())
         {
-            if (MyMenu.getListString() == "ALIEN SHOOTER")
+            if (M5.getListString() == "ALIEN SHOOTER")
             {
                 M5.update();
                 // The game object with member call
                 SpaceShooterClass SpaceShooterObj;
                 SpaceShooterObj.Run();
             }
-             if (MyMenu.getListString() == "FLAPPY BIRD")
+             if (M5.getListString() == "FLAPPY BIRD")
             {
                 M5.update();
                 FlappyBirdClass FlappyBirdObj;
@@ -45,5 +45,5 @@ GamesListClass::GamesListClass()
 
 GamesListClass::~GamesListClass()
 {
-    MyMenu.show();
+    M5.show();
 }

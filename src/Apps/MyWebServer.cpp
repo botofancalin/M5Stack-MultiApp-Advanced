@@ -343,7 +343,7 @@ void WebServerClass::Run()
         M5.update();
         if (M5.BtnC.wasPressed())
         {
-            MyMenu.windowClr();
+            M5.windowClr();
             if (webServerTask != NULL)
             {
                 vTaskDelete(webServerTask);
@@ -357,7 +357,7 @@ void WebServerClass::Run()
         {
             if (webServerTask == NULL)
             {
-                MyMenu.windowClr();
+                M5.windowClr();
                 xTaskCreatePinnedToCore(
                     MywebServer,    /* Task function. */
                     "MywebServer",  /* name of the task, a name just for humans */
@@ -374,10 +374,10 @@ void WebServerClass::Run()
 WebServerClass::WebServerClass()
 {
     M5.update();
-    MyMenu.drawAppMenu(F("WebServer"), F("START"), F("ESC"), F("STOP"));
+    M5.drawAppMenu(F("WebServer"), F("START"), F("ESC"), F("STOP"));
 }
 
 WebServerClass::~WebServerClass()
 {
-    MyMenu.show();
+    M5.show();
 }

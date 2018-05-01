@@ -2,49 +2,49 @@
 
 void appListTools()
 {
-    MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+    M5.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
 
     while (M5.BtnB.wasPressed())
     {
         M5.update();
     }
-    MyMenu.clearList();
-    MyMenu.setListCaption("TOOLS");
-    MyMenu.addList("WIFI PACKET MONITOR");
-    MyMenu.addList("WIFI SCANNER");
-    MyMenu.addList("I2C SCANNER");
-    MyMenu.addList("DHT TEMP & HUMIDITY");
-    MyMenu.addList("STOPWATCH");
-    MyMenu.showList();
+    M5.clearList();
+    M5.setListCaption("TOOLS");
+    M5.addList("WIFI PACKET MONITOR");
+    M5.addList("WIFI SCANNER");
+    M5.addList("I2C SCANNER");
+    M5.addList("DHT TEMP & HUMIDITY");
+    M5.addList("STOPWATCH");
+    M5.showList();
 
     while (!M5.BtnA.wasPressed())
     {
         if (M5.BtnC.wasPressed())
         {
-            MyMenu.nextList();
+            M5.nextList();
         }
         if (M5.BtnB.wasPressed())
         {
-            if (MyMenu.getListString() == "DHT TEMP & HUMIDITY")
+            if (M5.getListString() == "DHT TEMP & HUMIDITY")
             {
                 DhtReaderClass DhtReaderObj;
                 DhtReaderObj.Run();
             }
-            if (MyMenu.getListString() == "WIFI SCANNER")
+            if (M5.getListString() == "WIFI SCANNER")
             {
                 WifiScannerClass WifiScannerObj;
                 WifiScannerObj.Run();
             }
-            if (MyMenu.getListString() == "I2C SCANNER")
+            if (M5.getListString() == "I2C SCANNER")
             {
                I2CScannerClass I2CScannerObj;
                I2CScannerObj.Run();
             }
-            if (MyMenu.getListString() == "WIFI PACKET MONITOR")
+            if (M5.getListString() == "WIFI PACKET MONITOR")
             {
                Monitor_run();
             }
-            if (MyMenu.getListString() == "STOPWATCH")
+            if (M5.getListString() == "STOPWATCH")
             {
                 StopWatchClass StopWatchObj;
                 StopWatchObj.Run();
@@ -52,5 +52,5 @@ void appListTools()
         }
         M5.update();
     }
-    MyMenu.show();
+    M5.show();
 }

@@ -15,7 +15,7 @@ void appOta()
 			}
 
 			// NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-			MyMenu.windowClr();
+			M5.windowClr();
 			M5.Lcd.setTextColor(YELLOW);
 			M5.Lcd.drawString(String("Start updating " + type), 5, 60, 2);
 		})

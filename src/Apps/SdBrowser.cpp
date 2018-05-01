@@ -73,12 +73,12 @@ void SdBrowserClass::aSortFiles()
 
 void SdBrowserClass::buildMyMenu()
 {
-    MyMenu.clearList();
-    MyMenu.setListCaption("Files");
+    M5.clearList();
+    M5.setListCaption("Files");
     for (int i = 0; i < appsCount; i++)
     {
         String shortName = fileVector[i].fileName.substring(1);
-        MyMenu.addList(shortName);
+        M5.addList(shortName);
     }
 }
 
@@ -88,7 +88,7 @@ void SdBrowserClass::Run()
     listDir(SD, "/", levels);
     aSortFiles();
     buildMyMenu();
-    MyMenu.showList();
+    M5.showList();
     while (!M5.BtnA.wasPressed())
     {
         if (M5.BtnC.wasPressed())
@@ -96,12 +96,12 @@ void SdBrowserClass::Run()
             if (repaint)
             {
                 M5.Lcd.clear();
-                MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
-                MyMenu.btnRestore();
+                M5.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
+                M5.btnRestore();
             }
-            MyMenu.nextList();
+            M5.nextList();
         }
-        int MenuID = MyMenu.getListID();
+        int MenuID = M5.getListID();
 
         if (M5.BtnB.wasPressed())
         {
@@ -126,7 +126,7 @@ void SdBrowserClass::Run()
                     M5.Lcd.drawJpgFile(SD, FileName.c_str());
                 }
                 repaint = true;
-                MyMenu.btnRestore();
+                M5.btnRestore();
             }
             else if (FileName.endsWith(".mp3"))
             {
@@ -136,14 +136,14 @@ void SdBrowserClass::Run()
             else if (!inmenu)
             {
                 inmenu = true;
-                MyMenu.windowClr();
+                M5.windowClr();
                 M5.Lcd.drawCentreString("File Name: " + fileVector[MenuID].fileName, M5.Lcd.width() / 2, (M5.Lcd.height() / 2) - 10, 2);
                 M5.Lcd.drawCentreString("File Size: " + String(fileVector[MenuID].fileSize), M5.Lcd.width() / 2, (M5.Lcd.height() / 2) + 10, 2);
             }
             else
             {
                 inmenu = false;
-                MyMenu.showList();
+                M5.showList();
             }
         }
         M5.update();
@@ -153,13 +153,13 @@ void SdBrowserClass::Run()
 SdBrowserClass::SdBrowserClass()
 {
     M5.update();
-    MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
+    M5.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
 }
 
 SdBrowserClass::~SdBrowserClass()
 {
     fileVector.clear();
     fileVector.shrink_to_fit();
-    MyMenu.clearList();
-    MyMenu.show();
+    M5.clearList();
+    M5.show();
 }

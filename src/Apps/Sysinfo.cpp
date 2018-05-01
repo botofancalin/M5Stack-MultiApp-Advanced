@@ -117,7 +117,7 @@ void SysinfoClass::Run()
 
         if (!done)
         {
-            MyMenu.windowClr();
+            M5.windowClr();
             drawpage(page);
             done = true;
         }
@@ -129,10 +129,10 @@ void SysinfoClass::Run()
 SysinfoClass::SysinfoClass()
 {
     M5.update();
-    MyMenu.drawAppMenu(F("M5 SYSTEM INFO"), F("<"), F("ESC"), F(">"));
+    M5.drawAppMenu(F("M5 SYSTEM INFO"), F("<"), F("ESC"), F(">"));
 }
 
 SysinfoClass::~SysinfoClass()
 {
-    MyMenu.show();
+    M5.show();
 }

@@ -21,7 +21,7 @@ void CfgBrightnessClass::Run()
             tmp_lbrigth = tmp_brigth;
             preferences.putUShort("light", tmp_lbrigth);
             M5.Lcd.setBrightness(tmp_lbrigth);
-            MyMenu.windowClr();
+            M5.windowClr();
             val = map(tmp_lbrigth, 16, 255, 0, 100);
             M5.Lcd.HprogressBar(40, 110, 240, 30, YELLOW, val, true);
         }
@@ -32,11 +32,11 @@ void CfgBrightnessClass::Run()
 
 CfgBrightnessClass::CfgBrightnessClass()
 {
-    MyMenu.drawAppMenu(F("DISPLAY BRIGHTNESS"), F("-"), F("OK"), F("+"));
+    M5.drawAppMenu(F("DISPLAY BRIGHTNESS"), F("-"), F("OK"), F("+"));
     M5.update();
 }
 
 CfgBrightnessClass::~CfgBrightnessClass()
 {
-    MyMenu.show();
+    M5.show();
 }

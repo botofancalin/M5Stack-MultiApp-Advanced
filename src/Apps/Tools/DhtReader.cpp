@@ -22,7 +22,7 @@ void DhtReaderClass::Run()
     M5.Lcd.drawCentreString("Pin 17 to DHT Signal Pin", 155, 120, 4);
     vTaskDelay(5000 / portTICK_PERIOD_MS);
     dht.setup(dhtPin, DHTesp::AUTO_DETECT);
-    MyMenu.drawAppMenu(F("DHT Reader"), F("ESC"), F(""), F(""));
+    M5.drawAppMenu(F("DHT Reader"), F("ESC"), F(""), F(""));
 
     while (!M5.BtnA.wasPressed())
     {
@@ -51,6 +51,6 @@ DhtReaderClass::~DhtReaderClass()
 {
     M5.Lcd.setRotation(0);
     M5.Lcd.fillScreen(0);
-    MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-    MyMenu.showList();
+    M5.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+    M5.showList();
 }

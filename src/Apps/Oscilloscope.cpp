@@ -507,5 +507,5 @@ OscilloscopeClass::~OscilloscopeClass()
 	Sig_Gen = NULL;
 	dacWrite(26, 0);
 	M5.Lcd.fillScreen(BLACK);
-	MyMenu.show();
+	M5.show();
 }

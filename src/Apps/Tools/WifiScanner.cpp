@@ -3,7 +3,7 @@
 void WifiScannerClass::Run()
 {
     M5.update();
-    MyMenu.drawAppMenu(F("WiFi SCANNER"), F("ESC"), F("SCAN"), F("PAGE"));
+    M5.drawAppMenu(F("WiFi SCANNER"), F("ESC"), F("SCAN"), F("PAGE"));
     M5.Lcd.drawCentreString(F("SCANNING....."), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
     vTaskDelay(100 / portTICK_PERIOD_MS);
     WiFi.mode(WIFI_MODE_STA);
@@ -45,7 +45,7 @@ void WifiScannerClass::Run()
             {
                 if (!wifi_showlock)
                 {
-                    MyMenu.windowClr();
+                    M5.windowClr();
                     M5.Lcd.drawCentreString(F("NO NETWORKS FOUND"), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
                     wifi_showlock = HIGH;
                 }
@@ -54,7 +54,7 @@ void WifiScannerClass::Run()
             {
                 if (!wifi_showlock)
                 {
-                    MyMenu.windowClr();
+                    M5.windowClr();
                     M5.Lcd.drawCentreString("FOUND " + String(wifi_count) + " NETWORKS, PAGE: " + String(list_page + 1) + "/" + String(list_pages), M5.Lcd.width() / 2, 40, 2);
                     if ((list_page + 1) == list_pages)
                     {
@@ -217,7 +217,7 @@ void WifiScannerClass::Run()
             {
                 list_page = 0;
                 list_pages = 0;
-                MyMenu.windowClr();
+                M5.windowClr();
                 M5.Lcd.drawCentreString(F("SCANNING DEEPER....."), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
                 wifi_count = WiFi.scanNetworks(false, true, false, 500);
                 wifi_showlock = LOW;
@@ -276,6 +276,6 @@ WifiScannerClass::~WifiScannerClass()
 {
     M5.Lcd.setRotation(0);
     M5.Lcd.fillScreen(0);
-    MyMenu.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-    MyMenu.showList();
+    M5.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+    M5.showList();
 }

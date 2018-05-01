@@ -92,7 +92,7 @@ void Mp3PlayerClass::drawTimeline()
 
 void Mp3PlayerClass::Play(String *fileName)
 {
-    MyMenu.windowClr();
+    M5.windowClr();
     M5.Lcd.setTextColor(CYAN);
     M5.Lcd.drawCentreString(*fileName, 158, 140, 2);
     M5.Lcd.setTextColor(WHITE);
@@ -154,17 +154,17 @@ void Mp3PlayerClass::Play(String *fileName)
     delete file;
     dacWrite(25, 0);
     dacWrite(26, 0);
-    MyMenu.windowClr();
+    M5.windowClr();
 }
 
 Mp3PlayerClass::Mp3PlayerClass()
 {
     M5.update();
-    MyMenu.drawAppMenu(F("Mp3Player"), F("VOL-"), F("EXIT"), F("VOL+"));
+    M5.drawAppMenu(F("Mp3Player"), F("VOL-"), F("EXIT"), F("VOL+"));
 }
 
 Mp3PlayerClass::~Mp3PlayerClass()
 {
-    MyMenu.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
-    MyMenu.showList();
+    M5.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
+    M5.showList();
 }

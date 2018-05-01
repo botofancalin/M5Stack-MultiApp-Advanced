@@ -25,25 +25,25 @@ void setup()
 	preferences.end();
 
 	//The main menu. Add main menu items here
-	MyMenu.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps1, appReturn);
-	MyMenu.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
-	MyMenu.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
-	MyMenu.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
+	M5.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps1, appReturn);
+	M5.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
+	M5.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
+	M5.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
 
-	MyMenu.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
-	MyMenu.addMenuItem(1, "WEBRADIO", "<", "OK", ">", -1, WebRadio, appWebRadio);
-	MyMenu.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
-	MyMenu.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, Browser, appSdBrowser);
-	MyMenu.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, Tools, appListTools);
-	MyMenu.addMenuItem(1, "GAMES", "<", "OK", ">", -1, Games, appGamesList);
-	MyMenu.addMenuItem(1, "RETURN", "<", "OK", ">", 0, Return, appReturn);
+	M5.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
+	M5.addMenuItem(1, "WEBRADIO", "<", "OK", ">", -1, WebRadio, appWebRadio);
+	M5.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
+	M5.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, Browser, appSdBrowser);
+	M5.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, Tools, appListTools);
+	M5.addMenuItem(1, "GAMES", "<", "OK", ">", -1, Games, appGamesList);
+	M5.addMenuItem(1, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
-	MyMenu.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, Sysinfo, appSysInfo);
-	MyMenu.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, WifiConn, appWiFiSetup);
-	MyMenu.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, Backlight, appCfgBrigthness);
-	MyMenu.addMenuItem(2, "RETURN", "<", "OK", ">", 0, Return, appReturn);
+	M5.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, Sysinfo, appSysInfo);
+	M5.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, WifiConn, appWiFiSetup);
+	M5.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, Backlight, appCfgBrigthness);
+	M5.addMenuItem(2, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
-	MyMenu.show();
+	M5.show();
 }
 
 void loop()
@@ -86,14 +86,14 @@ void loop()
 	}
 	if (M5.BtnC.wasPressed())
 	{
-		MyMenu.up();
+		M5.up();
 	}
 	if (M5.BtnA.wasPressed())
 	{
-		MyMenu.down();
+		M5.down();
 	}
 	if (M5.BtnB.wasPressed())
 	{
-		MyMenu.execute();
+		M5.execute();
 	}
 }
