@@ -59,7 +59,7 @@
         + Triangular Signal 2
         + Signal Generator OFF
       + Exit Oscilloscope App
-  - WebRadio
+    - WebRadio
     + Support Volume Adjustment
     + Support Stations change on the fly
     + Long press NEXT key to exit from Radio App
@@ -71,32 +71,32 @@
     + Web Radio streams are stored on SD Card on "RadioStations.txt" file
     + Support theoretically unlimited station list
         + The stations must be defined on separate lines as follow: "StationName=StationLink;  
-  + WebServer with web based SD File manager
-    + Can run in the background once started
-    + You can use other apps when the webserver is running
-    + List SD Folders
-    + Create Folder
-    + Delete Folder
-    + Download files
-    + Upload Files
-    + Delete Files
-    + Display Files Content (images, text, etc...)
-  - SD Browser that support
-    + Display Jpeg files on the screen
-    + Resize Jpeg to fit to screen size
-    + Play MP3 Files using Mp3 Player App
-    + Display File properties for the files that can't be open with included apps
-  - Tools list
-    + Wifi Packet Monitor
-    + Wifi Scanner
-    + I2C Scanner
-    + DHT Sensor reader
-      + Support any DHT sensor type
-    - Stopwatch
-  - Games (just for fun)
-    + Space Shooter
-    + Flappy Bird
-- Return (to menu root)
+    + WebServer with web based SD File manager
+      + Can run in the background once started
+      + You can use other apps when the webserver is running
+      + List SD Folders
+      + Create Folder
+      + Delete Folder
+      + Download files
+      + Upload Files
+      + Delete Files
+      + Display Files Content (images, text, etc...)
+    - SD Browser that support
+      + Display Jpeg files on the screen
+      + Resize Jpeg to fit to screen size
+      + Play MP3 Files using Mp3 Player App
+      + Display File properties for the files that can't be open with included apps
+    - Tools list
+      + Wifi Packet Monitor
+      + Wifi Scanner
+      + I2C Scanner
+      + DHT Sensor reader
+        + Support any DHT sensor type
+      - Stopwatch
+    - Games (just for fun)
+      + Space Shooter
+      + Flappy Bird
+  - Return (to menu root)
 - System
   + System Informations
     + CPU Frequency, Number of cores, Chip Revision, Flash Speed, Current Free RAM space, Wifi MAC address, Wifi IP Address, Wifi current Mode
@@ -109,12 +109,44 @@
     + Wifi STA: Set Wifi to STATION (Reciever) mode
     + Wifi AP: Set Wifi to ACCESS POINT (Sender) mode
     + Wifi OFF
- + Display Backlight Settings
+  + Display Backlight Settings
   + Set and save Display backlight so the settings survive reboot and flash
-- Support Loacl OTA flashing
+- Sleep
+  + Puth the device into Sleep mode
+  + The device can power back on by pressing ButtonB or reset key
+  
+## This Firmware also support:
+- Local OTA flashing
   + Set the M5Stack IP as Upload Port on PlatformIO then you can flash the device over WIFI
-- Remote OTA Support
+- Remote OTA Update
   + Will check the server for new version at startup
   + If a new version was found, will update to new version
   
-  ![image](MultiAppImgs/Oscilloscope.jpg)![image](MultiAppImgs/Wave.jpg) ![image](MultiAppImgs/Square.jpg) ![image](MultiAppImgs/Saw1.jpg) ![image](MultiAppImgs/Saw2.jpg)![image](MultiAppImgs/WebRadio.jpg)![image](MultiAppImgs/WebRadioRun.jpg)![image](MultiAppImgs/WebServer.jpg)(MultiAppImgs/WebServerRun.jpg)![image](MultiAppImgs/SdBrowser.jpg)![image](MultiAppImgs/JpgShow.jpg)![image](MultiAppImgs/Mp3Player.jpg) ![image](MultiAppImgs/Mp3Player.jpg)![image](MultiAppImgs/Tools.jpg)![image](MultiAppImgs/PacketMonitor.jpg)![image](MultiAppImgs/Dht.jpg)![image](MultiAppImgs/Games.jpg)![image](MultiAppImgs/SpaceShooter.jpg)![image](MultiAppImgs/FlappyBird.jpg)![image](MultiAppImgs/System.jpg)![image](MultiAppImgs/Sysinfo1.jpg)![image](MultiAppImgs/Sysinfo2.jpg)![image](MultiAppImgs/Wifi.jpg)![image](MultiAppImgs/WifiOptions.jpg)![image](MultiAppImgs/BackLight.jpg)![image](MultiAppImgs/LocalOta.jpg)![image](MultiAppImgs/ServerOta.jpg)
+  ![image](MultiAppImgs/Oscilloscope.jpg)
+  ![image](MultiAppImgs/WebRadio.jpg)
+  ![image](MultiAppImgs/WebServer.jpg)
+  ![image](MultiAppImgs/SdBrowser.jpg)
+  ![image](MultiAppImgs/Tools.jpg)
+  ![image](MultiAppImgs/Games.jpg)
+  ![image](MultiAppImgs/System.jpg)
+  ![image](MultiAppImgs/Wifi.jpg)
+  ![image](MultiAppImgs/BackLight.jpg)
+  ![image](MultiAppImgs/Sleep.jpg)
+   
+  ![image](MultiAppImgs/Wave.jpg) 
+  ![image](MultiAppImgs/Square.jpg) 
+  ![image](MultiAppImgs/Saw1.jpg) 
+  ![image](MultiAppImgs/Saw2.jpg)
+  ![image](MultiAppImgs/WebRadioRun.jpg)
+  ![image](MultiAppImgs/WebServerRun.jpg)
+  ![image](MultiAppImgs/JpgShow.jpg)
+  ![image](MultiAppImgs/Mp3Player.jpg) 
+  ![image](MultiAppImgs/PacketMonitor.jpg)
+  ![image](MultiAppImgs/Dht.jpg)
+  ![image](MultiAppImgs/SpaceShooter.jpg)
+  ![image](MultiAppImgs/FlappyBird.jpg)
+  ![image](MultiAppImgs/Sysinfo1.jpg)
+  ![image](MultiAppImgs/Sysinfo2.jpg)
+  ![image](MultiAppImgs/WifiOptions.jpg)
+  ![image](MultiAppImgs/LocalOta.jpg)
+  ![image](MultiAppImgs/ServerOta.jpg)
