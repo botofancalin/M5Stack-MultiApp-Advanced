@@ -99,3 +99,23 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
   + If a new version was found, will update to new version
   
   ![image](MultiAppImgs/Oscilloscope.jpg)![image](MultiAppImgs/Wave.jpg) ![image](MultiAppImgs/Square.jpg) ![image](MultiAppImgs/Saw1.jpg) ![image](MultiAppImgs/Saw2.jpg)![image](MultiAppImgs/WebRadio.jpg)![image](MultiAppImgs/WebRadioRun.jpg)![image](MultiAppImgs/WebServer.jpg)(MultiAppImgs/WebServerRun.jpg)![image](MultiAppImgs/SdBrowser.jpg)![image](MultiAppImgs/JpgShow.jpg)![image](MultiAppImgs/Mp3Player.jpg) ![image](MultiAppImgs/Mp3Player.jpg)![image](MultiAppImgs/Tools.jpg)![image](MultiAppImgs/PacketMonitor.jpg)![image](MultiAppImgs/Dht.jpg)![image](MultiAppImgs/Games.jpg)![image](MultiAppImgs/SpaceShooter.jpg)![image](MultiAppImgs/FlappyBird.jpg)![image](MultiAppImgs/System.jpg)![image](MultiAppImgs/Sysinfo1.jpg)![image](MultiAppImgs/Sysinfo2.jpg)![image](MultiAppImgs/Wifi.jpg)![image](MultiAppImgs/WifiOptions.jpg)![image](MultiAppImgs/BackLight.jpg)![image](MultiAppImgs/LocalOta.jpg)![image](MultiAppImgs/ServerOta.jpg)
+  
+## Get it going fast
+- Flash your M5 with Precompiled firmware from this repository
+  +The flashing instructions can be found on the Precompiled Firmware folder
+  
+# Installing and Compiling the firmware
+### First, you must install the necessary tools and prepare the IDE environment
+- Download (and unzip) this repository
+- Download and Install Visual Studio Code https://code.visualstudio.com/ or Atom: https://atom.io/
+- Install the PlatformIO Extension
+- Install ESP32 Framework on PlatformIO
+- Apply the PlatformIO Patch
+  + This Patch will fix ESP-IDF bug - ButtonA Problems when Wifi is connected
+  + This Patch will allow to upload large firmwares into M5Stack by sacrificing some SPIFFS area
+- Open the MultiApp Project folder on AplatformIO
+- Click the BUILD button
+  + This will build and Flash the M5Stack connected to your PC USB
+- To use Local Ota to flash your M5Stack
+  + The M5Stack must be connected to the same network as your PC
+  + In the project "platformio.ini" file set "upload_port = [your M5StackIP]"
