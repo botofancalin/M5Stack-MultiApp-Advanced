@@ -7,7 +7,7 @@ void appOta()
 			String type;
 			if (ArduinoOTA.getCommand() == U_FLASH)
 			{
-				type = "sketch";
+				type = "firmware";
 			}
 			else // U_SPIFFS
 			{
