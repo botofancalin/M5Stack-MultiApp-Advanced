@@ -1,5 +1,5 @@
 # M5Stack MultiApp Advanced
-![image](MultiAppImgs/Apps.jpg)
+
 ### This is a firmware that include several "sketches" as builtin apps
 ### Using this app, M5Stack can run all included apps without reflashing/rebooting
 #### This is the continued development of the original M5Stack MultiApp firmware
@@ -10,8 +10,16 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
 
 ## The project include:
 - Applications
+![image](MultiAppImgs/Apps.jpg)
   - Dual Channel Oscilloscope
+  ![image](MultiAppImgs/Oscilloscope.jpg)
   - WebRadio
+    + Support Volume Adjustment
+    + Support Stations change on the fly
+    + Long press NEXT key to exit from Radio App
+    + Display Volume Level
+    + Display Data buffer state
+    + If the connection is lost or the buffer get empty, will try to recover the connection. If the connection can't be recovered, will connect to the next station on the list
     + Can play MP3 streams
     + Web Radio streams are stored on SD Card on "RadioStations.txt" file
     + Support theoretically unlimited station list
@@ -44,7 +52,6 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     + CPU Frequency, Number of cores, Chip Revision, Flash Speed, Current Free RAM space, Wifi MAC address, Wifi IP Address, Wifi current Mode
     + Minimum FREE heap (RAM) since the device was started, Flash Size, SPIFFS Size, SPIFFS used space, SD Card Type, SD Card Size, SD Card used space
     
-![image](MultiAppImgs/Oscilloscope.jpg)
 
 ### The Oscilloscope Menu Structure:
 
