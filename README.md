@@ -17,7 +17,7 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     - Pin 35 Channel 1
     - Pin 36 Channel 2
     - Pin 26 Signal Generator
-![image](MultiAppImgs/Oscilloscope.jpg)
+  ![image](MultiAppImgs/Oscilloscope.jpg)
 
     - Oscilloscope Menu Structure:
       + Stop / Run frame
@@ -59,13 +59,20 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     + Web Radio streams are stored on SD Card on "RadioStations.txt" file
     + Support theoretically unlimited station list
         - The stations must be defined on separate lines as follow: "StationName=StationLink;"
+        
+        
   - WebServer with web based SD File manager that support
+    
+   ![image](MultiAppImgs/WebServer.jpg)
+    
     + List SD Folders
     + Create Folder
     + Delete Folder
     + Download files
     + Upload Files
     + Display Files Content (images, text, etc...)
+    
+    
   - SD Browser that support
     + Display Jpeg files on the screen
     + Resize Jpeg to fit to screen size
