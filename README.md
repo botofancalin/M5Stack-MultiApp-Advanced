@@ -39,7 +39,11 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     + Space Shooter
     + Flappy Bird
 - Return (to menu root)
-
+- System
+  + System Informations
+    + CPU Frequency, Number of cores, Chip Revision, Flash Speed, Current Free RAM space, Wifi MAC address, Wifi IP Address, Wifi current Mode
+    + Minimum FREE heap (RAM) since the device was started, Flash Size, SPIFFS Size, SPIFFS used space, SD Card Type, SD Card Size, SD Card used space
+    
 ![image](MultiAppImgs/Oscilloscope.jpg)
 
 ### The Oscilloscope Menu Structure:
