@@ -6,8 +6,6 @@ unsigned long lastcheck = 0;
 int SignalStrength = 0;
 bool OtaRunning = false;
 
-M5StackServerOta SrververOta(&version);
-
 void setup()
 {
 	M5.begin();
@@ -20,8 +18,6 @@ void setup()
 	{
 		WiFi.begin();
 	}
-
-	//MyMenu.setColorSchema(OLIVE,WHITE,BLACK);
 
 	preferences.begin("Brightnes", false);
 	M5.lcd.setBrightness(preferences.getUShort("light", 95));
@@ -62,6 +58,7 @@ void loop()
 			M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
 			if (!OtaRunning)
 			{
+				M5StackServerOta SrververOta(&version);
 				SrververOta.checkForNewVersion();
 				appOta();
 				OtaRunning = true;

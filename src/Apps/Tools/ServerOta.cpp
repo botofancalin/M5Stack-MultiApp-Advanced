@@ -13,13 +13,8 @@ void M5StackServerOta::checkForNewVersion()
 
         if (newVersion > version)
         {
-            Serial.println("Update Found");
             httpClient.end();
             execOTA();
-        }
-        else
-        {
-            Serial.println("No update needed");
         }
     }
 }
@@ -115,7 +110,6 @@ void M5StackServerOta::execOTA()
             {
                 if (Update.isFinished())
                 {
-                    Serial.println("Update successfully completed. Rebooting.");
                     ESP.restart();
                 }
             }
@@ -125,13 +119,11 @@ void M5StackServerOta::execOTA()
             // not enough space to begin OTA
             // Understand the partitions and
             // space availability
-            Serial.println("Not enough space to begin OTA");
             client.flush();
         }
     }
     else
     {
-        Serial.println("There was no content in the response");
         client.flush();
     }
 }
