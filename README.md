@@ -12,7 +12,7 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
 - Applications
   - Dual Channel Oscilloscope
   - WebRadio
-    = Can play MP3 streams
+    + Can play MP3 streams
     + Web Radio streams are stored on SD Card on "RadioStations.txt" file
     + Support theoretically unlimited station list
         - The stations must be defined on separate lines as follow: "StationName=StationLink;"
