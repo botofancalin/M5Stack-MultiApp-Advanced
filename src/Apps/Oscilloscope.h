@@ -51,7 +51,7 @@ private:
   const int MILLIVOL_per_dot[5] PROGMEM = {33, 17, 6, 3, 2};
   const char *Modes[3] PROGMEM = {"NORM", "INV", "OFF"};
   const char *TRIG_Modes[3] PROGMEM = {"Auto", "Norm", "Scan"};
-  const char *Rates[15] PROGMEM = {"  F1", "  F2", " 1ms", " 2ms", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s"};
+  const char *Rates[15] PROGMEM = {"0.3ms", "0.6ms", " 1ms", " 2ms", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s"};
   const char *Ranges[5] PROGMEM = {" 1V", "0.5V", "0.2V", "0.1V", "50mV"};
   const char *Generator[5] PROGMEM = {"Wave", "Sqr", "Tri1", "Tri2", "OFF"};
   unsigned int sample = 0; // index for double buffer

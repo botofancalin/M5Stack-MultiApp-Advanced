@@ -117,7 +117,7 @@ void Mp3PlayerClass::Play(String *fileName)
                 mp3->stop();
                 break;
             }
-            //genSpectrum();
+            genSpectrum();
             drawTimeline();
         }
         if (M5.BtnA.wasPressed() && vol > 0)
