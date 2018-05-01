@@ -1,0 +1,1 @@
+Copy the contents of patch folder to "C:\Users\[your user]\.platformio"

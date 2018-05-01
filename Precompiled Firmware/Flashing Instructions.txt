@@ -1,0 +1,11 @@
+Extract Data.zip to M5Stack SDCard root
+
+1. run ESPFlashDownloadTool_v3.6.4.exe
+2. Select ESP32 DownloadTool
+3. Select firmware File 
+4. enter address for file: 0x10000
+5. Select the COM PORT on Download tool
+6. Hold RESET key pressed on M5Stack
+7. Click START on Download Tool and release the Reset key
+
+After flashing, press reset key to start the M5Stack
