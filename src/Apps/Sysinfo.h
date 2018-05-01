@@ -1,4 +1,5 @@
-#include "M5StackSAM.h"
+#pragma once
+#include "M5Stack.h"
 
 #define PAGEMAX 1
 

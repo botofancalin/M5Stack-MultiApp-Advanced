@@ -8,6 +8,7 @@
  * letter to Creative Commons, 171 Second Street, Suite 300,            *
  * San Francisco, California, 94105, USA.                               *
  *----------------------------------------------------------------------*/
+#pragma once
 #ifndef Button_h
 #define Button_h
 // #if ARDUINO >= 100

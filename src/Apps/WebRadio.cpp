@@ -1,6 +1,4 @@
 #include "WebRadio.h"
-#define MDFONT &FreeSerif12pt7b
-#define STFONT &FreeSerif18pt7b
 
 void WebRadioClass::getvolume()
 {

@@ -15,6 +15,7 @@
  ****************************************************/
 
 // Stop fonts etc being loaded multiple times
+#pragma once
 #ifndef _DISPLAY_H_
 #define _DISPLAY_H_
 

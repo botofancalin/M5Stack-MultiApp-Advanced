@@ -1,5 +1,4 @@
-
-
+#pragma once
 #include "Apps/About.h"
 #include "Apps/CfgBrightness.h"
 #include "Apps/Oscilloscope.h"

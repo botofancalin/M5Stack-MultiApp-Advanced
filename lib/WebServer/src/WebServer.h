@@ -19,7 +19,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   Modified 8 May 2015 by Hristo Gochkov (proper post and file upload handling)
 */
-
+#pragma once
 #ifndef WEBSERVER_H
 #define WEBSERVER_H
 

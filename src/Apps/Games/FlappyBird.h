@@ -1,4 +1,5 @@
-#include "M5StackSAM.h"
+#pragma once
+#include "M5Stack.h"
 
 #define TFTW 320  // screen width
 #define TFTH 240  // screen height

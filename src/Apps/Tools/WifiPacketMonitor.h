@@ -1,4 +1,5 @@
-#include "M5StackSAM.h"
+#pragma once
+#include "M5Stack.h"
 
 #define MAX_CH 14
 #define SNAP_LEN 2324 // max len of each recieved packet

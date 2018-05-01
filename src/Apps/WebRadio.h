@@ -1,4 +1,7 @@
-#include "M5StackSAM.h"
+#pragma once
+#include "M5Stack.h"
+#define MDFONT &FreeSerif12pt7b
+#define STFONT &FreeSerif18pt7b
 
 class WebRadioClass
 {

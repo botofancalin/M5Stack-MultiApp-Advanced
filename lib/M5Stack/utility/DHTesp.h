@@ -35,7 +35,7 @@
     2018-01-03: Added retry in case the reading from the sensor fails with a timeout.
     2018-01-08: Added ESP8266 (and probably AVR) compatibility.
  ******************************************************************/
-
+#pragma once
 #ifndef dhtesp_h
 #define dhtesp_h
 

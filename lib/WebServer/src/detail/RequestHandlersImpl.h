@@ -1,3 +1,4 @@
+#pragma once
 #ifndef REQUESTHANDLERSIMPL_H
 #define REQUESTHANDLERSIMPL_H
 

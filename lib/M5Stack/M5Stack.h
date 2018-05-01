@@ -19,7 +19,7 @@
  * </pre>
  *
  */
-
+#pragma once
 #ifndef _M5STACK_H_
 #define _M5STACK_H_
 
@@ -55,7 +55,7 @@
 #define BTN_TITLE_MAX_SIZE 6
 #define MAX_SUBMENUS 8
 
-#define LIST_MAX_LABEL_SIZE 64
+#define LIST_MAX_LABEL_SIZE 32
 #define LIST_PAGE_LABELS 6
 
 static int WiFi_Mode;

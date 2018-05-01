@@ -1,4 +1,5 @@
 
+#pragma once
 #include "M5StackSam.h"
 
 class M5StackServerOta

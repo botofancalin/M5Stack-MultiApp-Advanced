@@ -1,3 +1,4 @@
+#pragma once
 #include "Games/FlappyBird.h"
 #include "Games/SpaceShooter.h"
 
