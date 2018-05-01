@@ -126,11 +126,11 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
 
   + System Informations
   
-  ![image](MultiAppImgs/SysInfo1.jpg)
+  ![image](MultiAppImgs/Sysinfo1.jpg)
   
     + CPU Frequency, Number of cores, Chip Revision, Flash Speed, Current Free RAM space, Wifi MAC address, Wifi IP Address, Wifi current Mode
     
-    ![image](MultiAppImgs/SysInfo2.jpg)
+    ![image](MultiAppImgs/Sysinfo2.jpg)
     
     + Minimum FREE heap (RAM) since the device was started, Flash Size, SPIFFS Size, SPIFFS used space, SD Card Type, SD Card Size, SD Card used space
     
