@@ -134,3 +134,16 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     
     + Minimum FREE heap (RAM) since the device was started, Flash Size, SPIFFS Size, SPIFFS used space, SD Card Type, SD Card Size, SD Card used space
     
+  + Wifi Connection
+  
+  ![image](MultiAppImgs/Wifi.jpg)
+    + Can set the Wifi Connection on M5Stack by
+    + Wifi Smart Config
+    + Wifi WPS PushButton
+    + Wifi WPS PIN Code
+    + Wifi STA: Set Wifi to STATION (Reciever) mode
+    + Wifi AP: Set Wifi to ACCESS POINT (Sender) mode
+    + Wifi OFF
+  ![image](MultiAppImgs/WifiOptions.jpg)
+  
+    
