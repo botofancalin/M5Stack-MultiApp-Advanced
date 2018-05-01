@@ -13,6 +13,8 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
 - WebRadio
   + Can play MP3 streams
   + Web Radio streams are stored on SD Card on "RadioStations.txt" file
+  + Support theoretically unlimited station list
+  The stations must be defined on separate lines as follow: "StationName=StationLink;"
 - WebServer with web based SD File manager that support
   + List SD Folders
   + Create Folder
@@ -25,7 +27,12 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
   + Resize Jpeg to fit to screen size
   + Play MP3 Files using Mp3 Player App
   + Display File properties for the files that can't be open with included apps
-- Tools
+- Tools list
+  + Wifi Packet Monitor
+  + Wifi Scanner
+  + I2C Scanner
+  + DHT Sensor reader
+    + Support any DHT sensor type
 
 
 ![image](MultiAppImgs/Oscilloscope.jpg)
