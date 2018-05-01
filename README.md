@@ -17,9 +17,10 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     - Pin 35 Channel 1
     - Pin 36 Channel 2
     - Pin 26 Signal Generator
+    
   ![image](MultiAppImgs/Oscilloscope.jpg)
-
-    - Oscilloscope Menu Structure:
+  
+    + Oscilloscope Menu Structure:
       + Stop / Run frame
       + Sensitivity for each channel:
         + 50mV, 100mV, 200mV, 500mV, 1V per Divizion
