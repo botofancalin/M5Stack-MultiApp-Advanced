@@ -77,11 +77,24 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     
     
   - SD Browser that support
+  
+  ![image](MultiAppImgs/SdBrowser.jpg)
+  
     + Display Jpeg files on the screen
     + Resize Jpeg to fit to screen size
+    
+  ![image](MultiAppImgs/JpgShow.jpg)
+    
     + Play MP3 Files using Mp3 Player App
+    
+  ![image](MultiAppImgs/Mp3Player.jpg)
+  
     + Display File properties for the files that can't be open with included apps
+    
   - Tools list
+  
+  ![image](MultiAppImgs/Tools.jpg)
+  
     + Wifi Packet Monitor
     + Wifi Scanner
     + I2C Scanner
