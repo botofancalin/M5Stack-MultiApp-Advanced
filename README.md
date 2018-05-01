@@ -17,7 +17,8 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     - Pin 35 Channel 1
     - Pin 36 Channel 2
     - Pin 26 Signal Generator
-    
+![image](MultiAppImgs/Oscilloscope.jpg)
+
     - Oscilloscope Menu Structure:
       + Stop / Run frame
       + Sensitivity for each channel:
@@ -43,8 +44,10 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
       
 ![image](MultiAppImgs/Wave.jpg) ![image](MultiAppImgs/Square.jpg) ![image](MultiAppImgs/Saw1.jpg) ![image](MultiAppImgs/Saw2.jpg)
   
-![image](MultiAppImgs/Oscilloscope.jpg)
   - WebRadio
+  
+  ![image](MultiAppImgs/WebRadio.jpg)
+  
     + Support Volume Adjustment
     + Support Stations change on the fly
     + Long press NEXT key to exit from Radio App
