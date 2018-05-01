@@ -10,9 +10,40 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
 
 ## The project include:
 - Applications
+
 ![image](MultiAppImgs/Apps.jpg)
+
   - Dual Channel Oscilloscope
-  ![image](MultiAppImgs/Oscilloscope.jpg)
+    - Pin 35 Channel 1
+    - Pin 36 Channel 2
+    - Pin 26 Signal Generator
+    
+    - Oscilloscope Menu Structure:
+      + Stop / Run frame
+      + Sensitivity for each channel:
+        + 50mV, 100mV, 200mV, 500mV, 1V per Divizion
+      + Channel mode for each channel
+        + Normal, Inverted, Off
+      + Offset for each channel
+      + Trigger Switch
+        + Trigger from Channel 1 or Channel 2
+      + Trigger Mode
+        + Auto, Normal, Scan
+      + Trigger Level 0 - 100 %
+      + Trigger Edge
+        + Rising (UP)
+        + Falling (DN)
+      + Internal Signal Generator mode
+        + Wave signal
+        + Square signal
+        + Triangular Signal 1
+        + Triangular Signal 2
+        + Signal Generator OFF
+      + Exit Oscilloscope App
+      
+![image](MultiAppImgs/Wave.jpg) ![image](MultiAppImgs/Square.jpg) ![image](MultiAppImgs/Saw1.jpg) ![image](MultiAppImgs/Saw2.jpg)
+  
+![image](MultiAppImgs/Oscilloscope.jpg)
   - WebRadio
     + Support Volume Adjustment
     + Support Stations change on the fly
@@ -52,11 +83,3 @@ This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project 
     + CPU Frequency, Number of cores, Chip Revision, Flash Speed, Current Free RAM space, Wifi MAC address, Wifi IP Address, Wifi current Mode
     + Minimum FREE heap (RAM) since the device was started, Flash Size, SPIFFS Size, SPIFFS used space, SD Card Type, SD Card Size, SD Card used space
     
-
-### The Oscilloscope Menu Structure:
-
-- Freeze Frame
-+ Start / Stop
-- Sesitivity for
-+1V , 500mV, 200mV, 100mV, 50mV per Divizion
--
