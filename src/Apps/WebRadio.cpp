@@ -44,13 +44,13 @@ void MDCallback(void *cbData, const char *type, bool isUnicode, const char *stri
 	String s3 = s1;
 	s3.replace(s2, "");
 	s2.replace("/", "");
-	M5.Lcd.setTextColor(BLACK);
-	M5.Lcd.setFreeFont(MDFONT);
-	M5.Lcd.drawCentreString(_s3, 160, 80, 1);
-	M5.Lcd.drawCentreString(_s2, 160, 105, 1);
-	M5.Lcd.setTextColor(ORANGE);
-	M5.Lcd.drawCentreString(s3, 160, 80, 1);
-	M5.Lcd.drawCentreString(s2, 160, 105, 1);
+	M5m.Lcd.setTextColor(BLACK);
+	M5m.Lcd.setFreeFont(MDFONT);
+	M5m.Lcd.drawCentreString(_s3, 160, 80, 1);
+	M5m.Lcd.drawCentreString(_s2, 160, 105, 1);
+	M5m.Lcd.setTextColor(ORANGE);
+	M5m.Lcd.drawCentreString(s3, 160, 80, 1);
+	M5m.Lcd.drawCentreString(s2, 160, 105, 1);
 	_s2 = s2;
 	_s3 = s3;
 }
@@ -88,11 +88,11 @@ bool WebRadioClass::GetStations(fs::FS &fs, const char *path)
 
 void WebRadioClass::Run()
 {
-	M5.update();
+	M5m.update();
 	getvolume();
-	M5.drawAppMenu(F("WebRadio"), F("Vol-"), F("Next"), F("Vol+"));
-	M5.Lcd.setTextColor(ORANGE);
-	M5.Lcd.drawCentreString("Long press 'NEXT' to Exit", 158, 190, 2);
+	M5m.drawAppMenu(F("WebRadio"), F("Vol-"), F("Next"), F("Vol+"));
+	M5m.Lcd.setTextColor(ORANGE);
+	M5m.Lcd.drawCentreString("Long press 'NEXT' to Exit", 158, 190, 2);
 	preallocateBuffer = malloc(preallocateBufferSize);
 	preallocateCodec = malloc(preallocateCodecSize);
 	out = new AudioOutputI2S(0, 1);
@@ -108,22 +108,22 @@ void WebRadioClass::Run()
 				if (now - lastcheck >= 1000)
 				{
 
-					M5.Lcd.setTextColor(WHITE, 15);
+					M5m.Lcd.setTextColor(WHITE, 15);
 					SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
-					M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
+					M5m.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
 					lastcheck = now;
 				}
-				if (M5.BtnA.wasPressed() && vol > 0)
+				if (M5m.BtnA.wasPressed() && vol > 0)
 				{
 					vol -= 5;
 					setVolume(&vol);
 				}
-				if (M5.BtnC.wasPressed() && vol < 100)
+				if (M5m.BtnC.wasPressed() && vol < 100)
 				{
 					vol += 5;
 					setVolume(&vol);
 				}
-				if (M5.BtnB.wasPressed())
+				if (M5m.BtnB.wasPressed())
 				{
 					StopPlaying();
 					if (Station < (unsigned int)(Link.size() - 1))
@@ -136,31 +136,31 @@ void WebRadioClass::Run()
 					}
 					upd = true;
 				}
-				if (M5.BtnB.pressedFor(1000))
+				if (M5m.BtnB.pressedFor(1000))
 				{
 					play = false;
 				}
 				if (vol != old_vol)
 				{
-					M5.Lcd.HprogressBar(80, 170, 200, 15, GREEN, vol, true);
+					M5m.Lcd.HprogressBar(80, 170, 200, 15, GREEN, vol, true);
 					old_vol = vol;
 				}
-				M5.update();
+				M5m.update();
 
 				if (upd)
 				{
-					M5.Lcd.setTextColor(RED);
-					M5.Lcd.drawString("Buffer %", 15, 148, 2);
-					M5.Lcd.HprogressBar(80, 150, 200, 15, RED, 0, true);
+					M5m.Lcd.setTextColor(RED);
+					M5m.Lcd.drawString("Buffer %", 15, 148, 2);
+					M5m.Lcd.HprogressBar(80, 150, 200, 15, RED, 0, true);
 					rawFillLvl = 0;
-					M5.Lcd.setTextColor(GREEN);
-					M5.Lcd.drawString("Volume", 15, 168, 2);
-					M5.Lcd.HprogressBar(80, 170, 200, 15, GREEN, vol, true);
-					M5.Lcd.setFreeFont(STFONT);
-					M5.Lcd.setTextColor(BLACK);
-					M5.Lcd.drawCentreString(old_Station, 160, 35, 1);
-					M5.Lcd.setTextColor(PINK);
-					M5.Lcd.drawCentreString(Name[Station], 160, 35, 1);
+					M5m.Lcd.setTextColor(GREEN);
+					M5m.Lcd.drawString("Volume", 15, 168, 2);
+					M5m.Lcd.HprogressBar(80, 170, 200, 15, GREEN, vol, true);
+					M5m.Lcd.setFreeFont(STFONT);
+					M5m.Lcd.setTextColor(BLACK);
+					M5m.Lcd.drawCentreString(old_Station, 160, 35, 1);
+					M5m.Lcd.setTextColor(PINK);
+					M5m.Lcd.drawCentreString(Name[Station], 160, 35, 1);
 					old_Station = Name[Station];
 					file = new AudioFileSourceICYStream(Link[Station].c_str());
 					file->RegisterMetadataCB(MDCallback, (void *)"ICY");
@@ -178,7 +178,7 @@ void WebRadioClass::Run()
 					{
 						rawFillLvl = buff->getFillLevel();
 						fillLvl = map(rawFillLvl, 0, preallocateBufferSize, 0, 100);
-						M5.Lcd.HprogressBar(80, 150, 200, 15, RED, fillLvl, true);
+						M5m.Lcd.HprogressBar(80, 150, 200, 15, RED, fillLvl, true);
 					}
 					if (!upd && !fillLvl)
 					{
@@ -206,15 +206,15 @@ void WebRadioClass::Run()
 		}
 		else
 		{
-			M5.Lcd.setTextColor(WHITE);
-			M5.Lcd.drawCentreString("Wifi Not Connected!", 160, 60, 2);
+			M5m.Lcd.setTextColor(WHITE);
+			M5m.Lcd.drawCentreString("Wifi Not Connected!", 160, 60, 2);
 			delay(3000);
 		}
 	}
 	else
 	{
-		M5.Lcd.setTextColor(WHITE);
-		M5.Lcd.drawCentreString("RadioStations.txt Not Found!", 160, 60, 2);
+		M5m.Lcd.setTextColor(WHITE);
+		M5m.Lcd.drawCentreString("RadioStations.txt Not Found!", 160, 60, 2);
 		delay(3000);
 	}
 }
@@ -229,5 +229,5 @@ WebRadioClass::~WebRadioClass()
 	Name.shrink_to_fit();
 	Link.clear();
 	Link.shrink_to_fit();
-	M5.show();
+	M5m.show();
 }

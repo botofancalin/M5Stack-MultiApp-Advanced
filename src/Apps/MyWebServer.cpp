@@ -89,7 +89,7 @@ bool loadFromSdCard(String path)
 
     if (server.streamFile(dataFile, dataType) != dataFile.size())
     {
-        M5.Lcd.println("Sent less data than expected!");
+        M5m.Lcd.println("Sent less data than expected!");
     }
 
     dataFile.close();
@@ -110,8 +110,8 @@ void handleFileUpload()
             SD.remove((char *)upload.filename.c_str());
         }
         uploadFile = SD.open(upload.filename.c_str(), FILE_WRITE);
-        M5.Lcd.print("Upload: START, filename: ");
-        M5.Lcd.println(upload.filename);
+        M5m.Lcd.print("Upload: START, filename: ");
+        M5m.Lcd.println(upload.filename);
     }
     else if (upload.status == UPLOAD_FILE_WRITE)
     {
@@ -119,8 +119,8 @@ void handleFileUpload()
         {
             uploadFile.write(upload.buf, upload.currentSize);
         }
-        M5.Lcd.print("Upload: WRITE, Bytes: ");
-        M5.Lcd.println(upload.currentSize);
+        M5m.Lcd.print("Upload: WRITE, Bytes: ");
+        M5m.Lcd.println(upload.currentSize);
     }
     else if (upload.status == UPLOAD_FILE_END)
     {
@@ -128,8 +128,8 @@ void handleFileUpload()
         {
             uploadFile.close();
         }
-        M5.Lcd.print("Upload: END, Size: ");
-        M5.Lcd.println(upload.totalSize);
+        M5m.Lcd.print("Upload: END, Size: ");
+        M5m.Lcd.println(upload.totalSize);
     }
 }
 
@@ -307,14 +307,14 @@ void MywebServer(void *parameter)
     if (WiFi.localIP().toString() != "0.0.0.0" || WiFi.getMode() == 3)
     {
 
-        M5.Lcd.drawString("HTTP server started", 10, 40, 4);
+        M5m.Lcd.drawString("HTTP server started", 10, 40, 4);
         if (WiFi.getMode() == 3)
         {
-            M5.Lcd.drawString("http://192.168.4.1", 10, 70, 4);
+            M5m.Lcd.drawString("http://192.168.4.1", 10, 70, 4);
         }
         else
         {
-            M5.Lcd.drawString("http://" + WiFi.localIP().toString(), 10, 70, 4);
+            M5m.Lcd.drawString("http://" + WiFi.localIP().toString(), 10, 70, 4);
         }
 
         server.on("/list", HTTP_GET, printDirectory);
@@ -324,9 +324,9 @@ void MywebServer(void *parameter)
         server.onNotFound(handleNotFound);
 
         server.begin();
-        M5.Lcd.drawString("If you exit this app,", 10, 130, 2);
-        M5.Lcd.drawString("the server will continue to run", 10, 150, 2);
-        M5.Lcd.drawString("untill you stop it.", 10, 170, 2);
+        M5m.Lcd.drawString("If you exit this app,", 10, 130, 2);
+        M5m.Lcd.drawString("the server will continue to run", 10, 150, 2);
+        M5m.Lcd.drawString("untill you stop it.", 10, 170, 2);
     }
     for (;;)
     {
@@ -338,26 +338,26 @@ void MywebServer(void *parameter)
 
 void WebServerClass::Run()
 {
-    while (!M5.BtnB.wasPressed())
+    while (!M5m.BtnB.wasPressed())
     {
-        M5.update();
-        if (M5.BtnC.wasPressed())
+        M5m.update();
+        if (M5m.BtnC.wasPressed())
         {
-            M5.windowClr();
+            M5m.windowClr();
             if (webServerTask != NULL)
             {
                 vTaskDelete(webServerTask);
                 webServerTask = NULL;
-                M5.Lcd.drawString("MDNS server stoped", 10, 40, 4);
-                M5.Lcd.drawString("HTTP server stoped", 10, 70, 4);
+                M5m.Lcd.drawString("MDNS server stoped", 10, 40, 4);
+                M5m.Lcd.drawString("HTTP server stoped", 10, 70, 4);
             }
         }
 
-        if (M5.BtnA.wasPressed())
+        if (M5m.BtnA.wasPressed())
         {
             if (webServerTask == NULL)
             {
-                M5.windowClr();
+                M5m.windowClr();
                 xTaskCreatePinnedToCore(
                     MywebServer,    /* Task function. */
                     "MywebServer",  /* name of the task, a name just for humans */
@@ -373,11 +373,11 @@ void WebServerClass::Run()
 
 WebServerClass::WebServerClass()
 {
-    M5.update();
-    M5.drawAppMenu(F("WebServer"), F("START"), F("ESC"), F("STOP"));
+    M5m.update();
+    M5m.drawAppMenu(F("WebServer"), F("START"), F("ESC"), F("STOP"));
 }
 
 WebServerClass::~WebServerClass()
 {
-    M5.show();
+    M5m.show();
 }

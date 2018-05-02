@@ -1,5 +1,5 @@
 #pragma once
-#include "M5Stack.h"
+#include "M5StackMod.h"
 #define MDFONT &FreeSerif12pt7b
 #define STFONT &FreeSerif18pt7b
 

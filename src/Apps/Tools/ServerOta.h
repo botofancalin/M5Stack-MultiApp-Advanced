@@ -1,6 +1,6 @@
 
 #pragma once
-#include "M5Stack.h"
+#include "M5StackMod.h"
 
 class M5StackServerOta
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "M5Stack.h"
+#include "M5StackMod.h"
 
 #define CH1COLOR YELLOW
 #define CH2COLOR MAGENTA

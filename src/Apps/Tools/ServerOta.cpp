@@ -98,10 +98,10 @@ void M5StackServerOta::execOTA()
         // If yes, begin
         if (canBegin)
         {
-            M5.Lcd.fillScreen(BLACK);
-            M5.Lcd.setTextColor(YELLOW, BLACK);
-            M5.Lcd.drawCentreString("Please Wait...", 160, 80, 4);
-            M5.Lcd.drawCentreString("Updating Firmware", 160, 120, 4);
+            M5m.Lcd.fillScreen(BLACK);
+            M5m.Lcd.setTextColor(YELLOW, BLACK);
+            M5m.Lcd.drawCentreString("Please Wait...", 160, 80, 4);
+            M5m.Lcd.drawCentreString("Updating Firmware", 160, 120, 4);
             // No activity would appear on the Serial monitor
             // So be patient. This may take 2 - 5mins to complete
             size_t written = Update.writeStream(client);

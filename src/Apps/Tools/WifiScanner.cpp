@@ -2,19 +2,19 @@
 
 void WifiScannerClass::Run()
 {
-    M5.update();
-    M5.drawAppMenu(F("WiFi SCANNER"), F("ESC"), F("SCAN"), F("PAGE"));
-    M5.Lcd.drawCentreString(F("SCANNING....."), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
+    M5m.update();
+    M5m.drawAppMenu(F("WiFi SCANNER"), F("ESC"), F("SCAN"), F("PAGE"));
+    M5m.Lcd.drawCentreString(F("SCANNING....."), M5m.Lcd.width() / 2, M5m.Lcd.height() / 2, 2);
     vTaskDelay(100 / portTICK_PERIOD_MS);
     WiFi.mode(WIFI_MODE_STA);
     WiFi.disconnect();
     vTaskDelay(100 / portTICK_PERIOD_MS);
 
-    while (!M5.BtnA.wasPressed())
+    while (!M5m.BtnA.wasPressed())
     {
-        while (M5.BtnB.wasPressed())
+        while (M5m.BtnB.wasPressed())
         {
-            M5.update();
+            M5m.update();
         }
 
         wifi_count = WiFi.scanNetworks();
@@ -39,14 +39,14 @@ void WifiScannerClass::Run()
                 list_pages = 1;
             }
         }
-        while (!M5.BtnA.wasPressed())
+        while (!M5m.BtnA.wasPressed())
         {
             if (wifi_count == 0)
             {
                 if (!wifi_showlock)
                 {
-                    M5.windowClr();
-                    M5.Lcd.drawCentreString(F("NO NETWORKS FOUND"), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
+                    M5m.windowClr();
+                    M5m.Lcd.drawCentreString(F("NO NETWORKS FOUND"), M5m.Lcd.width() / 2, M5m.Lcd.height() / 2, 2);
                     wifi_showlock = HIGH;
                 }
             }
@@ -54,17 +54,17 @@ void WifiScannerClass::Run()
             {
                 if (!wifi_showlock)
                 {
-                    M5.windowClr();
-                    M5.Lcd.drawCentreString("FOUND " + String(wifi_count) + " NETWORKS, PAGE: " + String(list_page + 1) + "/" + String(list_pages), M5.Lcd.width() / 2, 40, 2);
+                    M5m.windowClr();
+                    M5m.Lcd.drawCentreString("FOUND " + String(wifi_count) + " NETWORKS, PAGE: " + String(list_page + 1) + "/" + String(list_pages), M5m.Lcd.width() / 2, 40, 2);
                     if ((list_page + 1) == list_pages)
                     {
                         if (list_lastpagelines == 0 and wifi_count >= list_lines)
                         {
                             for (short i = 0; i < list_lines; i++)
                             {
-                                M5.Lcd.drawString(WiFi.SSID(i + (list_page * list_lines)), 5, 80 + (i * 20), 2);
-                                M5.Lcd.drawString("ch " + String(WiFi.channel(i + (list_page * list_lines))), 200, 80 + (i * 20), 2);
-                                M5.Lcd.drawString(String(WiFi.RSSI(i + (list_page * list_lines))) + " dB", 150, 80 + (i * 20), 2);
+                                M5m.Lcd.drawString(WiFi.SSID(i + (list_page * list_lines)), 5, 80 + (i * 20), 2);
+                                M5m.Lcd.drawString("ch " + String(WiFi.channel(i + (list_page * list_lines))), 200, 80 + (i * 20), 2);
+                                M5m.Lcd.drawString(String(WiFi.RSSI(i + (list_page * list_lines))) + " dB", 150, 80 + (i * 20), 2);
                                 switch ((WiFi.encryptionType(i + (list_page * list_lines))))
                                 {
                                 case WIFI_AUTH_OPEN:
@@ -92,7 +92,7 @@ void WifiScannerClass::Run()
                                     Encryption = "Unknown";
                                     break;
                                 }
-                                M5.Lcd.drawString(Encryption, 200, 80 + (i * 20), 2);
+                                M5m.Lcd.drawString(Encryption, 200, 80 + (i * 20), 2);
                             }
                         }
                         else
@@ -101,9 +101,9 @@ void WifiScannerClass::Run()
                             {
                                 for (short i = 0; i < list_lastpagelines; i++)
                                 {
-                                    M5.Lcd.drawString(WiFi.SSID(i + (list_page * list_lines)), 5, 80 + (i * 20), 2);
-                                    M5.Lcd.drawString("ch " + String(WiFi.channel(i + (list_page * list_lines))), 200, 80 + (i * 20), 2);
-                                    M5.Lcd.drawString(String(WiFi.RSSI(i + (list_page * list_lines))) + " dB", 150, 80 + (i * 20), 2);
+                                    M5m.Lcd.drawString(WiFi.SSID(i + (list_page * list_lines)), 5, 80 + (i * 20), 2);
+                                    M5m.Lcd.drawString("ch " + String(WiFi.channel(i + (list_page * list_lines))), 200, 80 + (i * 20), 2);
+                                    M5m.Lcd.drawString(String(WiFi.RSSI(i + (list_page * list_lines))) + " dB", 150, 80 + (i * 20), 2);
                                     switch ((WiFi.encryptionType(i + (list_page * list_lines))))
                                     {
                                     case WIFI_AUTH_OPEN:
@@ -131,16 +131,16 @@ void WifiScannerClass::Run()
                                         Encryption = "Unknown";
                                         break;
                                     }
-                                    M5.Lcd.drawString(Encryption, 250, 80 + (i * 20), 2);
+                                    M5m.Lcd.drawString(Encryption, 250, 80 + (i * 20), 2);
                                 }
                             }
                             else
                             {
                                 for (short i = 0; i < wifi_count; i++)
                                 {
-                                    M5.Lcd.drawString(WiFi.SSID(i + (list_page * list_lines)), 5, 80 + (i * 20), 2);
-                                    M5.Lcd.drawString("ch " + String(WiFi.channel(i + (list_page * list_lines))), 200, 80 + (i * 20), 2);
-                                    M5.Lcd.drawString(String(WiFi.RSSI(i + (list_page * list_lines))) + " dB", 150, 80 + (i * 20), 2);
+                                    M5m.Lcd.drawString(WiFi.SSID(i + (list_page * list_lines)), 5, 80 + (i * 20), 2);
+                                    M5m.Lcd.drawString("ch " + String(WiFi.channel(i + (list_page * list_lines))), 200, 80 + (i * 20), 2);
+                                    M5m.Lcd.drawString(String(WiFi.RSSI(i + (list_page * list_lines))) + " dB", 150, 80 + (i * 20), 2);
                                     switch ((WiFi.encryptionType(i + (list_page * list_lines))))
                                     {
                                     case WIFI_AUTH_OPEN:
@@ -168,7 +168,7 @@ void WifiScannerClass::Run()
                                         Encryption = "Unknown";
                                         break;
                                     }
-                                    M5.Lcd.drawString(Encryption, 250, 80 + (i * 20), 2);
+                                    M5m.Lcd.drawString(Encryption, 250, 80 + (i * 20), 2);
                                 }
                             }
                         }
@@ -177,9 +177,9 @@ void WifiScannerClass::Run()
                     {
                         for (short i = 0; i < list_lines; i++)
                         {
-                            M5.Lcd.drawString(WiFi.SSID(i + (list_page * list_lines)), 5, 80 + (i * 20), 2);
-                            M5.Lcd.drawString("ch " + String(WiFi.channel(i + (list_page * list_lines))), 200, 80 + (i * 20), 2);
-                            M5.Lcd.drawString(String(WiFi.RSSI(i + (list_page * list_lines))) + " dB", 150, 80 + (i * 20), 2);
+                            M5m.Lcd.drawString(WiFi.SSID(i + (list_page * list_lines)), 5, 80 + (i * 20), 2);
+                            M5m.Lcd.drawString("ch " + String(WiFi.channel(i + (list_page * list_lines))), 200, 80 + (i * 20), 2);
+                            M5m.Lcd.drawString(String(WiFi.RSSI(i + (list_page * list_lines))) + " dB", 150, 80 + (i * 20), 2);
                             switch ((WiFi.encryptionType(i + (list_page * list_lines))))
                             {
                             case WIFI_AUTH_OPEN:
@@ -207,18 +207,18 @@ void WifiScannerClass::Run()
                                 Encryption = "Unknown";
                                 break;
                             }
-                            M5.Lcd.drawString(Encryption, 250, 80 + (i * 20), 2);
+                            M5m.Lcd.drawString(Encryption, 250, 80 + (i * 20), 2);
                         }
                     }
                     wifi_showlock = HIGH;
                 }
             }
-            if (M5.BtnB.wasPressed())
+            if (M5m.BtnB.wasPressed())
             {
                 list_page = 0;
                 list_pages = 0;
-                M5.windowClr();
-                M5.Lcd.drawCentreString(F("SCANNING DEEPER....."), M5.Lcd.width() / 2, M5.Lcd.height() / 2, 2);
+                M5m.windowClr();
+                M5m.Lcd.drawCentreString(F("SCANNING DEEPER....."), M5m.Lcd.width() / 2, M5m.Lcd.height() / 2, 2);
                 wifi_count = WiFi.scanNetworks(false, true, false, 500);
                 wifi_showlock = LOW;
                 if (wifi_count > 0)
@@ -242,7 +242,7 @@ void WifiScannerClass::Run()
                     }
                 }
             }
-            if (M5.BtnC.wasPressed())
+            if (M5m.BtnC.wasPressed())
             {
                 if (wifi_count > 0 and list_pages > 1)
                 {
@@ -254,7 +254,7 @@ void WifiScannerClass::Run()
                     wifi_showlock = LOW;
                 }
             }
-            M5.update();
+            M5m.update();
         }
     }
     preferences.begin("WiFi", false);
@@ -274,8 +274,8 @@ WifiScannerClass::WifiScannerClass()
 
 WifiScannerClass::~WifiScannerClass()
 {
-    M5.Lcd.setRotation(0);
-    M5.Lcd.fillScreen(0);
-    M5.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-    M5.showList();
+    M5m.Lcd.setRotation(0);
+    M5m.Lcd.fillScreen(0);
+    M5m.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+    M5m.showList();
 }

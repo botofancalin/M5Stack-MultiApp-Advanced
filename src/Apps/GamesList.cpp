@@ -3,39 +3,39 @@
 // the game list menu
 void GamesListClass::Run()
 {
-    M5.update();
-    M5.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
-    M5.clearList();
-    M5.setListCaption("GAMES");
+    M5m.update();
+    M5m.drawAppMenu(F("GAMES"),F("ESC"),F("SELECT"),F("LIST"));
+    M5m.clearList();
+    M5m.setListCaption("GAMES");
 
     // The list items Add new items to list to be displayed
-    M5.addList("ALIEN SHOOTER");
-    M5.addList("FLAPPY BIRD");
-    M5.showList();
+    M5m.addList("ALIEN SHOOTER");
+    M5m.addList("FLAPPY BIRD");
+    M5m.showList();
 
-    while (!M5.BtnA.wasPressed())
+    while (!M5m.BtnA.wasPressed())
     {
-        if (M5.BtnC.wasPressed())
+        if (M5m.BtnC.wasPressed())
         {
-            M5.nextList();
+            M5m.nextList();
         }
-        if (M5.BtnB.wasPressed())
+        if (M5m.BtnB.wasPressed())
         {
-            if (M5.getListString() == "ALIEN SHOOTER")
+            if (M5m.getListString() == "ALIEN SHOOTER")
             {
-                M5.update();
+                M5m.update();
                 // The game object with member call
                 SpaceShooterClass SpaceShooterObj;
                 SpaceShooterObj.Run();
             }
-             if (M5.getListString() == "FLAPPY BIRD")
+             if (M5m.getListString() == "FLAPPY BIRD")
             {
-                M5.update();
+                M5m.update();
                 FlappyBirdClass FlappyBirdObj;
                 FlappyBirdObj.Run();
             }
         }
-        M5.update();
+        M5m.update();
     } 
 }
 
@@ -45,5 +45,5 @@ GamesListClass::GamesListClass()
 
 GamesListClass::~GamesListClass()
 {
-    M5.show();
+    M5m.show();
 }

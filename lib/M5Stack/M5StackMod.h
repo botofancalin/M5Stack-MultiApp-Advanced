@@ -1,18 +1,18 @@
-// Copyright (c) M5Stack. All rights reserved.
+// Copyright (c) M5StackMod. All rights reserved.
 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 /**
- * \par Copyright (C), 2016-2017, M5Stack
- * \class M5Stack
- * \brief   M5Stack library.
- * @file    M5Stack.h
- * @author  M5Stack
+ * \par Copyright (C), 2016-2017, M5StackMod
+ * \class M5StackMod
+ * \brief   M5StackMod library.
+ * @file    M5StackMod.h
+ * @author  M5StackMod
  * @version V0.1.5
  * @date    2017/03/27
- * @brief   Header for M5Stack.cpp module
+ * @brief   Header for M5StackMod.cpp module
  *
  * \par Description
- * This file is a drive for M5Stack core.
+ * This file is a drive for M5StackMod core.
  * <pre>
  * `<Author>`         `<Time>`        `<Version>`        `<Descr>`
  * Zibin Zheng         2017/07/14        0.0.1          Rebuild the new.
@@ -65,12 +65,12 @@ extern "C" {
 #include "esp_sleep.h"
 }
 
-class M5Stack
+class M5StackMod
 {
 
 public:
-  M5Stack();
-  ~M5Stack();
+  M5StackMod();
+  ~M5StackMod();
   void begin();
   void update();
   void up();
@@ -140,8 +140,8 @@ private:
 };
 
 extern Preferences preferences;
-extern M5Stack M5;
-#define m5 M5
+extern M5StackMod M5m;
+#define m5 M5m
 #define lcd Lcd
 
 #else

@@ -9,7 +9,7 @@ bool OtaRunning = false;
 
 void setup()
 {
-	M5.begin();
+	M5m.begin();
 	dacWrite(25, 0); // Speaker OFF
 	preferences.begin("WiFi", false);
 	WiFi_Mode = preferences.getInt("mode", 0);
@@ -21,29 +21,29 @@ void setup()
 	}
 
 	preferences.begin("Brightnes", false);
-	M5.lcd.setBrightness(preferences.getUShort("light", 95));
+	M5m.lcd.setBrightness(preferences.getUShort("light", 95));
 	preferences.end();
 
 	//The main menu. Add main menu items here
-	M5.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps1, appReturn);
-	M5.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
-	M5.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
-	M5.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
+	M5m.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps1, appReturn);
+	M5m.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
+	M5m.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
+	M5m.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
 
-	M5.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
-	M5.addMenuItem(1, "WEBRADIO", "<", "OK", ">", -1, WebRadio, appWebRadio);
-	M5.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
-	M5.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, Browser, appSdBrowser);
-	M5.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, Tools, appListTools);
-	M5.addMenuItem(1, "GAMES", "<", "OK", ">", -1, Games, appGamesList);
-	M5.addMenuItem(1, "RETURN", "<", "OK", ">", 0, Return, appReturn);
+	M5m.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
+	M5m.addMenuItem(1, "WEBRADIO", "<", "OK", ">", -1, WebRadio, appWebRadio);
+	M5m.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
+	M5m.addMenuItem(1, "SD BROWSER", "<", "OK", ">", -1, Browser, appSdBrowser);
+	M5m.addMenuItem(1, "TOOLS", "<", "OK", ">", -1, Tools, appListTools);
+	M5m.addMenuItem(1, "GAMES", "<", "OK", ">", -1, Games, appGamesList);
+	M5m.addMenuItem(1, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
-	M5.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, Sysinfo, appSysInfo);
-	M5.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, WifiConn, appWiFiSetup);
-	M5.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, Backlight, appCfgBrigthness);
-	M5.addMenuItem(2, "RETURN", "<", "OK", ">", 0, Return, appReturn);
+	M5m.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, Sysinfo, appSysInfo);
+	M5m.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, WifiConn, appWiFiSetup);
+	M5m.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, Backlight, appCfgBrigthness);
+	M5m.addMenuItem(2, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
-	M5.show();
+	M5m.show();
 }
 
 void loop()
@@ -54,9 +54,9 @@ void loop()
 		WiFi_Mode = WiFi.getMode();
 		if (WiFi_Mode == WIFI_MODE_STA && WiFi.isConnected())
 		{
-			M5.Lcd.setTextColor(WHITE, 15);
+			M5m.Lcd.setTextColor(WHITE, 15);
 			SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
-			M5.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
+			M5m.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
 			if (!OtaRunning)
 			{
 				M5StackServerOta SrververOta(&version);
@@ -67,32 +67,32 @@ void loop()
 		}
 		else if (WiFi_Mode == WIFI_MODE_APSTA)
 		{
-			M5.Lcd.setTextColor(WHITE, 15);
-			M5.Lcd.drawRightString("Clients: " + String(WiFi.softAPgetStationNum()), 300, 5, 2);
+			M5m.Lcd.setTextColor(WHITE, 15);
+			M5m.Lcd.drawRightString("Clients: " + String(WiFi.softAPgetStationNum()), 300, 5, 2);
 		}
 		else if (WiFi_Mode == WIFI_MODE_NULL)
 		{
-			M5.Lcd.setTextColor(WHITE, 15);
-			M5.Lcd.drawRightString("Wifi OFF", 310, 5, 2);
+			M5m.Lcd.setTextColor(WHITE, 15);
+			M5m.Lcd.drawRightString("Wifi OFF", 310, 5, 2);
 		}
 		lastcheck = now;
 	}
 
-	M5.update();
+	M5m.update();
 	if (OtaRunning)
 	{
 		ArduinoOTA.handle();
 	}
-	if (M5.BtnC.wasPressed())
+	if (M5m.BtnC.wasPressed())
 	{
-		M5.up();
+		M5m.up();
 	}
-	if (M5.BtnA.wasPressed())
+	if (M5m.BtnA.wasPressed())
 	{
-		M5.down();
+		M5m.down();
 	}
-	if (M5.BtnB.wasPressed())
+	if (M5m.BtnB.wasPressed())
 	{
-		M5.execute();
+		M5m.execute();
 	}
 }

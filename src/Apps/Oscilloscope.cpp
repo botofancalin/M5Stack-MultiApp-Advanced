@@ -1,42 +1,42 @@
 #include "Oscilloscope.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-int Gen = 0;
+int Gen = 2;
 
 void OscilloscopeClass::DrawText()
 {
-	M5.Lcd.setTextColor(WHITE);
-	M5.Lcd.fillRect(270, menu, 70, 10, BLUE);
-	(menu != 19) ? M5.Lcd.fillRect(270, menu - 10, 70, 10, BLACK) : M5.Lcd.fillRect(270, 149, 70, 10, BLACK);
-	M5.Lcd.drawString((Start ? "Stop" : "Run"), 270, 20, 1);
-	M5.Lcd.drawString(String(String(Ranges[range0]) + "/DIV"), 270, 30, 1);
-	M5.Lcd.drawString(String(String(Ranges[range1]) + "/DIV"), 270, 40, 1);
-	M5.Lcd.drawString(String(String(Rates[rate]) + "/DIV"), 270, 50, 1);
-	M5.Lcd.drawString(String(Modes[ch0_mode]), 270, 60, 1);
-	M5.Lcd.drawString(String(Modes[ch1_mode]), 270, 70, 1);
-	M5.Lcd.drawString(String("OFS1:" + String(ch0_off)), 270, 80, 1);
-	M5.Lcd.drawString(String("OFS2:" + String(ch1_off)), 270, 90, 1);
-	M5.Lcd.drawString(String(trig_ch == 0 ? "T:1" : "T:2"), 270, 100, 1);
-	M5.Lcd.drawString(String(TRIG_Modes[trig_mode]), 270, 110);
-	M5.Lcd.drawString(String("Tlv:" + String(trig_lv - 30)), 270, 120, 1);
-	M5.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130, 1);
-	M5.Lcd.drawString(String("Gen:" + String(Generator[Gen])), 270, 140, 1);
-	M5.Lcd.drawString("Exit", 270, 150, 1);
-	M5.Lcd.setTextColor(WHITE, BLACK);
-	M5.Lcd.drawString("<", 60, 220, 2);
-	M5.Lcd.drawString("Menu", 145, 220, 2);
-	M5.Lcd.drawString(">", 252, 220, 2);
+	M5m.Lcd.setTextColor(WHITE);
+	M5m.Lcd.fillRect(270, menu, 70, 10, BLUE);
+	(menu != 19) ? M5m.Lcd.fillRect(270, menu - 10, 70, 10, BLACK) : M5m.Lcd.fillRect(270, 149, 70, 10, BLACK);
+	M5m.Lcd.drawString((Start ? "Stop" : "Run"), 270, 20, 1);
+	M5m.Lcd.drawString(String(String(Ranges[range0]) + "/DIV"), 270, 30, 1);
+	M5m.Lcd.drawString(String(String(Ranges[range1]) + "/DIV"), 270, 40, 1);
+	M5m.Lcd.drawString(String(String(Rates[rate]) + "/DIV"), 270, 50, 1);
+	M5m.Lcd.drawString(String(Modes[ch0_mode]), 270, 60, 1);
+	M5m.Lcd.drawString(String(Modes[ch1_mode]), 270, 70, 1);
+	M5m.Lcd.drawString(String("OFS1:" + String(ch0_off)), 270, 80, 1);
+	M5m.Lcd.drawString(String("OFS2:" + String(ch1_off)), 270, 90, 1);
+	M5m.Lcd.drawString(String(trig_ch == 0 ? "T:1" : "T:2"), 270, 100, 1);
+	M5m.Lcd.drawString(String(TRIG_Modes[trig_mode]), 270, 110);
+	M5m.Lcd.drawString(String("Tlv:" + String(trig_lv - 30)), 270, 120, 1);
+	M5m.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130, 1);
+	M5m.Lcd.drawString(String("Gen:" + String(Generator[Gen])), 270, 140, 1);
+	M5m.Lcd.drawString("Exit", 270, 150, 1);
+	M5m.Lcd.setTextColor(WHITE, BLACK);
+	M5m.Lcd.drawString("<", 60, 220, 2);
+	M5m.Lcd.drawString("Menu", 145, 220, 2);
+	M5m.Lcd.drawString(">", 252, 220, 2);
 }
 
 void OscilloscopeClass::CheckSW()
 {
-	M5.update();
-	if (M5.BtnB.wasPressed())
+	M5m.update();
+	if (M5m.BtnB.wasPressed())
 	{
 		(menu < 149) ? (menu += 10) : (menu = 19);
 		return;
 	}
-	else if (M5.BtnA.wasPressed())
+	else if (M5m.BtnA.wasPressed())
 	{
 		switch (menu)
 		{
@@ -103,7 +103,7 @@ void OscilloscopeClass::CheckSW()
 		}
 		return;
 	}
-	if (M5.BtnC.wasPressed())
+	if (M5m.BtnC.wasPressed())
 	{
 		switch (menu)
 		{
@@ -183,18 +183,18 @@ void OscilloscopeClass::DrawGrid()
 	{
 		for (int y = 0; y <= LCD_HEIGHT; y += DOTS_DIV)
 		{
-			M5.Lcd.drawPixel(x, y, OSCGREY);
+			M5m.Lcd.drawPixel(x, y, OSCGREY);
 		}
 		if (LCD_HEIGHT == 240)
 		{
-			M5.Lcd.drawPixel(x, LCD_HEIGHT - 1, OSCGREY);
+			M5m.Lcd.drawPixel(x, LCD_HEIGHT - 1, OSCGREY);
 		}
 	}
 	for (int x = 0; x <= SAMPLES; x += DOTS_DIV) // Vertical Line
 	{
 		for (int y = 0; y <= LCD_HEIGHT; y += 2)
 		{
-			M5.Lcd.drawPixel(x, y, OSCGREY);
+			M5m.Lcd.drawPixel(x, y, OSCGREY);
 		}
 	}
 	CheckSW();
@@ -207,14 +207,14 @@ void OscilloscopeClass::DrawGrid(int x)
 	{
 		for (int y = 0; y <= LCD_HEIGHT; y += DOTS_DIV)
 		{
-			M5.Lcd.drawPixel(x, y, OSCGREY);
+			M5m.Lcd.drawPixel(x, y, OSCGREY);
 		}
 	}
 	if ((x % DOTS_DIV) == 0)
 	{
 		for (int y = 0; y <= LCD_HEIGHT; y += 2)
 		{
-			M5.Lcd.drawPixel(x, y, OSCGREY);
+			M5m.Lcd.drawPixel(x, y, OSCGREY);
 		}
 	}
 }
@@ -231,13 +231,13 @@ void OscilloscopeClass::ClearAndDrawGraph()
 	{
 		if (ch0_mode != MODE_OFF)
 		{
-			M5.Lcd.drawLine(x, LCD_HEIGHT - data[clear][x], x + 1, LCD_HEIGHT - data[clear][x + 1], BLACK);
-			M5.Lcd.drawLine(x, LCD_HEIGHT - data[sample][x], x + 1, LCD_HEIGHT - data[sample][x + 1], CH1COLOR);
+			M5m.Lcd.drawLine(x, LCD_HEIGHT - data[clear][x], x + 1, LCD_HEIGHT - data[clear][x + 1], BLACK);
+			M5m.Lcd.drawLine(x, LCD_HEIGHT - data[sample][x], x + 1, LCD_HEIGHT - data[sample][x + 1], CH1COLOR);
 		}
 		if (ch1_mode != MODE_OFF)
 		{
-			M5.Lcd.drawLine(x, LCD_HEIGHT - data[clear + 1][x], x + 1, LCD_HEIGHT - data[clear + 1][x + 1], BLACK);
-			M5.Lcd.drawLine(x, LCD_HEIGHT - data[sample + 1][x], x + 1, LCD_HEIGHT - data[sample + 1][x + 1], CH2COLOR);
+			M5m.Lcd.drawLine(x, LCD_HEIGHT - data[clear + 1][x], x + 1, LCD_HEIGHT - data[clear + 1][x + 1], BLACK);
+			M5m.Lcd.drawLine(x, LCD_HEIGHT - data[sample + 1][x], x + 1, LCD_HEIGHT - data[sample + 1][x + 1], CH2COLOR);
 		}
 	}
 	DrawGrid();
@@ -257,13 +257,13 @@ void OscilloscopeClass::ClearAndDrawDot(int i)
 	}
 	if (ch0_mode != MODE_OFF)
 	{
-		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[clear][i - 1], i, LCD_HEIGHT - data[clear][i], BLACK);
-		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[sample][i - 1], i, LCD_HEIGHT - data[sample][i], CH1COLOR);
+		M5m.Lcd.drawLine(i - 1, LCD_HEIGHT - data[clear][i - 1], i, LCD_HEIGHT - data[clear][i], BLACK);
+		M5m.Lcd.drawLine(i - 1, LCD_HEIGHT - data[sample][i - 1], i, LCD_HEIGHT - data[sample][i], CH1COLOR);
 	}
 	if (ch1_mode != MODE_OFF)
 	{
-		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[clear + 1][i - 1], i, LCD_HEIGHT - data[clear + 1][i], BLACK);
-		M5.Lcd.drawLine(i - 1, LCD_HEIGHT - data[sample + 1][i - 1], i, LCD_HEIGHT - data[sample + 1][i], CH2COLOR);
+		M5m.Lcd.drawLine(i - 1, LCD_HEIGHT - data[clear + 1][i - 1], i, LCD_HEIGHT - data[clear + 1][i], BLACK);
+		M5m.Lcd.drawLine(i - 1, LCD_HEIGHT - data[sample + 1][i - 1], i, LCD_HEIGHT - data[sample + 1][i], CH2COLOR);
 	}
 	DrawGrid(i);
 }
@@ -319,7 +319,7 @@ void SigGen_Task(void *parameter)
 void OscilloscopeClass::Run()
 {
 	exitprg = false;
-	M5.Lcd.fillScreen(BLACK);
+	M5m.Lcd.fillScreen(BLACK);
 	DrawGrid();
 
 	if (Sig_Gen == NULL)
@@ -489,7 +489,7 @@ void OscilloscopeClass::Run()
 		{
 			CheckSW();
 		}
-		M5.update();
+		M5m.update();
 		if (exitprg) // endless loop exit condition
 		{
 			break;
@@ -506,6 +506,6 @@ OscilloscopeClass::~OscilloscopeClass()
 	vTaskDelete(Sig_Gen);
 	Sig_Gen = NULL;
 	dacWrite(26, 0);
-	M5.Lcd.fillScreen(BLACK);
-	M5.show();
+	M5m.Lcd.fillScreen(BLACK);
+	M5m.show();
 }

@@ -73,12 +73,12 @@ void SdBrowserClass::aSortFiles()
 
 void SdBrowserClass::buildMyMenu()
 {
-    M5.clearList();
-    M5.setListCaption("Files");
+    M5m.clearList();
+    M5m.setListCaption("Files");
     for (int i = 0; i < appsCount; i++)
     {
         String shortName = fileVector[i].fileName.substring(1);
-        M5.addList(shortName);
+        M5m.addList(shortName);
     }
 }
 
@@ -88,45 +88,45 @@ void SdBrowserClass::Run()
     listDir(SD, "/", levels);
     aSortFiles();
     buildMyMenu();
-    M5.showList();
-    while (!M5.BtnA.wasPressed())
+    M5m.showList();
+    while (!M5m.BtnA.wasPressed())
     {
-        if (M5.BtnC.wasPressed())
+        if (M5m.BtnC.wasPressed())
         {
             if (repaint)
             {
-                M5.Lcd.clear();
-                M5.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
-                M5.btnRestore();
+                M5m.Lcd.clear();
+                M5m.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
+                M5m.btnRestore();
             }
-            M5.nextList();
+            M5m.nextList();
         }
-        int MenuID = M5.getListID();
+        int MenuID = M5m.getListID();
 
-        if (M5.BtnB.wasPressed())
+        if (M5m.BtnB.wasPressed())
         {
             String FileName = fileVector[MenuID].fileName;
             if (FileName.endsWith(".jpg"))
             {
-                M5.Lcd.clear();
+                M5m.Lcd.clear();
                 if (fileVector[MenuID].fileSize > 100000UL)
                 {
-                    M5.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_8);
+                    M5m.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_8);
                 }
                 else if (fileVector[MenuID].fileSize > 70000UL)
                 {
-                    M5.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_4);
+                    M5m.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_4);
                 }
                 else if (fileVector[MenuID].fileSize > 50000)
                 {
-                    M5.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_2);
+                    M5m.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_2);
                 }
                 else
                 {
-                    M5.Lcd.drawJpgFile(SD, FileName.c_str());
+                    M5m.Lcd.drawJpgFile(SD, FileName.c_str());
                 }
                 repaint = true;
-                M5.btnRestore();
+                M5m.btnRestore();
             }
             else if (FileName.endsWith(".mp3"))
             {
@@ -136,30 +136,30 @@ void SdBrowserClass::Run()
             else if (!inmenu)
             {
                 inmenu = true;
-                M5.windowClr();
-                M5.Lcd.drawCentreString("File Name: " + fileVector[MenuID].fileName, M5.Lcd.width() / 2, (M5.Lcd.height() / 2) - 10, 2);
-                M5.Lcd.drawCentreString("File Size: " + String(fileVector[MenuID].fileSize), M5.Lcd.width() / 2, (M5.Lcd.height() / 2) + 10, 2);
+                M5m.windowClr();
+                M5m.Lcd.drawCentreString("File Name: " + fileVector[MenuID].fileName, M5m.Lcd.width() / 2, (M5m.Lcd.height() / 2) - 10, 2);
+                M5m.Lcd.drawCentreString("File Size: " + String(fileVector[MenuID].fileSize), M5m.Lcd.width() / 2, (M5m.Lcd.height() / 2) + 10, 2);
             }
             else
             {
                 inmenu = false;
-                M5.showList();
+                M5m.showList();
             }
         }
-        M5.update();
+        M5m.update();
     }
 }
 
 SdBrowserClass::SdBrowserClass()
 {
-    M5.update();
-    M5.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
+    M5m.update();
+    M5m.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
 }
 
 SdBrowserClass::~SdBrowserClass()
 {
     fileVector.clear();
     fileVector.shrink_to_fit();
-    M5.clearList();
-    M5.show();
+    M5m.clearList();
+    M5m.show();
 }

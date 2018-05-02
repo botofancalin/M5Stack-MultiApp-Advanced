@@ -1,9 +1,9 @@
-// Copyright (c) M5Stack. All rights reserved.
+// Copyright (c) M5StackMod. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#include "M5Stack.h"
+#include "M5StackMod.h"
 
-M5Stack::M5Stack()
+M5StackMod::M5StackMod()
 {
   levelIDX = 0;
   menuCount[levelIDX] = 0;
@@ -14,12 +14,12 @@ M5Stack::M5Stack()
   clearList();
 }
 
-void M5Stack::setListCaption(String inCaption)
+void M5StackMod::setListCaption(String inCaption)
 {
   listCaption = inCaption;
 }
 
-void M5Stack::clearList()
+void M5StackMod::clearList()
 {
   list_count = 0;
   list_pages = 0;
@@ -31,7 +31,7 @@ void M5Stack::clearList()
   listCaption = "";
 }
 
-void M5Stack::addList(String inStr)
+void M5StackMod::addList(String inStr)
 {
   if (inStr.length() <= LIST_MAX_LABEL_SIZE && inStr.length() > 0)
   {
@@ -60,17 +60,17 @@ void M5Stack::addList(String inStr)
   }
 }
 
-unsigned int M5Stack::getListID()
+unsigned int M5StackMod::getListID()
 {
   return list_idx;
 }
 
-String M5Stack::getListString()
+String M5StackMod::getListString()
 {
   return list_labels[list_idx];
 }
 
-void M5Stack::nextList()
+void M5StackMod::nextList()
 {
   if (list_idx < list_page * LIST_PAGE_LABELS + list_lines - 1)
   {
@@ -91,7 +91,7 @@ void M5Stack::nextList()
   showList();
 }
 
-void M5Stack::drawListItem(uint32_t inIDX, uint32_t postIDX)
+void M5StackMod::drawListItem(uint32_t inIDX, uint32_t postIDX)
 {
   if (inIDX == list_idx)
   {
@@ -104,7 +104,7 @@ void M5Stack::drawListItem(uint32_t inIDX, uint32_t postIDX)
   }
 }
 
-void M5Stack::showList()
+void M5StackMod::showList()
 {
   windowClr();
   unsigned int labelid = 0;
@@ -153,7 +153,7 @@ void M5Stack::showList()
   }
 }
 
-void M5Stack::up()
+void M5StackMod::up()
 {
   if (menuIDX < menuCount[levelIDX] - 1)
   {
@@ -162,7 +162,7 @@ void M5Stack::up()
   }
 }
 
-void M5Stack::down()
+void M5StackMod::down()
 {
   if (menuIDX > 0)
   {
@@ -171,14 +171,14 @@ void M5Stack::down()
   }
 }
 
-void M5Stack::GoToLevel(uint32_t inlevel)
+void M5StackMod::GoToLevel(uint32_t inlevel)
 {
   levelIDX = inlevel;
   menuIDX = 0;
   show();
 }
 
-void M5Stack::execute()
+void M5StackMod::execute()
 {
   if (menuList[levelIDX][menuIDX].gotoLevel == -1)
   {
@@ -190,7 +190,7 @@ void M5Stack::execute()
   }
 }
 
-void M5Stack::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title,
+void M5StackMod::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title,
                           const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
 {
   uint32_t mCnt = menuCount[levelID];
@@ -205,18 +205,18 @@ void M5Stack::addMenuItem(uint32_t levelID, const char *menu_title, const char *
   menuCount[levelID]++;
 }
 
-void M5Stack::show()
+void M5StackMod::show()
 {
   drawMenu(menuList[levelIDX][menuIDX].title, menuList[levelIDX][menuIDX].btnAtitle, menuList[levelIDX][menuIDX].btnBtitle,
            menuList[levelIDX][menuIDX].btnCtitle, menucolor, windowcolor, menuList[levelIDX][menuIDX].MenuImg, menutextcolor);
 }
 
-void M5Stack::windowClr()
+void M5StackMod::windowClr()
 {
   Lcd.fillRoundRect(0, 29, Lcd.width(), Lcd.height() - 28 - 28, 3, windowcolor);
 }
 
-unsigned int M5Stack::getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue)
+unsigned int M5StackMod::getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue)
 {
   inred = map(inred, 0, 255, 0, 31);
   ingrn = map(ingrn, 0, 255, 0, 63);
@@ -224,20 +224,20 @@ unsigned int M5Stack::getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue)
   return inred << 11 | ingrn << 5 | inblue;
 }
 
-void M5Stack::drawAppMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl)
+void M5StackMod::drawAppMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl)
 {
   drawMenu(inmenuttl, inbtnAttl, inbtnBttl, inbtnCttl, menucolor, windowcolor, NULL, menutextcolor);
   Lcd.setTextColor(menutextcolor, windowcolor);
 }
 
-void M5Stack::setColorSchema(unsigned int inmenucolor, unsigned int inwindowcolor, unsigned int intextcolor)
+void M5StackMod::setColorSchema(unsigned int inmenucolor, unsigned int inwindowcolor, unsigned int intextcolor)
 {
   menucolor = inmenucolor;
   windowcolor = inwindowcolor;
   menutextcolor = intextcolor;
 }
 
-void M5Stack::btnRestore()
+void M5StackMod::btnRestore()
 {
   Lcd.setTextColor(menutextcolor);
   Lcd.fillRoundRect(0, Lcd.height() - 28, Lcd.width(), 28, 3, 0x00);
@@ -250,7 +250,7 @@ void M5Stack::btnRestore()
   Lcd.setTextColor(menutextcolor, windowcolor);
 }
 
-void M5Stack::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor,
+void M5StackMod::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor,
                        unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
 {
   lastBtnTittle[0] = inbtnAttl;
@@ -274,12 +274,12 @@ void M5Stack::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, Str
   Lcd.drawCentreString(inbtnCttl, 221 + 30, Lcd.height() - 28 + 6, 2);
 }
 
-void M5Stack::begin()
+void M5StackMod::begin()
 {
   // UART
   Serial.begin(115200);
   Serial.flush();
-  Serial.print("M5Stack initializing...");
+  Serial.print("M5StackMod initializing...");
 
   // I2C
   pinMode(SCL, OUTPUT);
@@ -309,7 +309,7 @@ void M5Stack::begin()
   Serial.println("OK");
 }
 
-void M5Stack::update()
+void M5StackMod::update()
 {
 
   //Button update
@@ -318,12 +318,12 @@ void M5Stack::update()
   BtnC.read();
 }
 
-void M5Stack::setWakeupButton(uint8_t button)
+void M5StackMod::setWakeupButton(uint8_t button)
 {
   _wakeupPin = button;
 }
 
-void M5Stack::powerOFF()
+void M5StackMod::powerOFF()
 {
 
   // power off the Lcd
@@ -342,9 +342,9 @@ void M5Stack::powerOFF()
   USE_SERIAL.println("On power OFF fail!");
 }
 
-M5Stack::~M5Stack()
+M5StackMod::~M5StackMod()
 {
 }
 
 Preferences preferences;
-M5Stack M5;
+M5StackMod M5m;

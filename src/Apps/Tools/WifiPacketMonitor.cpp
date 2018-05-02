@@ -89,9 +89,9 @@ void draw()
 	}
 	String p = "Ch: " + (String)ch + " | Rssi: " + (String)rssi + " | Packets: " +
 			   (String)tmpPacketCounter + " | Deauth: [" + deauths + "]";
-	M5.Lcd.setTextColor(WHITE, BLUE);
-	M5.Lcd.drawString(p + "  ", 10, 2, 2);						 // string DRAW
-	M5.Lcd.drawLine(40, MAX_Y - 200, MAX_X, MAX_Y - 200, GREEN); // MAX LINE DRAW
+	M5m.Lcd.setTextColor(WHITE, BLUE);
+	M5m.Lcd.drawString(p + "  ", 10, 2, 2);						 // string DRAW
+	M5m.Lcd.drawLine(40, MAX_Y - 200, MAX_X, MAX_Y - 200, GREEN); // MAX LINE DRAW
 	for (int i = 40; i < MAX_X; i++)
 	{
 		len = pkts[i] * multiplicator;
@@ -100,17 +100,17 @@ void draw()
 		{
 			len = 200;
 		}
-		M5.Lcd.drawLine(i, MAX_Y, i, 31, BLACK);		  // LINE EARSE
-		M5.Lcd.drawLine(i, MAX_Y, i, MAX_Y - len, GREEN); // LINE DRAW
+		M5m.Lcd.drawLine(i, MAX_Y, i, 31, BLACK);		  // LINE EARSE
+		M5m.Lcd.drawLine(i, MAX_Y, i, MAX_Y - len, GREEN); // LINE DRAW
 		if (i < MAX_X - 1)
 		{
 			pkts[i] = pkts[i + 1];
 		}
 	}
-	M5.Lcd.setTextColor(RED);
-	M5.Lcd.drawString("Ch-", 57, 210, 2);
-	M5.Lcd.drawString("Exit", 148, 210, 2);
-	M5.Lcd.drawString("Ch+", 247, 210, 2);
+	M5m.Lcd.setTextColor(RED);
+	M5m.Lcd.drawString("Ch-", 57, 210, 2);
+	M5m.Lcd.drawString("Exit", 148, 210, 2);
+	M5m.Lcd.drawString("Ch+", 247, 210, 2);
 }
 // ===== main program ================================================
 void Monitor_run()
@@ -119,18 +119,18 @@ void Monitor_run()
 	WiFi.mode(WIFI_MODE_NULL);
 	WiFi.begin();
 	esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE);
-	M5.Lcd.fillScreen(BLACK);
-	M5.Lcd.setTextColor(WHITE, BLACK);
+	M5m.Lcd.fillScreen(BLACK);
+	M5m.Lcd.setTextColor(WHITE, BLACK);
 	;
 	int s = 10, a = 0;
 	for (int ypos = MAX_Y; ypos > 120; ypos = ypos - s)
 	{
-		M5.Lcd.setTextDatum(MR_DATUM);
-		M5.Lcd.drawString(String(MAX_Y - ypos), 30, ypos - 1 - a, 2);
+		M5m.Lcd.setTextDatum(MR_DATUM);
+		M5m.Lcd.drawString(String(MAX_Y - ypos), 30, ypos - 1 - a, 2);
 		a = a + 10;
 	}
-	M5.Lcd.setTextDatum(TL_DATUM);
-	M5.Lcd.fillRect(0, 0, 320, 20, BLUE);
+	M5m.Lcd.setTextDatum(TL_DATUM);
+	M5m.Lcd.fillRect(0, 0, 320, 20, BLUE);
 	esp_wifi_set_promiscuous_rx_cb(&wifi_promiscuous);
 	esp_wifi_set_promiscuous(true);
 	uint32_t currentTime;
@@ -138,20 +138,20 @@ void Monitor_run()
 	{
 		currentTime = millis();
 		{
-			M5.update();
-			if (M5.BtnA.wasPressed())
+			M5m.update();
+			if (M5m.BtnA.wasPressed())
 			{
 				ch--;
 				setChannel(ch);
 				draw();
 			}
-			if (M5.BtnC.wasPressed())
+			if (M5m.BtnC.wasPressed())
 			{
 				ch++;
 				setChannel(ch);
 				draw();
 			}
-			if (M5.BtnB.wasPressed())
+			if (M5m.BtnB.wasPressed())
 			{
 				break;
 			}
@@ -170,7 +170,7 @@ void Monitor_run()
 	{
 		pkts[i] = 0;
 	}
-	M5.Lcd.setTextFont(1);
+	M5m.Lcd.setTextFont(1);
 	preferences.begin("WiFi", false);
 	WiFi_Mode = preferences.getInt("mode", 0);
 	WiFi.mode(wifi_mode_t(WiFi_Mode));
@@ -179,9 +179,9 @@ void Monitor_run()
 		WiFi.begin();
 	}
 	preferences.end();
-	M5.Lcd.setRotation(0);
-	M5.Lcd.fillScreen(0);
-	M5.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
-	M5.showList();
+	M5m.Lcd.setRotation(0);
+	M5m.Lcd.fillScreen(0);
+	M5m.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
+	M5m.showList();
 	return;
 }

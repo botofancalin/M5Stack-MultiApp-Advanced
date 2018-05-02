@@ -95,34 +95,34 @@ void SpaceShooterClass::drawBitmap(char img[], int imgW, int imgH, int x, int y,
     }
     if (curPix != 'Z' && scale == 1)
     {
-      M5.Lcd.drawPixel(x + i % imgW, y + i / imgW, cellColor);
+      M5m.Lcd.drawPixel(x + i % imgW, y + i / imgW, cellColor);
     }
     else if (curPix != 'Z' && scale > 1)
     {
-      M5.Lcd.fillRect(x + scale * (i % imgW), y + scale * (i / imgW), scale, scale, cellColor);
+      M5m.Lcd.fillRect(x + scale * (i % imgW), y + scale * (i / imgW), scale, scale, cellColor);
     }
   }
 }
 //==================================================================
 void SpaceShooterClass::drawalien_shooter_score(bool win)
 {
-  M5.Lcd.setTextColor(WHITE);
-  M5.Lcd.setTextSize(2);
+  M5m.Lcd.setTextColor(WHITE);
+  M5m.Lcd.setTextSize(2);
   if (win)
   {
-    M5.Lcd.drawString("LEVEL UP!", 53, 40);
+    M5m.Lcd.drawString("LEVEL UP!", 53, 40);
   }
   else
   {
-    M5.Lcd.drawString("GAME OVER", 53, 40);
+    M5m.Lcd.drawString("GAME OVER", 53, 40);
   }
   for (; millis() - offsetM <= 1000;)
-    M5.Lcd.drawString("Score: " + String(alien_shooter_score), 80, 89);
+    M5m.Lcd.drawString("Score: " + String(alien_shooter_score), 80, 89);
   offsetM = millis();
   for (; millis() - offsetM <= 1000;)
   {
   }
-  M5.Lcd.drawString("Level: " + String(level), 80, 128);
+  M5m.Lcd.drawString("Level: " + String(level), 80, 128);
 }
 // functions =======================================================
 void SpaceShooterClass::gameOver()
@@ -132,23 +132,23 @@ void SpaceShooterClass::gameOver()
   {
     drawBitmap(splodedImg, splodedImgW, splodedImgH, shipX, shipY, 2);
   }
-  M5.Lcd.fillScreen(BLACK);
+  M5m.Lcd.fillScreen(BLACK);
   drawalien_shooter_score(false);
   delay(1000);
-  M5.Lcd.drawString("Start", 132, 221);
-  M5.Lcd.drawString("Exit", 232, 221);
+  M5m.Lcd.drawString("Start", 132, 221);
+  M5m.Lcd.drawString("Exit", 232, 221);
   while (1)
   {
     // wait for push button
-    if (M5.BtnB.wasPressed())
+    if (M5m.BtnB.wasPressed())
     {
       break;
     }
-    if (M5.BtnC.wasPressed())
+    if (M5m.BtnC.wasPressed())
     {
       return;
     }
-    M5.update();
+    M5m.update();
   }
 }
 //==================================================================
@@ -187,7 +187,7 @@ void SpaceShooterClass::levelUp()
   {
     if (millis() - offsetM >= 20)
     {
-      M5.Lcd.fillRect(oldShipX, oldShipY, 28, 44, BLACK);
+      M5m.Lcd.fillRect(oldShipX, oldShipY, 28, 44, BLACK);
       drawBitmap(shipImg, shipImgW, shipImgH, shipX, shipY, 2);
       drawBitmap(flamesImg, flamesImgW, flamesImgH, shipX + 1,
                  shipY + 32, 2);
@@ -204,7 +204,7 @@ void SpaceShooterClass::levelUp()
   for (; millis() - offsetM <= 4000;)
   {
   }
-  M5.Lcd.fillScreen(BLACK);
+  M5m.Lcd.fillScreen(BLACK);
   offsetM = millis();
   play = true;
 }
@@ -265,7 +265,7 @@ void SpaceShooterClass::moveAliens()
   {
     if (alienLive[i])
     {
-      M5.Lcd.fillRect(findOldAlienX(i), findOldAlienY(i), 28, 22, BLACK);
+      M5m.Lcd.fillRect(findOldAlienX(i), findOldAlienY(i), 28, 22, BLACK);
       drawBitmap(alienImg, alienImgW, alienImgH, findAlienX(i),
                  findAlienY(i), 2);
     }
@@ -295,22 +295,22 @@ void SpaceShooterClass::fireDaLazer()
     fFireAge[bulletNo] = 1;
     fFireX[bulletNo] = shipX + 13;
     fFireY[bulletNo] = shipY - 4;
-    M5.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 3, MAGENTA);
+    M5m.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 3, MAGENTA);
   }
   fire = false;
 }
 //==================================================================
 void SpaceShooterClass::keepFirinDaLazer(int bulletNo)
 {
-  M5.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 4, BLACK);
+  M5m.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 4, BLACK);
   fFireY[bulletNo] -= 8;
-  M5.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 4, MAGENTA);
+  M5m.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 4, MAGENTA);
   fFireAge[bulletNo] += 1;
 }
 //==================================================================
 void SpaceShooterClass::stopFirinDaLazer(int bulletNo)
 {
-  M5.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 4, BLACK);
+  M5m.Lcd.fillRect(fFireX[bulletNo], fFireY[bulletNo], 4, 4, BLACK);
   fFireAge[bulletNo] = 0;
 }
 //==================================================================
@@ -326,7 +326,7 @@ void SpaceShooterClass::moveShip()
   }
   if (oldShipX != shipX || oldShipY != shipY)
   {
-    M5.Lcd.fillRect(oldShipX, oldShipY, 28, 44, BLACK);
+    M5m.Lcd.fillRect(oldShipX, oldShipY, 28, 44, BLACK);
     oldShipX = shipX;
     oldShipY = shipY;
     drawBitmap(shipImg, shipImgW, shipImgH, shipX, shipY, 2);
@@ -394,21 +394,21 @@ void SpaceShooterClass::spaceShoot_run()
   memset(aFireX, 0, 5);
   memset(aFireY, 0, 5);
   memset(aFireAge, 0, 5);
-  M5.Lcd.fillScreen(BLACK);
-  M5.Lcd.setTextColor(0x5E85);
-  M5.Lcd.setTextSize(3);
+  M5m.Lcd.fillScreen(BLACK);
+  M5m.Lcd.setTextColor(0x5E85);
+  M5m.Lcd.setTextSize(3);
   randomSeed(analogRead(2));
   while (1)
   {
-    if (M5.BtnA.isPressed())
+    if (M5m.BtnA.isPressed())
     {
       left();
     }
-    if (M5.BtnC.isPressed())
+    if (M5m.BtnC.isPressed())
     {
       right();
     }
-    if (M5.BtnB.isPressed())
+    if (M5m.BtnB.isPressed())
     {
       select();
     }
@@ -417,20 +417,20 @@ void SpaceShooterClass::spaceShoot_run()
     {
       if (!startPrinted)
       {
-        M5.Lcd.drawString(">START<", 77, 105);
+        M5m.Lcd.drawString(">START<", 77, 105);
         startPrinted = true;
         offsetS = millis();
       }
       else
       {
-        M5.Lcd.fillRect(77, 105, 244, 32, BLACK);
+        M5m.Lcd.fillRect(77, 105, 244, 32, BLACK);
         startPrinted = false;
         offsetS = millis();
       }
     }
     if (beginGame && beginGame2)
     {
-      M5.Lcd.fillRect(77, 105, 244, 32, BLACK);
+      M5m.Lcd.fillRect(77, 105, 244, 32, BLACK);
       beginGame2 = false;
       play = true;
     }
@@ -442,7 +442,7 @@ void SpaceShooterClass::spaceShoot_run()
     }
     if (oldShipX != shipX || oldShipY != shipY)
     {
-      M5.Lcd.fillRect(oldShipX, oldShipY, 28, 44, BLACK);
+      M5m.Lcd.fillRect(oldShipX, oldShipY, 28, 44, BLACK);
       oldShipX = shipX;
       oldShipY = shipY;
       drawBitmap(shipImg, shipImgW, shipImgH, shipX, shipY, 2);
@@ -495,7 +495,7 @@ void SpaceShooterClass::spaceShoot_run()
         alienLiveCount += 1;
         if (alienShot(i))
         {
-          M5.Lcd.fillRect(findOldAlienX(i), findOldAlienY(i), 28, 22, BLACK);
+          M5m.Lcd.fillRect(findOldAlienX(i), findOldAlienY(i), 28, 22, BLACK);
           alienLiveCount -= 1;
           alienLive[i] = false;
           alien_shooter_score += alien_shooter_scoreInc;
@@ -522,7 +522,7 @@ void SpaceShooterClass::spaceShoot_run()
     {
       levelUp();
     }
-    M5.update();
+    M5m.update();
   }
 }
 
@@ -538,8 +538,8 @@ SpaceShooterClass::SpaceShooterClass()
 
 SpaceShooterClass::~SpaceShooterClass()
 {
-  M5.Lcd.fillScreen(0);
-  M5.Lcd.setTextSize(1);
-  M5.drawAppMenu(F("GAMES"), F("ESC"), F("SELECT"), F("LIST"));
-  M5.showList();
+  M5m.Lcd.fillScreen(0);
+  M5m.Lcd.setTextSize(1);
+  M5m.drawAppMenu(F("GAMES"), F("ESC"), F("SELECT"), F("LIST"));
+  M5m.showList();
 }
