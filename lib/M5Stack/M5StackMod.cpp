@@ -284,6 +284,7 @@ void M5StackMod::begin()
   // I2C
   pinMode(SCL, OUTPUT);
   digitalWrite(SDA, 1);
+  Wire.begin();
 
   // Setup the button with an internal pull-up
   pinMode(BUTTON_A_PIN, INPUT_PULLUP);
