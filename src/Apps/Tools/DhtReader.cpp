@@ -17,7 +17,6 @@ void DhtReaderClass::DrawWidgets()
 void DhtReaderClass::Run()
 {
     M5m.update();
-    Wire.begin();
     M5m.Lcd.fillScreen(BLACK);
     M5m.Lcd.drawCentreString("Pin 17 to DHT Signal Pin", 155, 120, 4);
     vTaskDelay(5000 / portTICK_PERIOD_MS);
