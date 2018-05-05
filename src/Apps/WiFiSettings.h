@@ -1,6 +1,5 @@
 #pragma once
-#include "M5StackMod.h"
-#include "WifiWps/WpsConnect.h"
+#include "WiFiWps/WpsConnect.h"
 
 class WifiSettingsClass
 {
