@@ -45,6 +45,7 @@
 #include "utility/Display.h"
 #include "utility/Config.h"
 #include "utility/Button.h"
+#include "utility/Speaker.h"
 #include "AudioFileSourceSD.h"
 #include "AudioFileSourceICYStream.h"
 #include "AudioFileSourceBuffer.h"
@@ -105,6 +106,9 @@ public:
 
   // LCD
   ILI9341 Lcd = ILI9341();
+
+      // SPEAKER
+    SPEAKER Speaker;
 
 private:
   uint8_t _wakeupPin;

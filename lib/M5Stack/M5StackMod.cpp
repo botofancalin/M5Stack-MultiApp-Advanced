@@ -213,7 +213,7 @@ void M5StackMod::show()
 
 void M5StackMod::windowClr()
 {
-  Lcd.fillRoundRect(0, 29, Lcd.width(), Lcd.height() - 28 - 28, 3, windowcolor);
+  Lcd.fillRoundRect(0, 29, Lcd.width(), Lcd.height() - 28 - 28, 5, windowcolor);
 }
 
 unsigned int M5StackMod::getrgb(uint8_t inred, uint8_t ingrn, uint8_t inblue)
@@ -240,10 +240,10 @@ void M5StackMod::setColorSchema(unsigned int inmenucolor, unsigned int inwindowc
 void M5StackMod::btnRestore()
 {
   Lcd.setTextColor(menutextcolor);
-  Lcd.fillRoundRect(0, Lcd.height() - 28, Lcd.width(), 28, 3, 0x00);
-  Lcd.fillRoundRect(31, Lcd.height() - 28, 60, 28, 3, menucolor);
-  Lcd.fillRoundRect(126, Lcd.height() - 28, 60, 28, 3, menucolor);
-  Lcd.fillRoundRect(221, Lcd.height() - 28, 60, 28, 3, menucolor);
+  Lcd.fillRoundRect(0, Lcd.height() - 28, Lcd.width(), 28, 5, 0x00);
+  Lcd.fillRoundRect(31, Lcd.height() - 28, 60, 28, 5, menucolor);
+  Lcd.fillRoundRect(126, Lcd.height() - 28, 60, 28, 5, menucolor);
+  Lcd.fillRoundRect(221, Lcd.height() - 28, 60, 28, 5, menucolor);
   Lcd.drawCentreString(lastBtnTittle[0], 31 + 30, Lcd.height() - 28 + 6, 2);
   Lcd.drawCentreString(lastBtnTittle[1], 126 + 30, Lcd.height() - 28 + 6, 2);
   Lcd.drawCentreString(lastBtnTittle[2], 221 + 30, Lcd.height() - 28 + 6, 2);
@@ -256,11 +256,11 @@ void M5StackMod::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, 
   lastBtnTittle[0] = inbtnAttl;
   lastBtnTittle[1] = inbtnBttl;
   lastBtnTittle[2] = inbtnCttl;
-  Lcd.fillRoundRect(31, Lcd.height() - 28, 60, 28, 3, inmenucolor);
-  Lcd.fillRoundRect(126, Lcd.height() - 28, 60, 28, 3, inmenucolor);
-  Lcd.fillRoundRect(221, Lcd.height() - 28, 60, 28, 3, inmenucolor);
-  Lcd.fillRoundRect(0, 0, Lcd.width(), 28, 3, inmenucolor);
-  Lcd.fillRoundRect(0, 29, Lcd.width(), Lcd.height() - 28 - 28, 3, inwindowcolor);
+  Lcd.fillRoundRect(31, Lcd.height() - 28, 60, 28, 5, inmenucolor);
+  Lcd.fillRoundRect(126, Lcd.height() - 28, 60, 28, 5, inmenucolor);
+  Lcd.fillRoundRect(221, Lcd.height() - 28, 60, 28, 5, inmenucolor);
+  Lcd.fillRoundRect(0, 0, Lcd.width(), 28, 5, inmenucolor);
+  Lcd.fillRoundRect(0, 29, Lcd.width(), Lcd.height() - 28 - 28, 5, inwindowcolor);
   if (iMenuImg != NULL)
   {
     Lcd.drawJpg((uint8_t *)iMenuImg, (sizeof(iMenuImg) / sizeof(iMenuImg[0])), 0, 30);
@@ -285,6 +285,9 @@ void M5StackMod::begin()
   pinMode(SCL, OUTPUT);
   digitalWrite(SDA, 1);
   Wire.begin();
+
+  // TONE
+    Speaker.begin();
 
   // Setup the button with an internal pull-up
   pinMode(BUTTON_A_PIN, INPUT_PULLUP);
