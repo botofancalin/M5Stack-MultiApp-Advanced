@@ -42,7 +42,7 @@
 #include <Update.h>
 #include <HTTPClient.h>
 
-#include "utility/Display.h"
+#include "M5Display.h"
 #include "utility/Config.h"
 #include "utility/Button.h"
 #include "utility/Speaker.h"
@@ -105,11 +105,11 @@ public:
   Button BtnC = Button(BUTTON_C_PIN, true, DEBOUNCE_MS);
 
   // LCD
-  ILI9341 Lcd = ILI9341();
 
       // SPEAKER
     SPEAKER Speaker;
 
+    M5Display Lcd = M5Display();
 private:
   uint8_t _wakeupPin;
   String listCaption;
