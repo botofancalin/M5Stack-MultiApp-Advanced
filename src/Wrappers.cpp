@@ -68,3 +68,9 @@ void appWebRadio()
     WebRadioClass WebRadioObj;
     WebRadioObj.Run();
 }
+
+void appWeatherStation()
+{
+    WeatherStationClass WeatherStationObj;
+    WeatherStationObj.Run();
+}

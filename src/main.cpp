@@ -25,11 +25,12 @@ void setup()
 	preferences.end();
 
 	//The main menu. Add main menu items here
-	M5m.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps1, appReturn);
+	M5m.addMenuItem(0, "APPLICATIONS", "<", "OK", ">", 1, Apps, appReturn);
 	M5m.addMenuItem(0, "SYSTEM", "<", "OK", ">", 2, System, appReturn);
 	M5m.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
 	M5m.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
 
+	M5m.addMenuItem(1, "WEATHER STATION", "<", "OK", ">", -1, WeatherStation, appWeatherStation);
 	M5m.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
 	M5m.addMenuItem(1, "WEBRADIO", "<", "OK", ">", -1, WebRadio, appWebRadio);
 	M5m.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);

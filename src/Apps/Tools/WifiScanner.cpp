@@ -274,7 +274,6 @@ WifiScannerClass::WifiScannerClass()
 
 WifiScannerClass::~WifiScannerClass()
 {
-    M5m.Lcd.setRotation(0);
     M5m.Lcd.fillScreen(0);
     M5m.drawAppMenu(F("TOOLS"), F("ESC"), F("SELECT"), F("LIST"));
     M5m.showList();
