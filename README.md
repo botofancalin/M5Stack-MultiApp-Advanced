@@ -59,18 +59,26 @@
         + Triangular Signal 2
         + Signal Generator OFF
       + Exit Oscilloscope App
-    - WebRadio
-    + Support Volume Adjustment
-    + Support Stations change on the fly
-    + Long press NEXT key to exit from Radio App
-    + Display Volume Level
-    + Display Data buffer state
-    + If the connection is lost or the buffer get empty, will try to recover the connection. 
-    + If the connection can't be recovered, will connect to the next station on the list
-    + Can play MP3 streams
-    + Web Radio streams are stored on SD Card on "RadioStations.txt" file
-    + Support theoretically unlimited station list
-        + The stations must be defined on separate lines as follow: "StationName=StationLink;  
+    + WebRadio
+      + Support Volume Adjustment
+      + Support Stations change on the fly
+      + Long press NEXT key to exit from Radio App
+      + Display Volume Level
+      + Display Data buffer state
+      + If the connection is lost or the buffer get empty, will try to recover the connection. 
+      + If the connection can't be recovered, will connect to the next station on the list
+      + Can play MP3 streams
+      + Web Radio streams are stored on SD Card on "RadioStations.txt" file
+      + Support theoretically unlimited station list
+          + The stations must be defined on separate lines as follow: "StationName=StationLink;  
+    + Weather Station
+      + Display Current Weather
+      + Display 5 days weather forecast
+      + Display Current Weather details
+      + Display 2 days and 2 nights forecast details
+      + Support multiple display languages
+        + The City, Country, Language and WUnderground Api key
+        Must be defined on WeatherParams.txt file on SD card
     + WebServer with web based SD File manager
       + Can run in the background once started
       + You can use other apps when the webserver is running
@@ -124,6 +132,7 @@
   
   ![image](MultiAppImgs/Oscilloscope.jpg)
   ![image](MultiAppImgs/WebRadio.jpg)
+  ![image](MultiAppImgs/Weather1.jpg)
   ![image](MultiAppImgs/WebServer.jpg)
   ![image](MultiAppImgs/SdBrowser.jpg)
   ![image](MultiAppImgs/Tools.jpg)
