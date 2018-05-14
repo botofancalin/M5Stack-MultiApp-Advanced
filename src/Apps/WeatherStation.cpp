@@ -61,7 +61,6 @@ void WeatherStationClass::drawTime()
     {
         updateData(false);
         drawn = false;
-        Serial.println("updated");
     }
 
     sprintf(time_str, "%02d:%02d:%02d\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
@@ -382,8 +381,10 @@ void WeatherStationClass::Run()
     }
     else
     {
+        M5m.Lcd.fillScreen(BLACK);
         M5m.Lcd.setTextColor(WHITE);
-        M5m.Lcd.drawCentreString("Wifi Not Connected!", 160, 60, 2);
+        M5m.Lcd.setFreeFont(FSS12);
+        M5m.Lcd.drawCentreString("Wifi Not Connected!", 160, 60, 1);
         delay(3000);
     }
 }
