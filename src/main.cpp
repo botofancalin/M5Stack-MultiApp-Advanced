@@ -1,7 +1,7 @@
 #include "Wrappers.h"
 #include "Resources.h"
 
-const int version = 2
+const int version = 3
 ;
 unsigned long lastcheck = 0;
 int SignalStrength = 0;
