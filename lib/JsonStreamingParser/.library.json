@@ -1,0 +1,40 @@
+{
+    "name": "JsonStreamingParser", 
+    "repository": {
+        "url": "https://github.com/squix78/json-streaming-parser.git", 
+        "type": "git"
+    }, 
+    "platforms": [
+        "atmelavr", 
+        "atmelsam", 
+        "espressif8266", 
+        "intel_arc32", 
+        "microchippic32", 
+        "nordicnrf51", 
+        "teensy", 
+        "timsp430"
+    ], 
+    "frameworks": [
+        "arduino"
+    ], 
+    "version": "1.0.5", 
+    "examples": [
+        "examples/JsonStreamingParser/*.ino", 
+        "examples/JsonStreamingParser/*.cpp", 
+        "examples/JsonStreamingParser/*.h"
+    ], 
+    "authors": [
+        {
+            "url": "http://blog.squix.ch", 
+            "maintainer": false, 
+            "email": null, 
+            "name": "Daniel Eichhorn"
+        }
+    ], 
+    "keywords": [
+        "streaming", 
+        "json"
+    ], 
+    "id": 561, 
+    "description": "A very memory efficient library to parse (large) JSON objects on embedded devices"
+}

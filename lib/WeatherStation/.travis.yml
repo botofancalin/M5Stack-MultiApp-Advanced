@@ -1,0 +1,29 @@
+language: python
+python:
+    - "2.7"
+
+# Cache PlatformIO packages using Travis CI container-based infrastructure
+sudo: false
+cache:
+    directories:
+        - "~/.platformio"
+
+env:
+    - PLATFORMIO_CI_SRC=examples/PlaneSpotterDemo
+    - PLATFORMIO_CI_SRC=examples/WeatherStationDemo
+    - PLATFORMIO_CI_SRC=examples/WeatherStationDemoExtended
+    - PLATFORMIO_CI_SRC=examples/WeatherStationDemoExtendedDST
+    - PLATFORMIO_CI_SRC=examples/WorldClockDemo
+    - PLATFORMIO_CI_SRC=examples/WundergroundAlertsDemo
+    - PLATFORMIO_CI_SRC=examples/WundergroundAstronomyDemo
+    - PLATFORMIO_CI_SRC=examples/WundergroundConditionsDemo
+    - PLATFORMIO_CI_SRC=examples/WundergroundForecastDemo
+    - PLATFORMIO_CI_SRC=examples/WundergroundHourlyDemo
+
+install:
+    - pip install -U platformio
+    - platformio lib -g install "JsonStreamingParser" "ESP8266_SSD1306@4.0.0" 567@0.12 "simpleDSTadjust" "Adafruit Unified Sensor" "DHT sensor library"
+    - platformio lib update
+
+script:
+    - platformio ci --lib="." --project-option="lib_deps=JsonStreamingParser" --board=nodemcuv2

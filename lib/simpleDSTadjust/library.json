@@ -1,0 +1,14 @@
+{
+ "name": "simpleDSTadjust",
+ "frameworks": "arduino",
+ "platforms": "espressif",
+ "keywords": "dst, time",
+ "description": "Simple rule based Daylight Saving Time adjust library that implements DST aware version of the esp8266 time() function.",
+ "repository":
+ {
+    "type": "git",
+    "url": "https://github.com/neptune2/simpleDSTadjust"
+ },
+ "version": "1.2.0"
+}
+

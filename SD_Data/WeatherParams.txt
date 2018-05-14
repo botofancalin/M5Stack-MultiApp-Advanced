@@ -1,0 +1,4 @@
+CITY=City; Your City Name
+COUNTRY=UK; Your Country initials
+LANGUAGE=EN; Your Language initials (EN for english)
+APIKEY=apikey; Your WUndeground Key

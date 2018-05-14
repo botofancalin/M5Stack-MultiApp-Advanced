@@ -215,7 +215,7 @@ void WebRadioClass::Run()
 	else
 	{
 		M5m.Lcd.setTextColor(WHITE);
-		M5m.Lcd.drawCentreString("RadioStations.txt Not Found!", 160, 60, 2);
+		M5m.Lcd.drawCentreString("RadioStations.txt Not Found on SD", 160, 60, 2);
 		delay(3000);
 	}
 }

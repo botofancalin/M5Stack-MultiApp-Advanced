@@ -5,6 +5,41 @@
 #define FSS18 &FreeSans18pt7b
 #define FSS24 &FreeSans24pt7b
 
+String WeatherStationClass::GetTextData(String *source, String strname)
+{
+    int t = ((source->indexOf(strname)) + (strname.length()));
+    int r = source->indexOf(';', t);
+    usabledata = source->substring(t, r);
+
+    return usabledata;
+}
+
+bool WeatherStationClass::GetParams(fs::FS &fs, const char *path)
+{
+    File sdfile = fs.open(path);
+    if (!sdfile)
+    {
+        return false;
+    }
+
+    if (sdfile.available())
+    {
+        WeatherParams = sdfile.readStringUntil(EOF);
+        WUNDERGROUND_CITY = GetTextData(&WeatherParams, String("CITY="));
+        WUNDERGROUND_COUNTRY = GetTextData(&WeatherParams, String("COUNTRY="));
+        WUNDERGRROUND_LANGUAGE = GetTextData(&WeatherParams, String("LANGUAGE="));
+        WUNDERGRROUND_API_KEY = GetTextData(&WeatherParams, String("APIKEY="));
+    }
+
+    else
+    {
+        return false;
+    }
+
+    sdfile.close();
+    return true;
+}
+
 void WeatherStationClass::updateData(bool msg = false)
 {
 
@@ -31,8 +66,6 @@ void WeatherStationClass::updateData(bool msg = false)
     astronomyClient->updateAstronomy(&astronomy, WUNDERGRROUND_API_KEY, WUNDERGRROUND_LANGUAGE, WUNDERGROUND_COUNTRY, WUNDERGROUND_CITY);
     delete astronomyClient;
     astronomyClient = nullptr;
-
-    
 }
 
 void WeatherStationClass::drawTime()
@@ -76,7 +109,7 @@ void WeatherStationClass::drawCurrentWeather()
                     sizeof(getMeteoconIconFromProgmem(conditions.weatherIcon)) / getMeteoconIconFromProgmem(conditions.weatherIcon)[0], 100, 45);
     M5m.Lcd.setTextColor(BLUE);
     M5m.Lcd.setFreeFont(FSS12);
-    M5m.Lcd.drawRightString(DISPLAYED_CITY_NAME, 315, 50, 1);
+    M5m.Lcd.drawRightString(WUNDERGROUND_CITY, 315, 50, 1);
     M5m.Lcd.setTextColor(WHITE);
 
     String temp = conditions.currentTemp + degreeSign;
@@ -169,9 +202,9 @@ void WeatherStationClass::drawForecastTable(uint8_t start)
                         sizeof(getMiniMeteoconIconFromProgmem(forecasts[i].forecastIcon)) / getMiniMeteoconIconFromProgmem(forecasts[i].forecastIcon)[0], 0, fy - 10);
         M5m.Lcd.setTextColor(ORANGE);
         M5m.Lcd.setFreeFont(FSS9);
-        M5m.Lcd.drawString(forecasts[i].forecastTitle, 70, fy - 2, 1);
+        M5m.Lcd.drawString(forecasts[i].forecastTitle, 70, (fy - 4), 1);
         M5m.Lcd.setTextColor(WHITE);
-        M5m.Lcd.drawString(getShortText(forecasts[i].forecastIcon), 70, fy + 17, 1);
+        M5m.Lcd.drawString(getShortText(forecasts[i].forecastIcon), 70, fy + 18, 1);
         M5m.Lcd.setTextColor(WHITE);
         if (i % 2 == 0)
         {
@@ -182,9 +215,9 @@ void WeatherStationClass::drawForecastTable(uint8_t start)
             temp = forecasts[i - 1].forecastLowTemp;
         }
         M5m.Lcd.setFreeFont(FSS9);
-        M5m.Lcd.drawRightString("Temp: " + temp + degreeSign, 315, fy - 2, 1);
+        M5m.Lcd.drawRightString("Temp: " + temp + degreeSign, 315, (fy - 4), 1);
         M5m.Lcd.setTextColor(BLUE);
-        M5m.Lcd.drawRightString("Precip: " + forecasts[i].PoP + "%", 315, fy + 17, 1);
+        M5m.Lcd.drawRightString("Precip: " + forecasts[i].PoP + "%", 315, fy + 18, 1);
         M5m.Lcd.drawFastHLine(0, fy + 40, 320, WHITE);
     }
 }
@@ -327,56 +360,69 @@ void WeatherStationClass::Run()
     M5m.update();
     if (WiFi.isConnected())
     {
-        updateData(true);
-        lastDownloadUpdate = 0;
-
-        while (!M5m.BtnB.wasPressed())
+        if (GetParams(SD, "/WeatherParams.txt"))
         {
-            M5m.update();
-            if (M5m.BtnA.wasPressed())
-            {
-                (screen > 0) ? screen-- : screen = 2;
-                drawn = false;
-            }
-            if (M5m.BtnC.wasPressed())
-            {
-                (screen < 3) ? screen++ : screen = 0;
-                drawn = false;
-            }
+            updateData(true);
+            lastDownloadUpdate = 0;
 
-            if ((screen == 0) && (millis() - lastDownloadUpdate >= 1000))
+            while (!M5m.BtnB.wasPressed())
             {
-                drawTime();
-                lastDownloadUpdate = millis();
-            }
-
-            if (!drawn)
-            {
-                switch (screen)
+                M5m.update();
+                if (M5m.BtnA.wasPressed())
                 {
-                case 0:
-                    M5m.Lcd.fillScreen(BLACK);
-                    dateDrawn = false;
-                    drawCurrentWeather();
-                    drawForecastDetail(8, 160, 2);
-                    drawForecastDetail(70, 160, 4);
-                    drawForecastDetail(135, 160, 6);
-                    drawForecastDetail(200, 160, 8);
-                    drawForecastDetail(260, 160, 10);
-                    break;
-                case 1:
-                    M5m.Lcd.fillScreen(BLACK);
-                    drawCurrentWeatherDetail();
-                    break;
-                case 2:
-                    M5m.Lcd.fillScreen(BLACK);
-                    drawForecastTable(1);
-                    break;
-                default:
-                    break;
+                    (screen > 0) ? screen-- : screen = 2;
+                    drawn = false;
                 }
-                drawn = true;
+                if (M5m.BtnC.wasPressed())
+                {
+                    (screen < 2) ? screen++ : screen = 0;
+                    drawn = false;
+                }
+
+                if ((screen == 0) && (millis() - lastDownloadUpdate >= 1000))
+                {
+                    drawTime();
+                    lastDownloadUpdate = millis();
+                }
+
+                if (!drawn)
+                {
+                    switch (screen)
+                    {
+                    case 0:
+                        M5m.Lcd.fillScreen(BLACK);
+                        dateDrawn = false;
+                        drawCurrentWeather();
+                        drawForecastDetail(8, 160, 2);
+                        drawForecastDetail(70, 160, 4);
+                        drawForecastDetail(135, 160, 6);
+                        drawForecastDetail(200, 160, 8);
+                        drawForecastDetail(260, 160, 10);
+                        break;
+                    case 1:
+                        M5m.Lcd.fillScreen(BLACK);
+                        drawCurrentWeatherDetail();
+                        break;
+                    case 2:
+                        M5m.Lcd.fillScreen(BLACK);
+                        drawForecastTable(1);
+                        break;
+                    default:
+                        break;
+                    }
+                    drawn = true;
+                }
             }
+        }
+
+        else
+        {
+            M5m.Lcd.fillScreen(BLACK);
+            M5m.Lcd.setTextColor(WHITE);
+            M5m.Lcd.setFreeFont(FSS9);
+            M5m.Lcd.drawCentreString("WeatherParams.txt not found on SD", 160, 60, 1);
+            delay(3000);
+            return;
         }
     }
     else
