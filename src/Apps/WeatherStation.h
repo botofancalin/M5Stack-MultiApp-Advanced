@@ -8,7 +8,6 @@
 #include "weathericons.h"
 #include "simpleDSTadjust.h"
 
-#define UTC_OFFSET +2
 #define NTP_SERVERS "0.ch.pool.ntp.org", "1.ch.pool.ntp.org", "2.ch.pool.ntp.org"
 
 class WeatherStationClass
@@ -24,7 +23,7 @@ class WeatherStationClass
     bool dateDrawn = false;
     const uint8_t labelX = 110;
     const uint8_t valueX = 245;
-    int fy, screen = 0;
+    int fy, screen = 0, Utc_Offset;
     long lastDownloadUpdate;
     String WUNDERGROUND_CITY;
     String WUNDERGRROUND_API_KEY;

@@ -29,6 +29,7 @@ bool WeatherStationClass::GetParams(fs::FS &fs, const char *path)
         WUNDERGROUND_COUNTRY = GetTextData(&WeatherParams, String("COUNTRY="));
         WUNDERGRROUND_LANGUAGE = GetTextData(&WeatherParams, String("LANGUAGE="));
         WUNDERGRROUND_API_KEY = GetTextData(&WeatherParams, String("APIKEY="));
+        Utc_Offset = atoi((GetTextData(&WeatherParams, String("TIME_OFFSET="))).c_str());
     }
 
     else
@@ -51,7 +52,7 @@ void WeatherStationClass::updateData(bool msg = false)
         M5m.Lcd.drawCentreString("Reading Weather Info...", 160, 120, 1);
     }
 
-    configTime(UTC_OFFSET * 3600, 0, NTP_SERVERS);
+    configTime(Utc_Offset * 3600, 0, NTP_SERVERS);
     WundergroundConditions *conditionsClient = new WundergroundConditions(IS_METRIC);
     conditionsClient->updateConditions(&conditions, WUNDERGRROUND_API_KEY, WUNDERGRROUND_LANGUAGE, WUNDERGROUND_COUNTRY, WUNDERGROUND_CITY);
     delete conditionsClient;
