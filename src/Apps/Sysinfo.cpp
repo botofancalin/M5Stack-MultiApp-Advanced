@@ -12,7 +12,7 @@ void SysinfoClass::page_0()
     chipRev = ESP.getChipRevision();
     cpuSpeed = ESP.getCpuFreqMHz();
     flashSpeed = ESP.getFlashChipSpeed();
-    ramFree = esp_get_free_heap_size();
+    ramFree = ESP.getFreeHeap();
     WiFiMAC = getWiFiMac();
 
     M5m.Lcd.drawString(F("CPU FREQ:"), 10, 40, 2);

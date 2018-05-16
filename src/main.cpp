@@ -20,7 +20,7 @@ void setup()
 	}
 
 	preferences.begin("Brightnes", false);
-	M5m.lcd.setBrightness(preferences.getUShort("light", 95));
+	M5m.Lcd.setBrightness(preferences.getUShort("light", 95));
 	preferences.end();
 
 	//The main menu. Add main menu items here
