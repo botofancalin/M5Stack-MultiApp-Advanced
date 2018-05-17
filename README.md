@@ -16,7 +16,7 @@
 # Installing and Compiling the firmware
 ### First, you must install the necessary tools and prepare the IDE environment
 - Download (and unzip) this repository
-- Download and Install Visual Studio Code https://code.visualstudio.com/ or Atom: https://atom.io/
+- Download and Install Visual Studio Code https://code.visualstudio.com/
 - Install the PlatformIO Extension
 - Install ESP32 Framework on PlatformIO
 - Apply the PlatformIO Patch
