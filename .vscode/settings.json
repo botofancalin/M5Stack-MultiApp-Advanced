@@ -25,5 +25,9 @@
         "tuple": "cpp",
         "typeinfo": "cpp",
         "utility": "cpp"
+    },
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/calin/.platformio/penv/bin:/home/calin/.platformio/penv:/home/calin/bin:/home/calin/.local/bin:/home/calin/bin:/home/calin/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/calin/esp/xtensa-esp32-elf/bin:/home/calin/esp/xtensa-esp32-elf/bin",
+        "PLATFORMIO_CALLER": "vscode"
     }
 }
