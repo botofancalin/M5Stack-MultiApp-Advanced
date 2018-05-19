@@ -421,7 +421,7 @@ void WeatherStationClass::Run()
             M5m.Lcd.fillScreen(BLACK);
             M5m.Lcd.setTextColor(WHITE);
             M5m.Lcd.setFreeFont(FSS9);
-            M5m.Lcd.drawCentreString("WeatherParams.txt not found on SD", 160, 60, 1);
+            M5m.Lcd.drawCentreString("WeatherParams.txt not found on SD!", 160, 60, 1);
             delay(3000);
             return;
         }
