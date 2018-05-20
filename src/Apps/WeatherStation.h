@@ -1,11 +1,10 @@
-#pragma once
 #include "M5StackMod.h"
 #include "WeatherIcons.h"
 #include "JsonListener.h"
 #include "WundergroundConditions.h"
 #include "WundergroundForecast.h"
 #include "WundergroundAstronomy.h"
-#include "weathericons.h"
+#include "WeatherIcons.h"
 #include "simpleDSTadjust.h"
 
 #define NTP_SERVERS "0.ch.pool.ntp.org", "1.ch.pool.ntp.org", "2.ch.pool.ntp.org"
