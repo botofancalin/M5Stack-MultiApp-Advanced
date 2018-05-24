@@ -29,7 +29,7 @@ class WeatherStationClass
     String WUNDERGRROUND_API_KEY;
     String WUNDERGRROUND_LANGUAGE; // as per https://www.wunderground.com/weather/api/d/docs?d=resources/country-to-iso-matching
     String WUNDERGROUND_COUNTRY;
-    const String degreeSign = "°C";
+    const String degreeSign = "C";
     String date = "", oldDate = "", day, temp, WeatherParams, name, usabledata;
     char time_str[11];
     char *dstAbbrev;

@@ -73,7 +73,7 @@ void WeatherStationClass::drawTime()
 {
     M5m.Lcd.setTextColor(BLACK);
     M5m.Lcd.setFreeFont(FSS18);
-    M5m.Lcd.drawCentreString(time_str, 250, 5, 1);
+    M5m.Lcd.drawRightString(time_str, 315, 5, 1);
     simpleDSTadjust dstAdjusted(StartRule, EndRule);
     now = dstAdjusted.time(&dstAbbrev);
     timeinfo = localtime(&now);
@@ -100,7 +100,7 @@ void WeatherStationClass::drawTime()
     sprintf(time_str, "%02d:%02d:%02d\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
     M5m.Lcd.setTextColor(WHITE);
     M5m.Lcd.setFreeFont(FSS18);
-    M5m.Lcd.drawCentreString(time_str, 250, 5, 1);
+    M5m.Lcd.drawRightString(time_str, 315, 5, 1);
 }
 
 void WeatherStationClass::drawCurrentWeather()

@@ -1,14 +1,14 @@
 {
   "build": {
     "core": "esp32",
-    "extra_flags": "-DARDUINO_M5Stack-Core-ESP32",
+    "extra_flags": "-DARDUINO_M5Stack_Core_ESP32",
     "f_cpu": "240000000L",
     "f_flash": "80000000L",
     "flash_mode": "dio",
     "ldscript": "esp32_out.ld",
     "mcu": "esp32",
     "partitions": "min_spiffs",
-    "variant": "m5stack-core-esp32"
+    "variant": "m5stack_core_esp32"
   },
   "connectivity": [
     "wifi",
@@ -27,7 +27,10 @@
     "maximum_size": 1966080,
     "require_upload_port": true,
     "speed": 115200,
-    "wait_for_upload_port": true
+    "protocol": "esptool",
+    "protocols": [
+      "esptool"
+    ]
   },
   "url": "http://www.m5stack.com",
   "vendor": "M5Stack"
