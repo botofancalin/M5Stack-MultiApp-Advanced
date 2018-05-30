@@ -57,6 +57,7 @@ class WundergroundConditions: public JsonListener {
 
   public:
     WundergroundConditions(boolean isMetric);
+    virtual ~WundergroundConditions();
     void updateConditions(WGConditions *conditions, String apiKey, String language, String country, String city);
     void updateConditions(WGConditions *conditions, String apiKey, String language, String zmwCode);
     void updateConditionsPWS(WGConditions *conditions, String apiKey, String language, String pws);

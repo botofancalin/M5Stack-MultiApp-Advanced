@@ -4,7 +4,7 @@
 void WebRadioClass::getvolume()
 {
 	preferences.begin("Volume", false);
-	vol = preferences.getFloat("vol", 15.0f);
+	M5m.vol = preferences.getFloat("vol", 15.0f);
 	preferences.end();
 }
 
@@ -114,15 +114,15 @@ void WebRadioClass::Run()
 					M5m.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
 					lastcheck = now;
 				}
-				if (M5m.BtnA.wasPressed() && vol > 0)
+				if (M5m.BtnA.wasPressed() && M5m.vol > 0)
 				{
-					vol -= 5;
-					setVolume(&vol);
+					M5m.vol -= 5;
+					setVolume(&M5m.vol);
 				}
-				if (M5m.BtnC.wasPressed() && vol < 100)
+				if (M5m.BtnC.wasPressed() && M5m.vol < 100)
 				{
-					vol += 5;
-					setVolume(&vol);
+					M5m.vol += 5;
+					setVolume(&M5m.vol);
 				}
 				if (M5m.BtnB.wasPressed())
 				{
@@ -141,10 +141,10 @@ void WebRadioClass::Run()
 				{
 					play = false;
 				}
-				if (vol != old_vol)
+				if (M5m.vol != M5m.old_vol)
 				{
-					M5m.Lcd.HprogressBar(80, 170, 200, 15, GREEN, vol, true);
-					old_vol = vol;
+					M5m.Lcd.HprogressBar(80, 170, 200, 15, GREEN, M5m.vol, true);
+					M5m.old_vol = M5m.vol;
 				}
 				M5m.update();
 
@@ -156,7 +156,7 @@ void WebRadioClass::Run()
 					rawFillLvl = 0;
 					M5m.Lcd.setTextColor(GREEN);
 					M5m.Lcd.drawString("Volume", 15, 168, 2);
-					M5m.Lcd.HprogressBar(80, 170, 200, 15, GREEN, vol, true);
+					M5m.Lcd.HprogressBar(80, 170, 200, 15, GREEN, M5m.vol, true);
 					M5m.Lcd.setFreeFont(STFONT);
 					M5m.Lcd.setTextColor(BLACK);
 					M5m.Lcd.drawCentreString(old_Station, 160, 35, 1);
@@ -168,8 +168,8 @@ void WebRadioClass::Run()
 					buff = new AudioFileSourceBuffer(file, preallocateBuffer, preallocateBufferSize);
 					player = new AudioGeneratorMP3(preallocateCodec, preallocateCodecSize);
 					player->begin(buff, out);
-					setVolume(&vol);
-					old_vol = vol;
+					setVolume(&M5m.vol);
+					M5m.old_vol = M5m.vol;
 					upd = false;
 				}
 				else
@@ -197,7 +197,7 @@ void WebRadioClass::Run()
 				}
 			}
 			preferences.begin("Volume", false);
-			preferences.putFloat("vol", vol);
+			preferences.putFloat("vol", M5m.vol);
 			preferences.end();
 			StopPlaying();
 			free(preallocateBuffer);

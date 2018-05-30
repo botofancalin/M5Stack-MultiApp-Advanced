@@ -88,7 +88,6 @@ void WorldClockClient::updateTime() {
     }
   }
 
-  int pos = 0;
   boolean isBody = false;
   char c;
 

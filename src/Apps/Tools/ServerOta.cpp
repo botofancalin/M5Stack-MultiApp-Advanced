@@ -105,6 +105,7 @@ void M5StackServerOta::execOTA()
             // No activity would appear on the Serial monitor
             // So be patient. This may take 2 - 5mins to complete
             size_t written = Update.writeStream(client);
+            Serial.println(written);
 
             if (Update.end())
             {

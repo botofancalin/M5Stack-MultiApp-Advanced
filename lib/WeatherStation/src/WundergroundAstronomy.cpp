@@ -28,26 +28,34 @@ See more at http://blog.squix.ch
 #include <HTTPClient.h>
 #include "WundergroundAstronomy.h"
 
-
-WundergroundAstronomy::WundergroundAstronomy(boolean _usePM) {
+WundergroundAstronomy::WundergroundAstronomy(boolean _usePM)
+{
   usePM = _usePM;
 }
-void WundergroundAstronomy::setPM(boolean usePM) {
+WundergroundAstronomy::~WundergroundAstronomy()
+{
+}
+void WundergroundAstronomy::setPM(boolean usePM)
+{
   this->usePM = usePM;
 }
-void WundergroundAstronomy::updateAstronomy(WGAstronomy *astronomy, String apiKey, String language, String country, String city) {
+void WundergroundAstronomy::updateAstronomy(WGAstronomy *astronomy, String apiKey, String language, String country, String city)
+{
   doUpdate(astronomy, "http://api.wunderground.com/api/" + apiKey + "/astronomy/lang:" + language + "/q/" + country + "/" + city + ".json");
 }
 
-void WundergroundAstronomy::updateAstronomy(WGAstronomy *astronomy, String apiKey, String language, String zmw) {
+void WundergroundAstronomy::updateAstronomy(WGAstronomy *astronomy, String apiKey, String language, String zmw)
+{
   doUpdate(astronomy, "http://api.wunderground.com/api/" + apiKey + "/astronomy/lang:" + language + "/q/zmw:" + zmw + ".json");
 }
 
-void WundergroundAstronomy::updateAstronomyPWS(WGAstronomy *astronomy, String apiKey, String language, String pws) {
+void WundergroundAstronomy::updateAstronomyPWS(WGAstronomy *astronomy, String apiKey, String language, String pws)
+{
   doUpdate(astronomy, "http://api.wunderground.com/api/" + apiKey + "/astronomy/lang:" + language + "/q/pws:" + pws + ".json");
 }
 
-void WundergroundAstronomy::doUpdate(WGAstronomy *astronomy, String url) {
+void WundergroundAstronomy::doUpdate(WGAstronomy *astronomy, String url)
+{
   this->astronomy = astronomy;
   JsonStreamingParser parser;
   parser.setListener(this);
@@ -62,20 +70,23 @@ void WundergroundAstronomy::doUpdate(WGAstronomy *astronomy, String url) {
   // start connection and send HTTP header
   int httpCode = http.GET();
   Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-  if(httpCode > 0) {
+  if (httpCode > 0)
+  {
 
+    WiFiClient *client = http.getStreamPtr();
 
-
-    WiFiClient * client = http.getStreamPtr();
-
-    while(client->connected()) {
-      while((size = client->available()) > 0) {
+    while (client->connected())
+    {
+      while ((size = client->available()) > 0)
+      {
         c = client->read();
-        if (c == '{' || c == '[') {
+        if (c == '{' || c == '[')
+        {
 
           isBody = true;
         }
-        if (isBody) {
+        if (isBody)
+        {
           parser.parse(c);
         }
       }
@@ -84,79 +95,100 @@ void WundergroundAstronomy::doUpdate(WGAstronomy *astronomy, String url) {
   this->astronomy = nullptr;
 }
 
-void WundergroundAstronomy::whitespace(char c) {
+void WundergroundAstronomy::whitespace(char c)
+{
   Serial.println("whitespace");
 }
 
-void WundergroundAstronomy::startDocument() {
+void WundergroundAstronomy::startDocument()
+{
   Serial.println("start document");
 }
 
-void WundergroundAstronomy::key(String key) {
+void WundergroundAstronomy::key(String key)
+{
   currentKey = String(key);
 }
 
-void WundergroundAstronomy::value(String value) {
+void WundergroundAstronomy::value(String value)
+{
 
-  if (currentKey == "ageOfMoon") {
+  if (currentKey == "ageOfMoon")
+  {
     astronomy->moonAge = value;
   }
 
-  if (currentKey == "phaseofMoon") {
+  if (currentKey == "phaseofMoon")
+  {
     astronomy->moonPhase = value;
   }
 
-  if (currentKey == "percentIlluminated") {
+  if (currentKey == "percentIlluminated")
+  {
     astronomy->moonPctIlum = value;
   }
 
-
-  if (currentParent == "sunrise") {      // Has a Parent key and 2 sub-keys
-    if (currentKey == "hour") {
-      int tempHour = value.toInt();    // do this to concert to 12 hour time (make it a function!)
-      if (usePM && tempHour > 12){
+  if (currentParent == "sunrise")
+  { // Has a Parent key and 2 sub-keys
+    if (currentKey == "hour")
+    {
+      int tempHour = value.toInt(); // do this to concert to 12 hour time (make it a function!)
+      if (usePM && tempHour > 12)
+      {
         tempHour -= 12;
         isPM = true;
       }
-      else {
+      else
+      {
         isPM = false;
       }
       char tempHourBuff[3] = "";
       sprintf(tempHourBuff, "%02d", tempHour);
       astronomy->sunriseTime = String(tempHourBuff);
     }
-    if (currentKey == "minute") {
+    if (currentKey == "minute")
+    {
       char tempMinBuff[4] = "";
-      if (usePM) {
-        sprintf(tempMinBuff, "%02d%s", value.toInt(), isPM?"pm":"am");
-      } else {
+      if (usePM)
+      {
+        sprintf(tempMinBuff, "%02d%s", value.toInt(), isPM ? "pm" : "am");
+      }
+      else
+      {
         sprintf(tempMinBuff, "%02d", value.toInt());
       }
       astronomy->sunriseTime += ":" + String(tempMinBuff);
-
     }
     this->sunriseTime.trim();
   }
 
-
-  if (currentParent == "sunset") {      // Has a Parent key and 2 sub-keys
-    if (currentKey == "hour") {
-      int tempHour = value.toInt();   // do this to concert to 12 hour time (make it a function!)
-      if (usePM && tempHour > 12) {
+  if (currentParent == "sunset")
+  { // Has a Parent key and 2 sub-keys
+    if (currentKey == "hour")
+    {
+      int tempHour = value.toInt(); // do this to concert to 12 hour time (make it a function!)
+      if (usePM && tempHour > 12)
+      {
         tempHour -= 12;
         isPM = true;
-      } else {
+      }
+      else
+      {
         isPM = false;
       }
       char tempHourBuff[3] = "";
       sprintf(tempHourBuff, "%02d", tempHour);
       astronomy->sunsetTime = String(tempHourBuff);
     }
-    if (currentKey == "minute") {
+    if (currentKey == "minute")
+    {
       char tempMinBuff[4] = "";
-      if (usePM) {
-        sprintf(tempMinBuff, "%02d%s", value.toInt(), isPM?"pm":"am");
-      } else {
+      if (usePM)
+      {
+        sprintf(tempMinBuff, "%02d%s", value.toInt(), isPM ? "pm" : "am");
+      }
+      else
+      {
         sprintf(tempMinBuff, "%02d", value.toInt());
       }
       astronomy->sunsetTime += ":" + String(tempMinBuff);
@@ -164,23 +196,31 @@ void WundergroundAstronomy::value(String value) {
     this->sunsetTime.trim();
   }
 
-  if (currentParent == "moonrise") {      // Has a Parent key and 2 sub-keys
-    if (currentKey == "hour") {
-    int tempHour = value.toInt();   // do this to concert to 12 hour time (make it a function!)
-    if (usePM && tempHour > 12){
-      tempHour -= 12;
-      isPM = true;
+  if (currentParent == "moonrise")
+  { // Has a Parent key and 2 sub-keys
+    if (currentKey == "hour")
+    {
+      int tempHour = value.toInt(); // do this to concert to 12 hour time (make it a function!)
+      if (usePM && tempHour > 12)
+      {
+        tempHour -= 12;
+        isPM = true;
+      }
+      else
+        isPM = false;
+      char tempHourBuff[3] = "";
+      sprintf(tempHourBuff, "%02d", tempHour);
+      astronomy->moonriseTime = String(tempHourBuff);
     }
-    else isPM = false;
-    char tempHourBuff[3] = "";
-    sprintf(tempHourBuff, "%02d", tempHour);
-    astronomy->moonriseTime = String(tempHourBuff);
-    }
-    if (currentKey == "minute") {
+    if (currentKey == "minute")
+    {
       char tempMinBuff[4] = "";
-      if (usePM) {
-        sprintf(tempMinBuff, "%02d%s", value.toInt(), isPM?"pm":"am");
-      } else {
+      if (usePM)
+      {
+        sprintf(tempMinBuff, "%02d%s", value.toInt(), isPM ? "pm" : "am");
+      }
+      else
+      {
         sprintf(tempMinBuff, "%02d", value.toInt());
       }
       astronomy->moonriseTime += ":" + String(tempMinBuff);
@@ -188,49 +228,57 @@ void WundergroundAstronomy::value(String value) {
     this->moonriseTime.trim();
   }
 
-  if (currentParent == "moonset") {      // Has a Parent key and 2 sub-keys
-    if (currentKey == "hour") {
-      int tempHour = value.toInt();   // do this to concert to 12 hour time (make it a function!)
-      if (usePM && tempHour > 12){
+  if (currentParent == "moonset")
+  { // Has a Parent key and 2 sub-keys
+    if (currentKey == "hour")
+    {
+      int tempHour = value.toInt(); // do this to concert to 12 hour time (make it a function!)
+      if (usePM && tempHour > 12)
+      {
         tempHour -= 12;
         isPM = true;
       }
-      else isPM = false;
+      else
+        isPM = false;
       char tempHourBuff[3] = "";
       sprintf(tempHourBuff, "%02d", tempHour);
       astronomy->moonsetTime = String(tempHourBuff);
     }
-    if (currentKey == "minute") {
+    if (currentKey == "minute")
+    {
       char tempMinBuff[4] = "";
-      if (usePM) {
-        sprintf(tempMinBuff, "%02d%s", value.toInt(), isPM?"pm":"am");
-      } else {
+      if (usePM)
+      {
+        sprintf(tempMinBuff, "%02d%s", value.toInt(), isPM ? "pm" : "am");
+      }
+      else
+      {
         sprintf(tempMinBuff, "%02d", value.toInt());
       }
       astronomy->moonsetTime += ":" + String(tempMinBuff);
     }
     astronomy->moonsetTime.trim();
   }
-
 }
 
-void WundergroundAstronomy::endArray() {
-
+void WundergroundAstronomy::endArray()
+{
 }
 
-
-void WundergroundAstronomy::startObject() {
+void WundergroundAstronomy::startObject()
+{
   currentParent = currentKey;
 }
 
-void WundergroundAstronomy::endObject() {
+void WundergroundAstronomy::endObject()
+{
   currentParent = "";
 }
 
-void WundergroundAstronomy::endDocument() {
-
+void WundergroundAstronomy::endDocument()
+{
 }
 
-void WundergroundAstronomy::startArray() {
-
+void WundergroundAstronomy::startArray()
+{
 }

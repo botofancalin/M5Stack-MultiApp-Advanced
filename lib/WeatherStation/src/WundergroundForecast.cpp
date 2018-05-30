@@ -31,6 +31,9 @@ See more at http://blog.squix.ch
 WundergroundForecast::WundergroundForecast(boolean _isMetric) {
   isMetric = _isMetric;
 }
+WundergroundForecast::~WundergroundForecast()
+{
+}
 
 void WundergroundForecast::setMetric(bool isMetric) {
   this->isMetric = isMetric;

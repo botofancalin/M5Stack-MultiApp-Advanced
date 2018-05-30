@@ -5,7 +5,7 @@ void WifiSettingsClass::AP_Mode()
     WiFi.disconnect();
     vTaskDelay(200 / portTICK_PERIOD_MS);
     WiFi.mode(WIFI_MODE_AP);
-    WiFi_Mode = WIFI_MODE_AP;
+    M5m.WiFi_Mode = WIFI_MODE_AP;
     WiFi.begin("M5Stack");
     WiFi.softAPsetHostname("M5Stack");
     M5m.Lcd.drawString("AP Mode Started", 5, 50, 2);
@@ -18,7 +18,7 @@ void WifiSettingsClass::STA_Mode()
     WiFi.disconnect();
     WiFi.mode(WIFI_MODE_STA);
     WiFi.begin();
-    WiFi_Mode = WIFI_MODE_STA;
+    M5m.WiFi_Mode = WIFI_MODE_STA;
     M5m.Lcd.drawString("STA Mode Started", 5, 50, 2);
     M5m.Lcd.drawString("Will Connect to sored SSID", 5, 70, 2);
 }
@@ -28,7 +28,7 @@ void WifiSettingsClass::APSTA_Mode()
     WiFi.disconnect();
     WiFi.mode(WIFI_MODE_APSTA);
     WiFi.begin();
-    WiFi_Mode = WIFI_MODE_APSTA;
+    M5m.WiFi_Mode = WIFI_MODE_APSTA;
     M5m.Lcd.drawString("AP + STA Mode Started", 5, 50, 2);
     M5m.Lcd.drawString("Will use the sored SSID", 5, 70, 2);
 }
@@ -78,7 +78,7 @@ void WifiSettingsClass::SmartConfig()
     M5m.Lcd.setTextColor(WHITE);
     M5m.Lcd.drawString("WiFi Connected", 5, 130, 2);
     M5m.Lcd.drawString("IP: " + WiFi.localIP().toString(), 5, 150, 2);
-    WiFi_Mode = WIFI_MODE_STA;
+    M5m.WiFi_Mode = WIFI_MODE_STA;
 }
 
 void WifiSettingsClass::Run()
@@ -133,14 +133,14 @@ void WifiSettingsClass::Run()
                 M5m.windowClr();
                 vTaskDelay(200 / portTICK_PERIOD_MS);
                 Wps_run(true);
-                WiFi_Mode = WIFI_MODE_STA;
+                M5m.WiFi_Mode = WIFI_MODE_STA;
             }
             if (M5m.getListString() == "Connect by WPS Pin Code")
             {
                 M5m.windowClr();
                 vTaskDelay(200 / portTICK_PERIOD_MS);
                 Wps_run(false);
-                WiFi_Mode = WIFI_MODE_STA;
+                M5m.WiFi_Mode = WIFI_MODE_STA;
             }
             if (M5m.getListString() == "WiFi OFF")
             {
@@ -148,7 +148,7 @@ void WifiSettingsClass::Run()
                 vTaskDelay(200 / portTICK_PERIOD_MS);
                 WiFi.disconnect();
                 WiFi.mode(WIFI_MODE_NULL);
-                WiFi_Mode = WIFI_MODE_NULL;
+                M5m.WiFi_Mode = WIFI_MODE_NULL;
                 M5m.Lcd.drawString("WiFi Turned OFF", 5, 50, 2);
                 vTaskDelay(2000 / portTICK_PERIOD_MS);
                 M5m.drawAppMenu(F("WiFi"), F("ESC"), F("SELECT"), F("LIST"));

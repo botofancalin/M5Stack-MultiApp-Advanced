@@ -11,10 +11,10 @@ void setup()
 	M5m.begin();
 	dacWrite(25, 0); // Speaker OFF
 	preferences.begin("WiFi", false);
-	WiFi_Mode = preferences.getInt("mode", 0);
+	M5m.WiFi_Mode = preferences.getInt("mode", 0);
 	preferences.end();
-	WiFi.mode(wifi_mode_t(WiFi_Mode));
-	if (WiFi_Mode > 0)
+	WiFi.mode(wifi_mode_t(M5m.WiFi_Mode));
+	if (M5m.WiFi_Mode > 0)
 	{
 		WiFi.begin();
 	}
@@ -51,8 +51,8 @@ void loop()
 	unsigned long now = millis();
 	if (now - lastcheck >= 1000)
 	{
-		WiFi_Mode = WiFi.getMode();
-		if (WiFi_Mode == WIFI_MODE_STA && WiFi.isConnected())
+		M5m.WiFi_Mode = WiFi.getMode();
+		if (M5m.WiFi_Mode == WIFI_MODE_STA && WiFi.isConnected())
 		{
 			M5m.Lcd.setTextColor(WHITE, 15);
 			SignalStrength = map(100 + WiFi.RSSI(), 5, 90, 0, 100);
@@ -65,12 +65,12 @@ void loop()
 				OtaRunning = true;
 			}
 		}
-		else if (WiFi_Mode == WIFI_MODE_APSTA)
+		else if (M5m.WiFi_Mode == WIFI_MODE_APSTA)
 		{
 			M5m.Lcd.setTextColor(WHITE, 15);
 			M5m.Lcd.drawRightString("Clients: " + String(WiFi.softAPgetStationNum()), 300, 5, 2);
 		}
-		else if (WiFi_Mode == WIFI_MODE_NULL)
+		else if (M5m.WiFi_Mode == WIFI_MODE_NULL)
 		{
 			M5m.Lcd.setTextColor(WHITE, 15);
 			M5m.Lcd.drawRightString("Wifi OFF", 310, 5, 2);

@@ -258,9 +258,9 @@ void WifiScannerClass::Run()
         }
     }
     preferences.begin("WiFi", false);
-    WiFi_Mode = preferences.getInt("mode", 0);
-    WiFi.mode(wifi_mode_t(WiFi_Mode));
-    if (WiFi_Mode != 0)
+    M5m.WiFi_Mode = preferences.getInt("mode", 0);
+    WiFi.mode(wifi_mode_t(M5m.WiFi_Mode));
+    if (M5m.WiFi_Mode != 0)
     {
         WiFi.begin();
     }

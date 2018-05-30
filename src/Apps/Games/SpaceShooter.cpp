@@ -45,11 +45,7 @@ void SpaceShooterClass::initVars()
   shipSpeed = 50;
   doSplode = false;
   fire = false;
-  fFireX[5] = {0};
-  fFireY[5] = {0};
-  fFireAge[5] = {0};
   //--------------------------Aliens----------------------------------
-  alienLive[18];
   alienLiveCount = 18;
   alienX = 7;
   alienY = 25;
@@ -58,17 +54,14 @@ void SpaceShooterClass::initVars()
   changeAlienX = 6;
   changeAlienY = 0;
   alienSpeed = 200;
-  oldAlienSpeed;
-  aFireX[5];
-  aFireY[5];
-  aFireAge[5];
+  oldAlienSpeed = 0;
   chanceOfFire = 2;
 }
 //==================================================================
 
 void SpaceShooterClass::drawBitmap(char img[], int imgW, int imgH, int x, int y, int scale)
 {
-  uint16_t cellColor;
+  uint16_t cellColor = 0;
   char curPix;
   for (int i = 0; i < imgW * imgH; i++)
   {
@@ -219,7 +212,7 @@ int SpaceShooterClass::findOldAlienY(int num) { return oldAlienY + 33 * (num / 6
 //==================================================================
 bool SpaceShooterClass::alienShot(int num)
 {
-  for (int i; i < 5; i++)
+  for (int i = 0; i < 5; i++)
   {
     if (fFireAge[i] < 20 && fFireAge[i] > 0)
     {

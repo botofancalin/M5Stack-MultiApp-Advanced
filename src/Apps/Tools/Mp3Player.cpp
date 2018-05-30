@@ -3,7 +3,7 @@
 void Mp3PlayerClass::getvolume()
 {
     preferences.begin("Volume", false);
-    vol = preferences.getFloat("vol", 15.0f);
+    M5m.vol = preferences.getFloat("vol", 15.0f);
     preferences.end();
 }
 
@@ -102,10 +102,10 @@ void Mp3PlayerClass::Play(String *fileName)
     mp3 = new AudioGeneratorMP3();
     out->SetChannels(2);
     mp3->begin(file, out);
-    setVolume(&vol);
-    old_vol = vol;
+    setVolume(&M5m.vol);
+    M5m.old_vol = M5m.vol;
     M5m.Lcd.setTextColor(ORANGE);
-    M5m.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
+    M5m.Lcd.drawCentreString("Volume: " + String(M5m.vol), 158, 190, 2);
     M5m.Lcd.setTextColor(WHITE);
 
     while (!M5m.BtnB.wasPressed())
@@ -120,28 +120,28 @@ void Mp3PlayerClass::Play(String *fileName)
             genSpectrum();
             drawTimeline();
         }
-        if (M5m.BtnA.wasPressed() && vol > 0)
+        if (M5m.BtnA.wasPressed() && M5m.vol > 0)
         {
-            vol -= 5;
-            setVolume(&vol);
+            M5m.vol -= 5;
+            setVolume(&M5m.vol);
         }
-        if (M5m.BtnC.wasPressed() && vol < 100)
+        if (M5m.BtnC.wasPressed() && M5m.vol < 100)
         {
-            vol += 5;
-            setVolume(&vol);
+            M5m.vol += 5;
+            setVolume(&M5m.vol);
         }
-        if (vol != old_vol)
+        if (M5m.vol != M5m.old_vol)
         {
             M5m.Lcd.setTextColor(ORANGE);
             M5m.Lcd.fillRect(120, 190, 80, 14, BLACK);
-            M5m.Lcd.drawCentreString("Volume: " + String(vol), 158, 190, 2);
+            M5m.Lcd.drawCentreString("Volume: " + String(M5m.vol), 158, 190, 2);
             M5m.Lcd.setTextColor(WHITE);
-            old_vol = vol;
+            M5m.old_vol = M5m.vol;
         }
         M5m.update();
     }
     preferences.begin("Volume", false);
-    preferences.putFloat("vol", vol);
+    preferences.putFloat("vol", M5m.vol);
     preferences.end();
     mp3->stop();
     out->stop();

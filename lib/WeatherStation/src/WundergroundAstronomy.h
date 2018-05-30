@@ -59,6 +59,7 @@ class WundergroundAstronomy: public JsonListener {
 
   public:
     WundergroundAstronomy(boolean usePM);
+    virtual ~WundergroundAstronomy();
     void updateAstronomy(WGAstronomy *astronomy, String apiKey, String language, String country, String city);
     void updateAstronomy(WGAstronomy *astronomy, String apiKey, String language, String zmw);
     void updateAstronomyPWS(WGAstronomy *astronomy, String apiKey, String language, String pws);

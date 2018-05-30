@@ -31,6 +31,9 @@ See more at http://blog.squix.ch
 WundergroundConditions::WundergroundConditions(boolean _isMetric) {
   isMetric = _isMetric;
 }
+WundergroundConditions::~WundergroundConditions()
+{
+}
 
 void WundergroundConditions::setMetric(boolean isMetric) {
   this->isMetric = isMetric;

@@ -92,7 +92,6 @@ void MetOfficeClient::doUpdate(String url) {
     }
   }
 
-  int pos = 0;
   boolean isBody = false;
   char c;
 
@@ -458,4 +457,6 @@ String MetOfficeClient::getWeatherIconName(String weatherType) {
   if (weatherType == "30") return "thunder";  // Thunder
   int weatherTypeAsInt = weatherType.toInt();
   if (weatherTypeAsInt > 30) return "no_data";// Something unexpected has happened!
+
+  return "unknown";
 }
