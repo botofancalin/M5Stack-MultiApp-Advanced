@@ -59,9 +59,6 @@
 #define LIST_MAX_LABEL_SIZE 32
 #define LIST_PAGE_LABELS 6
 
-static int WiFi_Mode;
-static int vol, old_vol;
-
 extern "C" {
 #include "esp_sleep.h"
 }
@@ -110,6 +107,8 @@ public:
     SPEAKER Speaker;
 
     M5Display Lcd = M5Display();
+int WiFi_Mode;
+int vol, old_vol;
 private:
   uint8_t _wakeupPin;
   String listCaption;

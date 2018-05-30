@@ -7,8 +7,7 @@
     "flash_mode": "dio",
     "ldscript": "esp32_out.ld",
     "mcu": "esp32",
-    "partitions": "min_spiffs",
-    "variant": "m5stack-core-esp32"
+    "variant": "m5stack_core_esp32"
   },
   "connectivity": [
     "wifi",
