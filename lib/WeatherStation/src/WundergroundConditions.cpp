@@ -91,6 +91,7 @@ void WundergroundConditions::doUpdate(WGConditions *conditions, String url) {
           parser.parse(c);
         }
       }
+      break;
     }
   }
   this->conditions = nullptr;

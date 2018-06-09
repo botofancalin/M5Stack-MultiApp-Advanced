@@ -90,6 +90,7 @@ void WundergroundAstronomy::doUpdate(WGAstronomy *astronomy, String url)
           parser.parse(c);
         }
       }
+      break;
     }
   }
   this->astronomy = nullptr;

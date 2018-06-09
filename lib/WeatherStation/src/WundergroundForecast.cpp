@@ -93,6 +93,7 @@ void WundergroundForecast::doUpdate(WGForecast *forecasts, uint8_t maxForecasts,
           parser.parse(c);
         }
       }
+      break;
     }
   }
   this->forecasts = nullptr;
