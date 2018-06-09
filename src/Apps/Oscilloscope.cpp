@@ -34,6 +34,7 @@ void OscilloscopeClass::CheckSW()
 	if (M5m.BtnB.wasPressed())
 	{
 		(menu < 149) ? (menu += 10) : (menu = 19);
+		DrawText();
 		return;
 	}
 	else if (M5m.BtnA.wasPressed())
@@ -101,6 +102,7 @@ void OscilloscopeClass::CheckSW()
 			exitprg = !exitprg;
 			break;
 		}
+		DrawText();
 		return;
 	}
 	if (M5m.BtnC.wasPressed())
@@ -168,13 +170,13 @@ void OscilloscopeClass::CheckSW()
 			exitprg = !exitprg;
 			break;
 		}
+		DrawText();
 		return;
 	}
 	else
 	{
 		return;
 	}
-	DrawText();
 }
 
 void OscilloscopeClass::DrawGrid()
