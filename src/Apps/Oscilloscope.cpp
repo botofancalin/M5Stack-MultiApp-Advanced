@@ -1,27 +1,27 @@
 #include "Oscilloscope.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-int Gen = 2;
+int Gen = 1;
 
 void OscilloscopeClass::DrawText()
 {
 	M5m.Lcd.setTextColor(WHITE);
-	M5m.Lcd.fillRect(270, menu, 70, 10, BLUE);
-	(menu != 19) ? M5m.Lcd.fillRect(270, menu - 10, 70, 10, BLACK) : M5m.Lcd.fillRect(270, 149, 70, 10, BLACK);
-	M5m.Lcd.drawString((Start ? "Stop" : "Run"), 270, 20, 1);
-	M5m.Lcd.drawString(String(String(Ranges[range0]) + "/DIV"), 270, 30, 1);
-	M5m.Lcd.drawString(String(String(Ranges[range1]) + "/DIV"), 270, 40, 1);
-	M5m.Lcd.drawString(String(String(Rates[rate]) + "/DIV"), 270, 50, 1);
-	M5m.Lcd.drawString(String(Modes[ch0_mode]), 270, 60, 1);
-	M5m.Lcd.drawString(String(Modes[ch1_mode]), 270, 70, 1);
-	M5m.Lcd.drawString(String("OFS1:" + String(ch0_off)), 270, 80, 1);
-	M5m.Lcd.drawString(String("OFS2:" + String(ch1_off)), 270, 90, 1);
-	M5m.Lcd.drawString(String(trig_ch == 0 ? "T:1" : "T:2"), 270, 100, 1);
-	M5m.Lcd.drawString(String(TRIG_Modes[trig_mode]), 270, 110);
-	M5m.Lcd.drawString(String("Tlv:" + String(trig_lv - 30)), 270, 120, 1);
-	M5m.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 270, 130, 1);
-	M5m.Lcd.drawString(String("Gen:" + String(Generator[Gen])), 270, 140, 1);
-	M5m.Lcd.drawString("Exit", 270, 150, 1);
+	M5m.Lcd.fillRect(272, menu, 68, 10, BLUE);
+	(menu != 19) ? M5m.Lcd.fillRect(272, menu - 10, 70, 10, BLACK) : M5m.Lcd.fillRect(272, 149, 68, 10, BLACK);
+	M5m.Lcd.drawString((Start ? "Run" : "Stop"), 272, 20, 1);
+	M5m.Lcd.drawString(String(String(Ranges[range0]) + "/DIV"), 272, 30, 1);
+	M5m.Lcd.drawString(String(String(Ranges[range1]) + "/DIV"), 272, 40, 1);
+	M5m.Lcd.drawString(String(String(Rates[rate]) + "/DIV"), 272, 50, 1);
+	M5m.Lcd.drawString(String(Modes[ch0_mode]), 272, 60, 1);
+	M5m.Lcd.drawString(String(Modes[ch1_mode]), 272, 70, 1);
+	M5m.Lcd.drawString(String("OFS1:" + String(ch0_off)), 272, 80, 1);
+	M5m.Lcd.drawString(String("OFS2:" + String(ch1_off)), 272, 90, 1);
+	M5m.Lcd.drawString(String(trig_ch == 0 ? "T:1" : "T:2"), 272, 100, 1);
+	M5m.Lcd.drawString(String(TRIG_Modes[trig_mode]), 272, 110);
+	M5m.Lcd.drawString(String("Tlv:" + String(trig_lv - 30)), 272, 120, 1);
+	M5m.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 272, 130, 1);
+	M5m.Lcd.drawString(String("Gen:" + String(Generator[Gen])), 272, 140, 1);
+	M5m.Lcd.drawString("Exit", 272, 150, 1);
 	M5m.Lcd.setTextColor(WHITE, BLACK);
 	M5m.Lcd.drawString("<", 60, 220, 2);
 	M5m.Lcd.drawString("Menu", 145, 220, 2);
@@ -43,6 +43,7 @@ void OscilloscopeClass::CheckSW()
 		{
 		case 19:
 			Start = !Start;
+			trig = false;
 			break;
 		case 29:
 			if (range0 > 0)
@@ -84,7 +85,9 @@ void OscilloscopeClass::CheckSW()
 			trig_ch = !trig_ch;
 			break;
 		case 109:
-			(trig_mode > TRIG_AUTO) ? (trig_mode--) : (trig_mode = TRIG_SCAN);
+			(trig_mode > TRIG_AUTO) ? (trig_mode--) : (trig_mode = TRIG_ONE);
+			Start = true;
+			trig = false;			
 			break;
 		case 119:
 			if (trig_lv > 30)
@@ -111,6 +114,7 @@ void OscilloscopeClass::CheckSW()
 		{
 		case 19:
 			Start = !Start;
+			trig = false;
 			break;
 		case 29:
 			if (range0 < RANGE_MAX)
@@ -152,7 +156,9 @@ void OscilloscopeClass::CheckSW()
 			trig_ch = !trig_ch;
 			break;
 		case 109:
-			(trig_mode < TRIG_SCAN) ? (trig_mode++) : (trig_mode = TRIG_AUTO);
+			(trig_mode < TRIG_ONE) ? (trig_mode++) : (trig_mode = TRIG_AUTO);
+			Start = true;
+			trig = false;
 			break;
 		case 119:
 			if (trig_lv < 130)
@@ -491,6 +497,14 @@ void OscilloscopeClass::Run()
 		{
 			CheckSW();
 		}
+		
+		if (trig_mode == TRIG_ONE && !trig) 
+		{
+			Start = false;
+			trig = true;
+			DrawText();
+		}
+		
 		M5m.update();
 		if (exitprg) // endless loop exit condition
 		{
