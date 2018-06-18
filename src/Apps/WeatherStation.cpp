@@ -28,7 +28,7 @@ bool WeatherStationClass::GetParams(fs::FS &fs, const char *path)
         WUNDERGROUND_CITY = GetTextData(&WeatherParams, String("CITY="));
         WUNDERGROUND_COUNTRY = GetTextData(&WeatherParams, String("COUNTRY="));
         WUNDERGRROUND_LANGUAGE = GetTextData(&WeatherParams, String("LANGUAGE="));
-        WUNDERGRROUND_API_KEY = GetTextData(&WeatherParams, String("APIKEY="));
+        WUNDERGRROUND_API_KEY = "b27ca9b828b6383b";
         Utc_Offset = atoi((GetTextData(&WeatherParams, String("TIME_OFFSET="))).c_str());
     }
 
