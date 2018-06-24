@@ -28,7 +28,7 @@ bool WeatherStationClass::GetParams(fs::FS &fs, const char *path)
         WUNDERGROUND_CITY = GetTextData(&WeatherParams, String("CITY="));
         WUNDERGROUND_COUNTRY = GetTextData(&WeatherParams, String("COUNTRY="));
         WUNDERGRROUND_LANGUAGE = GetTextData(&WeatherParams, String("LANGUAGE="));
-        WUNDERGRROUND_API_KEY = "b27ca9b828b6383b";
+        WUNDERGRROUND_API_KEY = GetTextData(&WeatherParams, String("APIKEY="));
         Utc_Offset = atoi((GetTextData(&WeatherParams, String("TIME_OFFSET="))).c_str());
     }
 
@@ -69,12 +69,15 @@ void WeatherStationClass::updateData(bool msg = false)
     astronomyClient = nullptr;
 }
 
+dstRule StartRule = {"CEST", Last, Sun, Mar, 2, 3600}; // Central European Summer Time = UTC/GMT +2 hours
+dstRule EndRule = {"CET", Last, Sun, Oct, 2, 0};       // Central European Time = UTC/GMT +1 hour
+simpleDSTadjust dstAdjusted(StartRule, EndRule);
+
 void WeatherStationClass::drawTime()
 {
     M5m.Lcd.setTextColor(BLACK);
     M5m.Lcd.setFreeFont(FSS18);
     M5m.Lcd.drawRightString(time_str, 315, 5, 1);
-    simpleDSTadjust dstAdjusted(StartRule, EndRule);
     now = dstAdjusted.time(&dstAbbrev);
     timeinfo = localtime(&now);
     date = ctime(&now);

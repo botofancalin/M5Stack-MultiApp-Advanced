@@ -56,6 +56,13 @@ private:
   const char *Rates[15] PROGMEM = {"0.3ms", "0.6ms", " 1ms", " 2ms", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s"};
   const char *Ranges[5] PROGMEM = {" 1V", "0.5V", "0.2V", "0.1V", "50mV"};
   const char *Generator[5] PROGMEM = {"Wave", "Sqr", "Tri1", "Tri2", "OFF"};
+  const unsigned long r_1[5] = {1000 / DOTS_DIV, 2000 / DOTS_DIV, 
+                               5000 / DOTS_DIV, 10000 / DOTS_DIV, 
+                               20000 / DOTS_DIV};
+  const unsigned long r_2[8] = {50000 / DOTS_DIV, 100000 / DOTS_DIV,
+                               200000 / DOTS_DIV, 500000 / DOTS_DIV,
+                               1000000 / DOTS_DIV, 2000000 / DOTS_DIV,
+                               5000000 / DOTS_DIV, 10000000 / DOTS_DIV};
   unsigned int sample = 0; // index for double buffer
   bool Start = true;
   bool exitprg = false;

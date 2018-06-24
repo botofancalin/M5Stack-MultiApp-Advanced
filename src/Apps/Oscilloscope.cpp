@@ -94,6 +94,10 @@ void OscilloscopeClass::CheckSW()
 			{
 				trig_lv--;
 			}
+			else
+			{
+				trig_lv = 130;
+			}
 			break;
 		case 129:
 			trig_edge = !trig_edge;
@@ -164,6 +168,10 @@ void OscilloscopeClass::CheckSW()
 			if (trig_lv < 130)
 			{
 				trig_lv++;
+			}
+			else
+			{
+				trig_lv = 30;
 			}
 			break;
 		case 129:
@@ -368,7 +376,7 @@ void OscilloscopeClass::Run()
 
 				if (trig_edge == TRIG_E_UP)
 				{
-					if (*adp >= trig_lv && *adp > *oadp)
+					if (*adp >= trig_lv && *adp > *oadp + 1)
 					{
 						break;
 					}
@@ -424,9 +432,8 @@ void OscilloscopeClass::Run()
 			}
 			else if (rate >= 2 && rate <= 6)
 			{
-				const unsigned long r_[] = {1000 / DOTS_DIV, 2000 / DOTS_DIV, 5000 / DOTS_DIV, 10000 / DOTS_DIV, 20000 / DOTS_DIV};
 				unsigned long st = micros();
-				unsigned long r = r_[rate - 2];
+				unsigned long r = r_1[rate - 2];
 				for (int i = 0; i < SAMPLES; i++)
 				{
 					while ((st - micros()) < r)
@@ -458,14 +465,10 @@ void OscilloscopeClass::Run()
 					data[1][i] = data[3][i];
 				}
 			}
-			const unsigned long r_[] = {50000 / DOTS_DIV, 100000 / DOTS_DIV,
-										200000 / DOTS_DIV, 500000 / DOTS_DIV,
-										1000000 / DOTS_DIV, 2000000 / DOTS_DIV,
-										5000000 / DOTS_DIV, 10000000 / DOTS_DIV};
 			unsigned long st = micros();
 			for (int i = 0; i < SAMPLES; i++)
 			{
-				while ((st - micros()) < r_[rate - 7])
+				while ((st - micros()) < r_2[rate - 7])
 				{
 					CheckSW();
 					if (rate < 7)
@@ -477,8 +480,8 @@ void OscilloscopeClass::Run()
 				{
 					break;
 				}
-				st += r_[rate - 7];
-				if (st - micros() > r_[rate - 7]) // sampling rate has been changed to shorter interval
+				st += r_2[rate - 7];
+				if (st - micros() > r_2[rate - 7]) // sampling rate has been changed to shorter interval
 				{
 					st = micros();
 				}
