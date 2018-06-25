@@ -158,8 +158,12 @@ void M5StackMod::up()
   if (menuIDX < menuCount[levelIDX] - 1)
   {
     menuIDX++;
-    show();
   }
+  else
+  {
+    menuIDX = 0;
+  }
+  show();
 }
 
 void M5StackMod::down()
@@ -167,8 +171,12 @@ void M5StackMod::down()
   if (menuIDX > 0)
   {
     menuIDX--;
-    show();
   }
+  else
+  {
+    menuIDX = menuCount[levelIDX] - 1;
+  }
+  show();
 }
 
 void M5StackMod::GoToLevel(uint32_t inlevel)
