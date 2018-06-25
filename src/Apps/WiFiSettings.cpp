@@ -20,7 +20,7 @@ void WifiSettingsClass::STA_Mode()
     WiFi.begin();
     M5m.WiFi_Mode = WIFI_MODE_STA;
     M5m.Lcd.drawString("STA Mode Started", 5, 50, 2);
-    M5m.Lcd.drawString("Will Connect to sored SSID", 5, 70, 2);
+    M5m.Lcd.drawString("Will Connect to stored SSID", 5, 70, 2);
 }
 
 void WifiSettingsClass::APSTA_Mode()
@@ -30,7 +30,7 @@ void WifiSettingsClass::APSTA_Mode()
     WiFi.begin();
     M5m.WiFi_Mode = WIFI_MODE_APSTA;
     M5m.Lcd.drawString("AP + STA Mode Started", 5, 50, 2);
-    M5m.Lcd.drawString("Will use the sored SSID", 5, 70, 2);
+    M5m.Lcd.drawString("Will use the stored SSID", 5, 70, 2);
 }
 
 void WifiSettingsClass::SmartConfig()

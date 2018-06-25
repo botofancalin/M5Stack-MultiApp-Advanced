@@ -16,7 +16,7 @@
 void appReturn();
 void appSleep();
 void appAbout();
-void appCfgBrigthness();
+void appCfgbrightness();
 void appOscilloscope();
 void appSdBrowser();
 void appSysInfo();

@@ -10,7 +10,7 @@ public:
     void Run();
 
 private:
-    unsigned short tmp_brigth;
-    unsigned short tmp_lbrigth;
+    unsigned short tmp_bright;
+    unsigned short tmp_lbright;
     int val;
 };

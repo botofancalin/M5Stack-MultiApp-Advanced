@@ -21,7 +21,7 @@ void appAbout()
     AboutObj.Run();
 }
 
-void appCfgBrigthness()
+void appCfgbrightness()
 {
     CfgBrightnessClass BrightnessObj;
     BrightnessObj.Run();
