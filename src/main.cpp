@@ -19,7 +19,7 @@ void setup()
 		WiFi.begin();
 	}
 
-	preferences.begin("Brightnes", false);
+	preferences.begin("Brightness", false);
 	M5m.Lcd.setBrightness(preferences.getUShort("light", 95));
 	preferences.end();
 
@@ -29,7 +29,7 @@ void setup()
 	M5m.addMenuItem(0, "ABOUT", "<", "OK", ">", -1, About, appAbout);
 	M5m.addMenuItem(0, "SLEEP/CHARGING", "<", "OK", ">", -1, Sleep, appSleep);
 
-	M5m.addMenuItem(1, "OSCILOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
+	M5m.addMenuItem(1, "OSCILLOSCOPE", "<", "OK", ">", -1, Oscilloscope, appOscilloscope);
 	M5m.addMenuItem(1, "WEBRADIO", "<", "OK", ">", -1, WebRadio, appWebRadio);
 	M5m.addMenuItem(1, "WEATHER STATION", "<", "OK", ">", -1, WeatherStation, appWeatherStation);
 	M5m.addMenuItem(1, "WEBSERVER", "<", "OK", ">", -1, Webserver, appWebServer);
@@ -40,7 +40,7 @@ void setup()
 
 	M5m.addMenuItem(2, "SYSTEM INFORMATIONS", "<", "OK", ">", -1, Sysinfo, appSysInfo);
 	M5m.addMenuItem(2, "WIFI CONNECTION", "<", "OK", ">", -1, WifiConn, appWiFiSetup);
-	M5m.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, Backlight, appCfgBrigthness);
+	M5m.addMenuItem(2, "DISPLAY BACKLIGHT", "<", "OK", ">", -1, Backlight, appCfgbrightness);
 	M5m.addMenuItem(2, "RETURN", "<", "OK", ">", 0, Return, appReturn);
 
 	M5m.show();

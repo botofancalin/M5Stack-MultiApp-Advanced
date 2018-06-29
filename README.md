@@ -31,41 +31,42 @@
 
 ## The project include:
 - Applications
-  - Dual Channel Oscilloscope
-    + Pin 35 Channel 1
-    + Pin 36 Channel 2
-    + Pin 26 Signal Generator
-    + Oscilloscope Menu Structure:
-      + Stop / Run frame
-      + Sensitivity for each channel:
-        + 50mV, 100mV, 200mV, 500mV, 1V per Divizion
-      + Sample Rate
-        + 0.3ms, 0.6ms, 1ms, 2ms, 5ms, 10ms, 20ms, 50ms, 0.1s, 0.2s, 0.5s, 1s, 2s, 5s, 10s per Divizion
-      + Channel mode for each channel
-        + Normal, Inverted, Off
-      + Offset for each channel
-      + Trigger Switch
-        + Trigger from Channel 1 or Channel 2
-      + Trigger Mode
-        + Auto, Normal, Scan
-      + Trigger Level 0 - 100 %
-      + Trigger Edge
-        + Rising (UP)
-        + Falling (DN)
-      + Internal Signal Generator mode
-        + Wave signal
-        + Square signal
-        + Triangular Signal 1
-        + Triangular Signal 2
-        + Signal Generator OFF
-      + Exit Oscilloscope App
+	+ Dual Channel Oscilloscope
+		+ Signals
+			+ Pin 35 Channel 1
+			+ Pin 36 Channel 2
+			+ Pin 26 Signal Generator
+		+ Oscilloscope Menu Structure:
+			+ Stop / Run frame
+			+ Sensitivity for each channel:
+				+ 50mV, 100mV, 200mV, 500mV, 1V per division
+			+ Sample Rate
+				+ 0.3ms, 0.6ms, 1ms, 2ms, 5ms, 10ms, 20ms, 50ms, 0.1s, 0.2s, 0.5s, 1s, 2s, 5s, 10s per division
+		+ Channel modes for each channel
+      		+ Normal, Inverted, Off
+		+ Offset for each channel
+		+ Trigger Switch
+			+ Trigger from Channel 1 or Channel 2
+		+ Trigger Mode
+			+ Auto, Normal, Scan
+			+ Trigger Level 0 - 100 %
+		+ Trigger Edge
+			+ Rising (UP)
+			+ Falling (DN)
+		+ Internal Signal Generator mode
+			+ Wave signal
+			+ Square signal
+			+ Triangular Signal 1
+			+ Triangular Signal 2
+			+ Signal Generator OFF
+		+ Exit Oscilloscope App
     + WebRadio
       + Support Volume Adjustment
       + Support Stations change on the fly
       + Long press NEXT key to exit from Radio App
       + Display Volume Level
       + Display Data buffer state
-      + If the connection is lost or the buffer get empty, will try to recover the connection. 
+      + If the connection is lost or the buffer runs empty, will try to recover the connection. 
       + If the connection can't be recovered, will connect to the next station on the list
       + Can play MP3 streams
       + Web Radio streams are stored on SD Card on "RadioStations.txt" file
@@ -109,26 +110,25 @@
   + System Informations
     + CPU Frequency, Number of cores, Chip Revision, Flash Speed, Current Free RAM space, Wifi MAC address, Wifi IP Address, Wifi current Mode
     + Minimum FREE heap (RAM) since the device was started, Flash Size, SPIFFS Size, SPIFFS used space, SD Card Type, SD Card Size, SD Card used space
-  + Wifi Connection
-    + Can set the Wifi Connection on M5Stack by
-    + Wifi Smart Config
-    + Wifi WPS PushButton
-    + Wifi WPS PIN Code
-    + Wifi STA: Set Wifi to STATION (Reciever) mode
-    + Wifi AP: Set Wifi to ACCESS POINT (Sender) mode
-    + Wifi OFF
-  + Display Backlight Settings
-  + Set and save Display backlight so the settings survive reboot and flash
-- Sleep
-  + Puth the device into Sleep mode
-  + The device can power back on by pressing ButtonB or reset key
+	+ Wifi Connection
+		+ Wifi Smart Config
+		+ Wifi WPS PushButton
+		+ Wifi WPS PIN Code
+		+ Wifi STA: Set Wifi to STATION (Reciever) mode
+		+ Wifi AP: Set Wifi to ACCESS POINT (Sender) mode
+		+ Wifi OFF
+	+ Display Backlight Settings
+		+ Set and save Display backlight so the settings survive reboot and flash
++ Sleep
+	+ Puth the device into Sleep mode
+	+ The device can power back on by pressing ButtonB or reset key
   
 ## This Firmware also support:
-- Local OTA flashing
-  + Set the M5Stack IP as Upload Port on PlatformIO then you can flash the device over WIFI
-- Remote OTA Update
-  + Will check the server for new version at startup
-  + If a new version was found, will update to new version
++ Local OTA flashing
+	+ Set the M5Stack IP as Upload Port on PlatformIO then you can flash the device over WIFI
++ Remote OTA Update
+	+ Will check the server for new version at startup
+	+ If a new version was found, will update to new version
   
   ![image](MultiAppImgs/Oscilloscope.jpg)
   ![image](MultiAppImgs/WebRadio.jpg)
