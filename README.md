@@ -99,8 +99,9 @@
         + Support any DHT sensor type
       - Stopwatch
     - Games (just for fun)
-      + Space Shooter
+      + Tetris
       + Flappy Bird
+      + Space Shooter
   - Return (to menu root)
 - System
   + System Informations
