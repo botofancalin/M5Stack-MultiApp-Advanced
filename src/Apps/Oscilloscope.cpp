@@ -518,6 +518,8 @@ void OscilloscopeClass::Run()
 
 OscilloscopeClass::OscilloscopeClass()
 {
+	M5m.Lcd.setTextSize(1);
+	M5m.Lcd.setTextFont(1);
 }
 
 OscilloscopeClass::~OscilloscopeClass()

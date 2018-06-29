@@ -440,7 +440,8 @@ WeatherStationClass::WeatherStationClass()
 
 WeatherStationClass::~WeatherStationClass()
 {
+    M5m.Lcd.fillScreen(0);
     M5m.Lcd.setTextSize(1);
-    M5m.Lcd.fillScreen(BLACK);
+	M5m.Lcd.setTextFont(1);
     M5m.show();
 }

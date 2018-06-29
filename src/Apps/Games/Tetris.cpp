@@ -4,7 +4,7 @@
 void TetrisClass::Run()
 {
     M5m.Lcd.fillScreen(BLACK); // CLEAR SCREEN
-    //----------------------------// Make Block ----------------------------
+    //----------------------------// Make Blocks ----------------------------
     make_block(0, BLACK);  // Type No, Color
     make_block(1, 0x00F0); // DDDD     RED
     make_block(2, 0xFBE4); // DD,DD    PUPLE
@@ -14,7 +14,7 @@ void TetrisClass::Run()
     make_block(6, 0xF00F); // _DD,DD_  LIGHT GREEN
     make_block(7, 0xF8FC); // _D_,DDD  PINK
     //----------------------------------------------------------------------
-    M5m.Lcd.drawJpg((uint8_t *)tetris_img, (sizeof(tetris_img) / sizeof(tetris_img[0]))); // Load background from file data
+    M5m.Lcd.drawJpg((uint8_t *)tetris_img, (sizeof(tetris_img) / sizeof(tetris_img[0])));
     M5m.Lcd.setFreeFont(FFS9B);
     PutStartPos(); // Start Position
     for (int i = 0; i < 4; ++i)
@@ -52,7 +52,7 @@ void TetrisClass::Run()
 }
 //========================================================================
 void TetrisClass::Draw()
-{ // Draw 120x240 in the center
+{ 
     for (int i = 0; i < Width; ++i)
     {
         for (int j = 0; j < Height; ++j)
@@ -254,7 +254,7 @@ void TetrisClass::ReviseScreen(Point next_pos, int next_rot)
 }
 //========================================================================
 void TetrisClass::make_block(int n, uint16_t color)
-{ // Make Block color
+{ 
     for (int i = 0; i < 12; i++)
         for (int j = 0; j < 12; j++)
         {
@@ -280,10 +280,10 @@ TetrisClass::~TetrisClass()
     preferences.putInt("t_sc", max_score);
     preferences.end();
 
-    M5m.Lcd.setTextSize(1);
 
     M5m.Lcd.fillScreen(0);
     M5m.Lcd.setTextSize(1);
+	M5m.Lcd.setTextFont(1);
     M5m.drawAppMenu(F("GAMES"), F("ESC"), F("SELECT"), F("LIST"));
     M5m.showList();
 }

@@ -284,7 +284,6 @@ void FlappyBirdClass::game_over()
         }
         if (M5m.BtnC.wasPressed())
         {
-            M5m.Lcd.setTextSize(1);
             return;
         }
         M5m.update();
@@ -307,6 +306,7 @@ FlappyBirdClass::~FlappyBirdClass()
 {
     M5m.Lcd.fillScreen(0);
     M5m.Lcd.setTextSize(1);
+	M5m.Lcd.setTextFont(1);
     M5m.drawAppMenu(F("GAMES"), F("ESC"), F("SELECT"), F("LIST"));
     M5m.showList();
 }
