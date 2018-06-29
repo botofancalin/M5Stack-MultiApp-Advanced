@@ -1,10 +1,5 @@
 #include "WeatherStation.h"
 
-#define FSS9 &FreeSans9pt7b
-#define FSS12 &FreeSans12pt7b
-#define FSS18 &FreeSans18pt7b
-#define FSS24 &FreeSans24pt7b
-
 String WeatherStationClass::GetTextData(String *source, String strname)
 {
     int t = ((source->indexOf(strname)) + (strname.length()));
@@ -445,6 +440,7 @@ WeatherStationClass::WeatherStationClass()
 
 WeatherStationClass::~WeatherStationClass()
 {
+    M5m.Lcd.setTextSize(1);
     M5m.Lcd.fillScreen(BLACK);
     M5m.show();
 }

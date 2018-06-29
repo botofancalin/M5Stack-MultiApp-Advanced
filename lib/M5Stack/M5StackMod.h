@@ -59,7 +59,14 @@
 #define LIST_MAX_LABEL_SIZE 32
 #define LIST_PAGE_LABELS 6
 
-extern "C" {
+#define FSS9 &FreeSans9pt7b
+#define FSS12 &FreeSans12pt7b
+#define FSS18 &FreeSans18pt7b
+#define FSS24 &FreeSans24pt7b
+#define FFS9B &FreeSansBold9pt7b
+
+extern "C"
+{
 #include "esp_sleep.h"
 }
 

@@ -44,10 +44,14 @@ void FlappyBirdClass::game_loop()
             {
                 // if the bird is not too close to the top of the screen apply jump force
                 if (bird.y > BIRDH2 * 0.5)
+                {
                     bird.vel_y = -JUMP_FORCE;
+                }
                 // else zero velocity
                 else
+                {
                     bird.vel_y = 0;
+                }
             }
             M5m.update();
 
@@ -105,7 +109,9 @@ void FlappyBirdClass::game_loop()
         }
         // erase behind pipe
         if (pipes.x <= TFTW)
+        {
             M5m.Lcd.drawFastVLine(pipes.x + PIPEW, 0, GAMEH, BCKGRDCOL);
+        }
         // bird
         // ---------------
         tmpx = BIRDW - 1;
@@ -133,7 +139,9 @@ void FlappyBirdClass::game_loop()
         // ---------------
         grassx -= SPEED;
         if (grassx < 0)
+        {
             grassx = TFTW;
+        }
         M5m.Lcd.drawFastVLine(grassx % TFTW, GAMEH + 1, GRASSH - 1, GRASSCOL);
         M5m.Lcd.drawFastVLine((grassx + 64) % TFTW, GAMEH + 1, GRASSH - 1, GRASSCOL2);
 
@@ -142,15 +150,21 @@ void FlappyBirdClass::game_loop()
         // ===============
         // if the bird hit the ground game over
         if (bird.y > GAMEH - BIRDH)
+        {
             break;
+        }
         // checking for bird collision with pipe
         if (bird.x + BIRDW >= pipes.x - BIRDW2 && bird.x <= pipes.x + PIPEW - BIRDW)
         {
             // bird entered a pipe, check for collision
             if (bird.y < pipes.gap_y || bird.y + BIRDH > pipes.gap_y + GAPHEIGHT)
+            {
                 break;
+            }
             else
+            {
                 passed_pipe = true;
+            }
         }
         // if bird has passed the pipe increase flappy_bird_score
         else if (bird.x > pipes.x + PIPEW - BIRDW && passed_pipe)
@@ -222,8 +236,8 @@ void FlappyBirdClass::game_start()
 
 void FlappyBirdClass::resetMaxflappy_bird_score()
 {
-    preferences.begin("Fpsc",false);
-    preferences.putInt("sc",flappy_bird_score);
+    preferences.begin("Fpsc", false);
+    preferences.putInt("sc", flappy_bird_score);
     preferences.end();
 }
 
@@ -233,12 +247,12 @@ void FlappyBirdClass::resetMaxflappy_bird_score()
 void FlappyBirdClass::game_over()
 {
     M5m.Lcd.fillScreen(BLACK);
-    preferences.begin("Fpsc",false);
+    preferences.begin("Fpsc", false);
     maxflappy_bird_score = preferences.getInt("sc", 0);
 
     if (flappy_bird_score > maxflappy_bird_score)
     {
-        preferences.putInt("sc",flappy_bird_score);
+        preferences.putInt("sc", flappy_bird_score);
         maxflappy_bird_score = flappy_bird_score;
         M5m.Lcd.setTextColor(RED);
         M5m.Lcd.setTextSize(2);

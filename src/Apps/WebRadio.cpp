@@ -226,6 +226,7 @@ WebRadioClass::WebRadioClass()
 
 WebRadioClass::~WebRadioClass()
 {
+	M5m.Lcd.setTextSize(1);
 	Name.clear();
 	Name.shrink_to_fit();
 	Link.clear();

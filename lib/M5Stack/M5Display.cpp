@@ -43,6 +43,35 @@ void M5Display::setBrightness(uint8_t brightness) {
   ledcWrite(BLK_PWM_CHANNEL, brightness);
 }
 
+void M5Display::drawBitmap(int16_t x0, int16_t y0, int16_t w, int16_t h, const uint16_t *data) {
+  setSwapBytes(true);
+  pushImage((int32_t)x0, (int32_t)y0, (uint32_t)w, (uint32_t)h, data);
+}
+
+void M5Display::drawBitmap(int16_t x0, int16_t y0, int16_t w, int16_t h, uint16_t *data) {
+  setSwapBytes(true);
+  pushImage((int32_t)x0, (int32_t)y0, (uint32_t)w, (uint32_t)h, data);
+}
+
+void M5Display::drawBitmap(int16_t x0, int16_t y0, int16_t w, int16_t h, const uint16_t *data, uint16_t transparent) {
+  setSwapBytes(true);
+  pushImage((int32_t)x0, (int32_t)y0, (uint32_t)w, (uint32_t)h, data, transparent);
+}
+
+void M5Display::drawBitmap(int16_t x0, int16_t y0, int16_t w, int16_t h, const uint8_t *data) {
+  setSwapBytes(true);
+  pushImage((int32_t)x0, (int32_t)y0, (uint32_t)w, (uint32_t)h, (const uint16_t*)data);
+}
+
+void M5Display::drawBitmap(int16_t x0, int16_t y0, int16_t w, int16_t h, uint8_t *data) {
+  setSwapBytes(true);
+  pushImage((int32_t)x0, (int32_t)y0, (uint32_t)w, (uint32_t)h, (uint16_t*)data);
+}
+
+void M5Display::progressBar(int x, int y, int w, int h, uint8_t val) {
+  drawRect(x, y, w, h, 0x09F1);
+  fillRect(x + 1, y + 1, w * (((float)val) / 100.0), h - 1, 0x09F1);
+}
 
 #include "utility/qrcode.h"
 void M5Display::qrcode(const char *string, uint16_t x, uint16_t y, uint8_t width, uint8_t version) {
