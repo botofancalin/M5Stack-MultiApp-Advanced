@@ -8,10 +8,6 @@
 - This project use modifed M5Stack M5StackSAM and EspAudio libraryes from project local storage.
 
 ![image](MultiAppImgs/Apps.jpg)
-
-## Get it going fast
-- Flash your M5 with Precompiled firmware from this repository
-  +The flashing instructions can be found on the Precompiled Firmware folder
   
 # Installing and Compiling the firmware
 ### First, you must install the necessary tools and prepare the IDE environment

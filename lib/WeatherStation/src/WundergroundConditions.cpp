@@ -43,16 +43,6 @@ void WundergroundConditions::updateConditions(WGConditions *conditions, String a
   doUpdate(conditions, "http://api.wunderground.com/api/" + apiKey + "/conditions/lang:" + language + "/q/" + country + "/" + city + ".json");
 }
 
-// wunderground change the API URL scheme:
-// http://api.wunderground.com/api/<API-KEY>/conditions/lang:de/q/zmw:00000.215.10348.json
-void WundergroundConditions::updateConditions(WGConditions *conditions, String apiKey, String language, String zmwCode) {
-  doUpdate(conditions, "http://api.wunderground.com/api/" + apiKey + "/conditions/lang:" + language + "/q/zmw:" + zmwCode + ".json");
-}
-
-void WundergroundConditions::updateConditionsPWS(WGConditions *conditions, String apiKey, String language, String pws) {
-  doUpdate(conditions, "http://api.wunderground.com/api/" + apiKey + "/conditions/lang:" + language + "/q/pws:" + pws + ".json");
-}
-
 void WundergroundConditions::doUpdate(WGConditions *conditions, String url) {
   unsigned long lostTest = 10000UL;
   unsigned long lost_do = millis();

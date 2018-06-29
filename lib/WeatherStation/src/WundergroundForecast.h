@@ -62,8 +62,6 @@ class WundergroundForecast: public JsonListener {
     WundergroundForecast(boolean isMetric);
     virtual ~WundergroundForecast();
     void updateForecast(WGForecast *forecasts, uint8_t maxForecasts, String apiKey, String language, String country, String city);
-    void updateForecastPWS(WGForecast *forecasts, uint8_t maxForecasts, String apiKey, String language, String pws);
-    void updateForecastZMW(WGForecast *forecasts, uint8_t maxForecasts, String apiKey, String language, String zmwCode);
     void setMetric(bool isMetric);
     String getMeteoconIcon(String iconText);
 
