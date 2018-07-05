@@ -41,7 +41,7 @@
 		+ Trigger Switch
 			+ Trigger from Channel 1 or Channel 2
 		+ Trigger Mode
-			+ Auto, Normal, Scan
+			+ Auto, Normal, Scan, One Frame
 			+ Trigger Level 0 - 100 %
 		+ Trigger Edge
 			+ Rising (UP)
