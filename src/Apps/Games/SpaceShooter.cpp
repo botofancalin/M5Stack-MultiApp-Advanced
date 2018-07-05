@@ -190,6 +190,7 @@ void SpaceShooterClass::levelUp()
       offsetM = millis();
     }
   }
+  M5m.Lcd.fillRect(oldShipX, 0, 28, 44, BLACK);
   drawalien_shooter_score(true);
   level += 1;
   shipX = 147;
@@ -403,7 +404,7 @@ void SpaceShooterClass::spaceShoot_run()
     }
     if (M5m.BtnB.isPressed())
     {
-      select();
+      this->select();
     }
     //-------------Start Screen--------------
     if (millis() - offsetS >= 900 && !beginGame)
@@ -533,7 +534,7 @@ SpaceShooterClass::~SpaceShooterClass()
 {
   M5m.Lcd.fillScreen(0);
   M5m.Lcd.setTextSize(1);
-	M5m.Lcd.setTextFont(1);
+  M5m.Lcd.setTextFont(1);
   M5m.drawAppMenu(F("GAMES"), F("ESC"), F("SELECT"), F("LIST"));
   M5m.showList();
 }
