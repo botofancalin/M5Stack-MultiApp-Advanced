@@ -1,7 +1,7 @@
 #include "Wrappers.h"
 #include "Resources.h"
 
-const int version = 4;
+const int version = 5;
 unsigned long lastcheck = 0;
 int SignalStrength = 0;
 bool OtaRunning = false;
