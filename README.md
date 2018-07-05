@@ -15,9 +15,6 @@
 - Download and Install Visual Studio Code https://code.visualstudio.com/
 - Install the PlatformIO Extension
 - Install ESP32 Framework on PlatformIO
-- Apply the PlatformIO Patch
-  + This Patch will fix ESP-IDF bug - ButtonA Problems when Wifi is connected
-  + This Patch will allow to upload large firmwares into M5Stack by sacrificing some SPIFFS area
 - Open the MultiApp Project folder on PlatformIO
 - Click the BUILD button ![image](MultiAppImgs/BuildandFlash.jpg)
   + This will build and Flash the firmware to M5Stack connected to your PC USB
