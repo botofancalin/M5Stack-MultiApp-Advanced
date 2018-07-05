@@ -1,12 +1,18 @@
 
-extern "C" {
+extern "C"
+{
 #include "esp_wifi.h"
 #include "esp_wps.h"
 }
 
 #include "WpsConnect.h"
 
-esp_wps_config_t config;
+#define ESP_MANUFACTURER "ESPRESSIF"
+#define ESP_MODEL_NUMBER "ESP32"
+#define ESP_MODEL_NAME "MULTIAPP FW"
+#define ESP_DEVICE_NAME "M5STACK"
+
+static esp_wps_config_t config;
 
 String wpspin2string(uint8_t a[])
 {
@@ -17,6 +23,23 @@ String wpspin2string(uint8_t a[])
     }
     wps_pin[8] = '\0';
     return (String)wps_pin;
+}
+
+void wpsInitConfig(bool mode)
+{
+    config.crypto_funcs = &g_wifi_default_wps_crypto_funcs;
+    if (mode)
+    {
+        config.wps_type = WPS_TYPE_PBC;
+    }
+    else
+    {
+        config.wps_type = WPS_TYPE_PIN;
+    }
+    strcpy(config.factory_info.manufacturer, ESP_MANUFACTURER);
+    strcpy(config.factory_info.model_number, ESP_MODEL_NUMBER);
+    strcpy(config.factory_info.model_name, ESP_MODEL_NAME);
+    strcpy(config.factory_info.device_name, ESP_DEVICE_NAME);
 }
 
 void WiFiEvent(WiFiEvent_t event, system_event_info_t info)
@@ -64,17 +87,9 @@ void Wps_run(bool mode)
 {
     WiFi.disconnect();
     M5m.Lcd.drawString("Starting WPS", 5, 30, 2);
-    if (mode)
-    {
-        config = WPS_CONFIG_INIT_DEFAULT(WPS_TYPE_PBC);
-    }
-    else
-    {
-        config = WPS_CONFIG_INIT_DEFAULT(WPS_TYPE_PIN);
-    }
-
     WiFi.onEvent(WiFiEvent);
     WiFi.mode(WIFI_MODE_STA);
+    wpsInitConfig(mode);
     esp_wifi_wps_enable(&config);
     esp_wifi_wps_start(0);
 }
