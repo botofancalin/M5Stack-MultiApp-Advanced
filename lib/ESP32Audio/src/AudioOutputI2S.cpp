@@ -134,7 +134,7 @@ bool AudioOutputI2S::SetRate(int hz)
   // TODO - have a list of allowable rates from constructor, check them
   this->hertz = hz;
 #ifdef ESP32
-  i2s_set_sample_rates((i2s_port_t)portNo, AdjustI2SRate(hz)); 
+  i2s_set_sample_rates((i2s_port_t)portNo, (AdjustI2SRate(hz) / 2)); 
 #else
   i2s_set_rate(AdjustI2SRate(hz));
 #endif

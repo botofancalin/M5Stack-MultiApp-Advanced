@@ -1,6 +1,5 @@
 #include "WebRadio.h"
 
-
 void WebRadioClass::getvolume()
 {
 	preferences.begin("Volume", false);
@@ -200,6 +199,12 @@ void WebRadioClass::Run()
 			preferences.putFloat("vol", M5m.vol);
 			preferences.end();
 			StopPlaying();
+			if (out)
+			{
+				out->stop();
+				delete out;
+				out = NULL;
+			}
 			free(preallocateBuffer);
 			free(preallocateCodec);
 			dacWrite(25, 0);

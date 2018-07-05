@@ -50,6 +50,7 @@
 #include "AudioFileSourceICYStream.h"
 #include "AudioFileSourceBuffer.h"
 #include "AudioGeneratorMP3.h"
+#include "AudioGeneratorMP3a.h"
 #include "AudioOutputI2S.h"
 
 #define MENU_TITLE_MAX_SIZE 24

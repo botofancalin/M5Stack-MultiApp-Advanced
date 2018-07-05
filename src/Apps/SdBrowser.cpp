@@ -99,6 +99,7 @@ void SdBrowserClass::Run()
                 M5m.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
                 M5m.btnRestore();
             }
+            repaint = false;
             M5m.nextList();
         }
         int MenuID = M5m.getListID();
