@@ -20,7 +20,7 @@
   + This Patch will allow to upload large firmwares into M5Stack by sacrificing some SPIFFS area
 - Open the MultiApp Project folder on AplatformIO
 - Click the BUILD button ![image](MultiAppImgs/BuildandFlash.jpg)
-  + This will build and Flash the M5Stack connected to your PC USB
+  + This will build and Flash the firmware to M5Stack connected to your PC USB
 - To use Local Ota to flash your M5Stack
   + The M5Stack must be connected to the same network as your PC
   + In the project "platformio.ini" file set "upload_port = [your M5StackIP]"
