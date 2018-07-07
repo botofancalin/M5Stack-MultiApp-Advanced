@@ -17,11 +17,6 @@
 
 #define SPI_FREQUENCY  40000000
 
-// If the frequency is not defined, set a default
-#ifndef SPI_TOUCH_FREQUENCY
-  #define SPI_TOUCH_FREQUENCY  2500000
-#endif
-
 #define ILI9341_DRIVER
 #include "ILI9341_Defines.h"
 #define  TFT_DRIVER 0x9341

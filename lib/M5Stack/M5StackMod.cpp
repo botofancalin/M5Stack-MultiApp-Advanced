@@ -311,7 +311,7 @@ void M5StackMod::begin()
   Lcd.setBrightness(50);
 
   // TF Card & SPIFFS
-  SD.begin(TFCARD_CS_PIN, SPI, 40000000);
+  SD.begin(TFCARD_CS_PIN, SPI, 27000000);
   vTaskDelay(10 / portTICK_RATE_MS);
   //SPIFFS.begin();
 

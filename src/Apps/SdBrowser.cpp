@@ -134,6 +134,11 @@ void SdBrowserClass::Run()
                 Mp3PlayerClass Mp3PlayerObj;
                 Mp3PlayerObj.Play(&FileName);
             }
+            else if (FileName.endsWith(".mov"))
+            {
+                VideoPlayerClass VideoPlayerObj;
+                VideoPlayerObj.Play(FileName.c_str());
+            }
             else if (!inmenu)
             {
                 inmenu = true;
