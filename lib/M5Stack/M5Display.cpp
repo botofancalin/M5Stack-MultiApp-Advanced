@@ -2,10 +2,10 @@
 
 #define BLK_PWM_CHANNEL 7 //LEDC_CHANNEL_7
 
-M5Display::M5Display() : TFT_eSPI() {}
+M5Display::M5Display() : M5_sSPI() {}
 
 void M5Display::begin() {
-  TFT_eSPI::begin();
+  M5_sSPI::begin();
   setRotation(1);
   fillScreen(0);
 

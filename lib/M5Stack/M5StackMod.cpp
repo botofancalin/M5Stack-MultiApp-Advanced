@@ -313,7 +313,7 @@ void M5StackMod::begin()
   // TF Card & SPIFFS
   SD.begin(TFCARD_CS_PIN, SPI, 40000000);
   vTaskDelay(10 / portTICK_RATE_MS);
-  SPIFFS.begin();
+  //SPIFFS.begin();
 
   // Set wakeup button
   setWakeupButton(BUTTON_A_PIN);

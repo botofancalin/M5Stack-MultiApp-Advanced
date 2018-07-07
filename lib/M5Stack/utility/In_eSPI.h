@@ -507,11 +507,11 @@ const PROGMEM fontinfo fontdata [] = {
 
 
 // Class functions and variables
-class TFT_eSPI : public Print {
+class M5_sSPI : public Print {
 
  public:
 
-  TFT_eSPI(int16_t _W = TFT_WIDTH, int16_t _H = TFT_HEIGHT);
+  M5_sSPI(int16_t _W = TFT_WIDTH, int16_t _H = TFT_HEIGHT);
 
   void     init(void), begin(void); // Same - begin included for backwards compatibility
 
@@ -722,7 +722,7 @@ class TFT_eSPI : public Print {
   #include "Extensions/Smooth_font.h"
 #endif
 
-}; // End of class TFT_eSPI
+}; // End of class M5_sSPI
 
 // Load the Button Class
 // #include "Extensions/Button.h"

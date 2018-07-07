@@ -1,4 +1,4 @@
-This TFT_eSPI library has been developed from the Adafruit_GFX library:
+This M5_sSPI library has been developed from the Adafruit_GFX library:
 
 https://github.com/adafruit/Adafruit-GFX-Library
 
