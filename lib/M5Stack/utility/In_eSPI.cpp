@@ -2505,7 +2505,7 @@ void M5_sSPI::setWindow(int16_t x0, int16_t y0, int16_t x1, int16_t y1)
 // Chip select stays low, use setWindow() from sketches
 
 #if defined (ESP8266) && !defined (RPI_WRITE_STROBE) && !defined (RPI_ILI9486_DRIVER)
-void M5_sSPI::setAddrWindow(int32_t xs, int32_t ys, int32_t xe, int32_t ye)
+inline void M5_sSPI::setAddrWindow(int32_t xs, int32_t ys, int32_t xe, int32_t ye)
 {
   //spi_begin();
 
@@ -2628,7 +2628,7 @@ void M5_sSPI::setAddrWindow(int32_t xs, int32_t ys, int32_t xe, int32_t ye)
 #else
 
 #if defined (ESP8266) && defined (RPI_ILI9486_DRIVER) // This is for the RPi display that needs 16 bits
-void M5_sSPI::setAddrWindow(int32_t x0, int32_t y0, int32_t x1, int32_t y1)
+inline void M5_sSPI::setAddrWindow(int32_t x0, int32_t y0, int32_t x1, int32_t y1)
 {
   //spi_begin();
 
@@ -2705,7 +2705,7 @@ void M5_sSPI::setAddrWindow(int32_t x0, int32_t y0, int32_t x1, int32_t y1)
 
 #else // This is for the ESP32
 
-void M5_sSPI::setAddrWindow(int32_t x0, int32_t y0, int32_t x1, int32_t y1)
+inline void M5_sSPI::setAddrWindow(int32_t x0, int32_t y0, int32_t x1, int32_t y1)
 {
   //spi_begin();
 
