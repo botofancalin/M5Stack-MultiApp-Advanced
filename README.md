@@ -84,6 +84,8 @@
       + Delete Files
       + Display Files Content (images, text, etc...)
     - SD Browser that support
+      + Play video files 
+          + limited to 290x162 rezolution for standard M5Stack without PSRam. Higher resolutions can be used with PSRam option.
       + Display Jpeg files on the screen
       + Resize Jpeg to fit to screen size
       + Play MP3 Files using Mp3 Player App
