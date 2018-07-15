@@ -36,9 +36,9 @@ private:
   int range0 = RANGE_MIN;
   int range1 = RANGE_MIN;
   uint8_t ch0_mode = MODE_ON;
-  uint8_t ch1_mode = MODE_OFF;
+  uint8_t ch1_mode = MODE_INV;
   int trig_mode = TRIG_AUTO;
-  int trig_edge = TRIG_E_UP;
+  int trig_edge = TRIG_E_DN;
   int trig_ch = 0;
   int menu = 19;
   int rate = 3;
@@ -52,10 +52,10 @@ private:
   const int VREF[5] PROGMEM = {250, 500, 1250, 2500, 5000};
   const int MILLIVOL_per_dot[5] PROGMEM = {33, 17, 6, 3, 2};
   const char *Modes[3] PROGMEM = {"NORM", "INV", "OFF"};
-  const char *TRIG_Modes[4] PROGMEM = {"Auto", "Norm", "Scan", "One Fr"};
+  const char *TRIG_Modes[4] PROGMEM = {"AUTO", "NORM", "SCAN", "ONE FR."};
   const char *Rates[15] PROGMEM = {"0.3ms", "0.6ms", " 1ms", " 2ms", " 5ms", "10ms", "20ms", "50ms", "0.1s", "0.2s", "0.5s", "1s", "2s", "5s", "10s"};
   const char *Ranges[5] PROGMEM = {" 1V", "0.5V", "0.2V", "0.1V", "50mV"};
-  const char *Generator[5] PROGMEM = {"Wave", "Sqr", "Tri1", "Tri2", "OFF"};
+  const char *Generator[5] PROGMEM = {"WAVE", "SQR", "TRI1", "TRI2", "OFF"};
   const unsigned long r_1[5] = {1000 / DOTS_DIV, 2000 / DOTS_DIV, 
                                5000 / DOTS_DIV, 10000 / DOTS_DIV, 
                                20000 / DOTS_DIV};

@@ -14,12 +14,12 @@ void OscilloscopeClass::DrawText()
 	M5m.Lcd.drawString(String(String(Rates[rate]) + "/DIV"), 272, 50, 1);
 	M5m.Lcd.drawString(String(Modes[ch0_mode]), 272, 60, 1);
 	M5m.Lcd.drawString(String(Modes[ch1_mode]), 272, 70, 1);
-	M5m.Lcd.drawString(String("OFS1:" + String(ch0_off)), 272, 80, 1);
-	M5m.Lcd.drawString(String("OFS2:" + String(ch1_off)), 272, 90, 1);
-	M5m.Lcd.drawString(String(trig_ch == 0 ? "T:1" : "T:2"), 272, 100, 1);
+	M5m.Lcd.drawString(String("OF1:" + String(ch0_off)), 272, 80, 1);
+	M5m.Lcd.drawString(String("OF2:" + String(ch1_off)), 272, 90, 1);
+	M5m.Lcd.drawString(String(trig_ch == 0 ? "T Ch: 1" : "T Ch: 2"), 272, 100, 1);
 	M5m.Lcd.drawString(String(TRIG_Modes[trig_mode]), 272, 110);
-	M5m.Lcd.drawString(String("Tlv:" + String(trig_lv - 30)), 272, 120, 1);
-	M5m.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T:UP" : "T:DN"), 272, 130, 1);
+	M5m.Lcd.drawString(String("T.LVL:" + String(trig_lv - 30)), 272, 120, 1);
+	M5m.Lcd.drawString(String((trig_edge == TRIG_E_UP) ? "T.E: UP" : "T.E: DN"), 272, 130, 1);
 	M5m.Lcd.drawString(String("Gen:" + String(Generator[Gen])), 272, 140, 1);
 	M5m.Lcd.drawString("Exit", 272, 150, 1);
 	M5m.Lcd.setTextColor(WHITE, BLACK);
@@ -46,15 +46,15 @@ void OscilloscopeClass::CheckSW()
 			trig = false;
 			break;
 		case 29:
-			if (range0 > 0)
+			if (range0 < RANGE_MAX)
 			{
-				range0--;
+				range0++;
 			}
 			break;
 		case 39:
-			if (range1 > 0)
+			if (range1 < RANGE_MAX)
 			{
-				range1--;
+				range1++;
 			}
 			break;
 		case 49:
@@ -70,15 +70,30 @@ void OscilloscopeClass::CheckSW()
 			(ch1_mode > MODE_ON) ? (ch1_mode--) : (ch1_mode = MODE_OFF);
 			break;
 		case 79:
-			if (ch0_off > -4095)
+			if (ch0_off > 0)
 			{
 				ch0_off -= 4096 / VREF[range0];
+				while (M5m.BtnA.isPressed() && ch0_off > 0)
+				{
+					ch0_off -= 4096 / VREF[range0];
+					delay(100);
+					M5m.update();
+					DrawText();
+				}
 			}
 			break;
 		case 89:
-			if (ch1_off > -4095)
+			if (ch1_off > 0)
 			{
 				ch1_off -= 4096 / VREF[range1];
+
+				while (M5m.BtnA.isPressed() && ch1_off > 0)
+				{
+					ch1_off -= 4096 / VREF[range1];
+					delay(100);
+					M5m.update();
+					DrawText();
+				}
 			}
 			break;
 		case 99:
@@ -87,7 +102,7 @@ void OscilloscopeClass::CheckSW()
 		case 109:
 			(trig_mode > TRIG_AUTO) ? (trig_mode--) : (trig_mode = TRIG_ONE);
 			Start = true;
-			trig = false;			
+			trig = false;
 			break;
 		case 119:
 			if (trig_lv > 30)
@@ -121,15 +136,15 @@ void OscilloscopeClass::CheckSW()
 			trig = false;
 			break;
 		case 29:
-			if (range0 < RANGE_MAX)
+			if (range0 > 0)
 			{
-				range0++;
+				range0--;
 			}
 			break;
 		case 39:
-			if (range1 < RANGE_MAX)
+			if (range1 > 0)
 			{
-				range1++;
+				range1--;
 			}
 			break;
 		case 49:
@@ -148,12 +163,26 @@ void OscilloscopeClass::CheckSW()
 			if (ch0_off < 4095)
 			{
 				ch0_off += 4096 / VREF[range0];
+				while (M5m.BtnC.isPressed() && ch0_off < 4095)
+				{
+					ch0_off += 4096 / VREF[range0];
+					delay(100);
+					M5m.update();
+					DrawText();
+				}
 			}
 			break;
 		case 89:
 			if (ch1_off < 4095)
 			{
 				ch1_off += 4096 / VREF[range1];
+				while (M5m.BtnC.isPressed() && ch0_off < 4095)
+				{
+					ch1_off += 4096 / VREF[range1];
+					delay(100);
+					M5m.update();
+					DrawText();
+				}
 			}
 			break;
 		case 99:
@@ -500,14 +529,14 @@ void OscilloscopeClass::Run()
 		{
 			CheckSW();
 		}
-		
-		if (trig_mode == TRIG_ONE && !trig) 
+
+		if (trig_mode == TRIG_ONE && !trig)
 		{
 			Start = false;
 			trig = true;
 			DrawText();
 		}
-		
+
 		M5m.update();
 		if (exitprg) // endless loop exit condition
 		{
