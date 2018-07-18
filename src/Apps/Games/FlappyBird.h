@@ -33,15 +33,6 @@
 #define C4 RED
 #define C5 M5m.Lcd.color565(251, 216, 114)
 
-// ---------------
-// draw pixel
-// ---------------
-// faster drawPixel method by inlining calls and using setAddrWindow and pushColor
-// using macro to force inlining
-#define drawPixel(a, b, c)            \
-    M5m.Lcd.setAddrWindow(a, b, a, b); \
-    M5m.Lcd.pushColor(c)
-
 class FlappyBirdClass
 {
   public:

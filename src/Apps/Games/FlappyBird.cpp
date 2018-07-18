@@ -99,13 +99,13 @@ void FlappyBirdClass::game_loop()
             M5m.Lcd.drawFastVLine(pipes.x, 0, pipes.gap_y, PIPEHIGHCOL);
             M5m.Lcd.drawFastVLine(pipes.x, pipes.gap_y + GAPHEIGHT + 1, GAMEH - (pipes.gap_y + GAPHEIGHT + 1), PIPEHIGHCOL);
             // bottom and top border of pipe
-            drawPixel(pipes.x, pipes.gap_y, PIPESEAMCOL);
-            drawPixel(pipes.x, pipes.gap_y + GAPHEIGHT, PIPESEAMCOL);
+            M5m.Lcd.drawPixel(pipes.x, pipes.gap_y, PIPESEAMCOL);
+            M5m.Lcd.drawPixel(pipes.x, pipes.gap_y + GAPHEIGHT, PIPESEAMCOL);
             // pipe seam
-            drawPixel(pipes.x, pipes.gap_y - 6, PIPESEAMCOL);
-            drawPixel(pipes.x, pipes.gap_y + GAPHEIGHT + 6, PIPESEAMCOL);
-            drawPixel(pipes.x + 3, pipes.gap_y - 6, PIPESEAMCOL);
-            drawPixel(pipes.x + 3, pipes.gap_y + GAPHEIGHT + 6, PIPESEAMCOL);
+            M5m.Lcd.drawPixel(pipes.x, pipes.gap_y - 6, PIPESEAMCOL);
+            M5m.Lcd.drawPixel(pipes.x, pipes.gap_y + GAPHEIGHT + 6, PIPESEAMCOL);
+            M5m.Lcd.drawPixel(pipes.x + 3, pipes.gap_y - 6, PIPESEAMCOL);
+            M5m.Lcd.drawPixel(pipes.x + 3, pipes.gap_y + GAPHEIGHT + 6, PIPESEAMCOL);
         }
         // erase behind pipe
         if (pipes.x <= TFTW)
@@ -124,13 +124,13 @@ void FlappyBirdClass::game_loop()
             tmpy = BIRDH - 1;
             do
             {
-                drawPixel(px, bird.old_y + tmpy, BCKGRDCOL);
+                M5m.Lcd.drawPixel(px, bird.old_y + tmpy, BCKGRDCOL);
             } while (tmpy--);
             // draw bird sprite at new position
             tmpy = BIRDH - 1;
             do
             {
-                drawPixel(px, bird.y + tmpy, birdcol[tmpx + (tmpy * BIRDW)]);
+                M5m.Lcd.drawPixel(px, bird.y + tmpy, birdcol[tmpx + (tmpy * BIRDW)]);
             } while (tmpy--);
         } while (tmpx--);
         // save position to erase bird on next draw
