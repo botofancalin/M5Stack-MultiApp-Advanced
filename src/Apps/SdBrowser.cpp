@@ -85,7 +85,7 @@ void SdBrowserClass::buildMyMenu()
 void SdBrowserClass::Run()
 {
     appsCount = 0;
-    listDir(SD, "/", levels);
+    listDir(My_SD, "/", levels);
     aSortFiles();
     buildMyMenu();
     M5m.showList();
@@ -112,19 +112,19 @@ void SdBrowserClass::Run()
                 M5m.Lcd.clear();
                 if (fileVector[MenuID].fileSize > 100000UL)
                 {
-                    M5m.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_8);
+                    M5m.Lcd.drawJpgFile(My_SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_8);
                 }
                 else if (fileVector[MenuID].fileSize > 70000UL)
                 {
-                    M5m.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_4);
+                    M5m.Lcd.drawJpgFile(My_SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_4);
                 }
                 else if (fileVector[MenuID].fileSize > 50000)
                 {
-                    M5m.Lcd.drawJpgFile(SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_2);
+                    M5m.Lcd.drawJpgFile(My_SD, FileName.c_str(), 0, 0, 0, 0, 0, 0, JPEG_DIV_2);
                 }
                 else
                 {
-                    M5m.Lcd.drawJpgFile(SD, FileName.c_str());
+                    M5m.Lcd.drawJpgFile(My_SD, FileName.c_str());
                 }
                 repaint = true;
                 M5m.btnRestore();

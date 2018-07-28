@@ -22,7 +22,11 @@
 #define _AUDIOFILESOURCESD_H
 
 #include "AudioFileSource.h"
+#ifdef M5STACK
 #include <SD.h>
+#else
+#include <SD_MMC.h>
+#endif
 
 
 class AudioFileSourceSD : public AudioFileSource

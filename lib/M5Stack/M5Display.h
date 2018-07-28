@@ -15,7 +15,7 @@ typedef enum
   JPEG_DIV_MAX
 } jpeg_div_t;
 
-class M5Display : public M5_sSPI
+class M5Display : public M5m_eSPI
 {
 
 public:

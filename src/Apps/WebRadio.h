@@ -17,7 +17,7 @@ private:
   AudioFileSourceBuffer *buff = NULL;
   AudioOutputI2S *out = NULL;
 
-  const int preallocateBufferSize = 8192;
+  const int preallocateBufferSize = 16384;
   const int preallocateCodecSize = 29192;
   void *preallocateBuffer = NULL;
   void *preallocateCodec = NULL;

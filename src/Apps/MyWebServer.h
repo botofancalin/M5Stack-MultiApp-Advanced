@@ -1,5 +1,6 @@
 #pragma once
 #include "M5StackMod.h"
+#include "WebServer.h"
 
 class WebServerClass
 {

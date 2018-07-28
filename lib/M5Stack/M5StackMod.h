@@ -28,30 +28,29 @@
 #include <Arduino.h>
 #include <vector>
 #include "WiFi.h"
-#include "WiFiClient.h"
-#include <ESPmDNS.h>
 #include <Wire.h>
 #include <SPI.h>
-#include "FS.h"
-#include "SD.h"
 #include "SPIFFS.h"
-#include "DHTesp.h"
 #include "Preferences.h"
 #include "ArduinoOTA.h"
-#include "WebServer.h"
 #include <Update.h>
 #include <HTTPClient.h>
 
 #include "M5Display.h"
-#include "utility/Config.h"
 #include "utility/Button.h"
-#include "utility/Speaker.h"
 #include "AudioFileSourceSD.h"
 #include "AudioFileSourceICYStream.h"
 #include "AudioFileSourceBuffer.h"
 #include "AudioGeneratorMP3.h"
-#include "AudioGeneratorMP3a.h"
 #include "AudioOutputI2S.h"
+
+#ifdef M5STACK
+#include "SD.h"
+#define My_SD SD
+#else
+#include "SD_MMC.h"
+#define My_SD SD_MMC
+#endif
 
 #define MENU_TITLE_MAX_SIZE 24
 #define BTN_TITLE_MAX_SIZE 6
@@ -104,19 +103,15 @@ public:
   void powerOFF();
 
 // Button API
-#define DEBOUNCE_MS 5
+#define DEBOUNCE_MS 10
   Button BtnA = Button(BUTTON_A_PIN, true, DEBOUNCE_MS);
   Button BtnB = Button(BUTTON_B_PIN, true, DEBOUNCE_MS);
   Button BtnC = Button(BUTTON_C_PIN, true, DEBOUNCE_MS);
 
-  // LCD
+  M5Display Lcd = M5Display();
+  int WiFi_Mode;
+  int vol, old_vol;
 
-      // SPEAKER
-    SPEAKER Speaker;
-
-    M5Display Lcd = M5Display();
-int WiFi_Mode;
-int vol, old_vol;
 private:
   uint8_t _wakeupPin;
   String listCaption;

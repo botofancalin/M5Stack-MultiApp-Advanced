@@ -199,7 +199,7 @@ void M5StackMod::execute()
 }
 
 void M5StackMod::addMenuItem(uint32_t levelID, const char *menu_title, const char *btnA_title, const char *btnB_title,
-                          const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
+                             const char *btnC_title, signed char goto_level, const char *Menu_Img, void (*function)())
 {
   uint32_t mCnt = menuCount[levelID];
   menuList[levelID] = (MenuCommandCallback *)realloc(menuList[levelID], (mCnt + 1) * sizeof(MenuCommandCallback));
@@ -259,7 +259,7 @@ void M5StackMod::btnRestore()
 }
 
 void M5StackMod::drawMenu(String inmenuttl, String inbtnAttl, String inbtnBttl, String inbtnCttl, unsigned int inmenucolor,
-                       unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
+                          unsigned int inwindowcolor, const char *iMenuImg, unsigned int intxtcolor)
 {
   lastBtnTittle[0] = inbtnAttl;
   lastBtnTittle[1] = inbtnBttl;
@@ -290,12 +290,9 @@ void M5StackMod::begin()
   Serial.print("M5StackMod initializing...");
 
   // I2C
-  pinMode(SCL, OUTPUT);
-  digitalWrite(SDA, 1);
-  Wire.begin();
-
-  // TONE
-    Speaker.begin();
+  pinMode(SCL_PIN, OUTPUT);
+  digitalWrite(SDA_PIN, 1);
+  Wire.begin(SDA_PIN,SCL_PIN);
 
   // Setup the button with an internal pull-up
   pinMode(BUTTON_A_PIN, INPUT_PULLUP);
@@ -310,11 +307,20 @@ void M5StackMod::begin()
   Lcd.setTextSize(1);
   Lcd.setBrightness(50);
 
-  // TF Card & SPIFFS
-  SD.begin(TFCARD_CS_PIN, SPI, 40000000);
+// TF Card & SPIFFS
+#ifdef M5STACK
+  My_SD.begin(TFCARD_CS_PIN, SPI, 40000000);
+#else
+  My_SD.begin();
+#endif
   vTaskDelay(10 / portTICK_RATE_MS);
-  SPIFFS.begin();
 
+  if (!SPIFFS.begin())
+  {
+    SPIFFS.format();
+    vTaskDelay(10 / portTICK_RATE_MS);
+    SPIFFS.begin();
+  }
   // Set wakeup button
   setWakeupButton(BUTTON_A_PIN);
 

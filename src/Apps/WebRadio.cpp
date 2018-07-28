@@ -97,7 +97,7 @@ void WebRadioClass::Run()
 	preallocateCodec = malloc(preallocateCodecSize);
 	out = new AudioOutputI2S(0, 1);
 
-	if (GetStations(SD, "/RadioStations.txt"))
+	if (GetStations(My_SD, "/RadioStations.txt"))
 	{
 		if (WiFi.isConnected())
 		{

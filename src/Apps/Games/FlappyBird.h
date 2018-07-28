@@ -17,7 +17,7 @@
 #define BIRDW2 8 // half width
 #define BIRDH2 8 // half height
 // pipe size
-#define PIPEW 24     // pipe width
+#define PIPEW 25     // pipe width
 #define GAPHEIGHT 56 // pipe gap height
 // floor size
 #define FLOORH 30 // floor height (from bottom of the screen)

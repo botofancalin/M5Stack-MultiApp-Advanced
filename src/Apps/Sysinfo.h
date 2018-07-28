@@ -16,15 +16,10 @@ private:
   uint8_t page = 0;
   uint8_t baseMac[6];
   char baseMacChr[18] = {0};
-  int chipRev;
-  int cpuSpeed;
-  int flashSpeed;
-  int ramFree;
-  int flashSize;
   int type;
   String WiFiMAC;
-  unsigned long sdSize;
-  unsigned long sdUsed;
+  uint64_t sdSize;
+  uint64_t sdUsed;
   String SD_Type[5] = {"NONE", "MMC", "SD", "SDHC", "UNKNOWN"};
   String wifi_m_mode[5] = {"OFF", "STA", "AP", "AP STA", "MAX"};
 

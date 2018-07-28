@@ -52,6 +52,10 @@ bool loadFromSdCard(String path)
     {
         dataType = "image/jpeg";
     }
+    else if (path.endsWith(".mp3"))
+    {
+        dataType = "audio/mpeg";
+    }
     else if (path.endsWith(".ico"))
     {
         dataType = "image/x-icon";
@@ -69,12 +73,12 @@ bool loadFromSdCard(String path)
         dataType = "application/zip";
     }
 
-    File dataFile = SD.open(path.c_str());
+    File dataFile = My_SD.open(path.c_str());
     if (dataFile.isDirectory())
     {
         path += "/index.htm";
         dataType = "text/html";
-        dataFile = SD.open(path.c_str());
+        dataFile = My_SD.open(path.c_str());
     }
 
     if (!dataFile)
@@ -89,7 +93,7 @@ bool loadFromSdCard(String path)
 
     if (server.streamFile(dataFile, dataType) != dataFile.size())
     {
-        M5m.Lcd.println("Sent less data than expected!");
+        Serial.println("Sent less data than expected!");
     }
 
     dataFile.close();
@@ -105,13 +109,11 @@ void handleFileUpload()
     HTTPUpload &upload = server.upload();
     if (upload.status == UPLOAD_FILE_START)
     {
-        if (SD.exists((char *)upload.filename.c_str()))
+        if (My_SD.exists((char *)upload.filename.c_str()))
         {
-            SD.remove((char *)upload.filename.c_str());
+            My_SD.remove((char *)upload.filename.c_str());
         }
-        uploadFile = SD.open(upload.filename.c_str(), FILE_WRITE);
-        M5m.Lcd.print("Upload: START, filename: ");
-        M5m.Lcd.println(upload.filename);
+        uploadFile = My_SD.open(upload.filename.c_str(), FILE_WRITE);
     }
     else if (upload.status == UPLOAD_FILE_WRITE)
     {
@@ -119,8 +121,6 @@ void handleFileUpload()
         {
             uploadFile.write(upload.buf, upload.currentSize);
         }
-        M5m.Lcd.print("Upload: WRITE, Bytes: ");
-        M5m.Lcd.println(upload.currentSize);
     }
     else if (upload.status == UPLOAD_FILE_END)
     {
@@ -128,22 +128,20 @@ void handleFileUpload()
         {
             uploadFile.close();
         }
-        M5m.Lcd.print("Upload: END, Size: ");
-        M5m.Lcd.println(upload.totalSize);
     }
 }
 
 void deleteRecursive(String path)
 {
-    if (!SD.exists((char *)path.c_str()))
+    if (!My_SD.exists((char *)path.c_str()))
     {
         return;
     }
-    File file = SD.open((char *)path.c_str());
+    File file = My_SD.open((char *)path.c_str());
     if (!file.isDirectory())
     {
         file.close();
-        SD.remove((char *)path.c_str());
+        My_SD.remove((char *)path.c_str());
         return;
     }
 
@@ -164,12 +162,12 @@ void deleteRecursive(String path)
         else
         {
             entry.close();
-            SD.remove((char *)entryPath.c_str());
+            My_SD.remove((char *)entryPath.c_str());
         }
         yield();
     }
 
-    SD.rmdir((char *)path.c_str());
+    My_SD.rmdir((char *)path.c_str());
     file.close();
 }
 
@@ -180,7 +178,7 @@ void handleDelete()
         return returnFail("BAD ARGS");
     }
     String path = server.arg(0);
-    if (path == "/" || !SD.exists((char *)path.c_str()))
+    if (path == "/" || !My_SD.exists((char *)path.c_str()))
     {
         returnFail("BAD PATH");
         return;
@@ -196,7 +194,7 @@ void handleCreate()
         return returnFail("BAD ARGS");
     }
     String path = server.arg(0);
-    if (path == "/" || SD.exists((char *)path.c_str()))
+    if (path == "/" || My_SD.exists((char *)path.c_str()))
     {
         returnFail("BAD PATH");
         return;
@@ -204,16 +202,16 @@ void handleCreate()
 
     if (path.indexOf('.') > 0)
     {
-        File file = SD.open((char *)path.c_str(), FILE_WRITE);
+        File file = My_SD.open((char *)path.c_str(), FILE_WRITE);
         if (file)
         {
-            file.write(NULL, 0);
+            file.write(0);
             file.close();
         }
     }
     else
     {
-        SD.mkdir((char *)path.c_str());
+        My_SD.mkdir((char *)path.c_str());
     }
     returnOK();
 }
@@ -225,11 +223,11 @@ void printDirectory()
         return returnFail("BAD ARGS");
     }
     String path = server.arg("dir");
-    if (path != "/" && !SD.exists((char *)path.c_str()))
+    if (path != "/" && !My_SD.exists((char *)path.c_str()))
     {
         return returnFail("BAD PATH");
     }
-    File dir = SD.open((char *)path.c_str());
+    File dir = My_SD.open((char *)path.c_str());
     path = String();
     if (!dir.isDirectory())
     {
@@ -268,11 +266,9 @@ void printDirectory()
             output += "file";
             output += "\",\"name\":\"";
             output += entry.name() + (String(dir.name())).length();
-        }
-
+        }        
         output += "\"";
         output += "}";
-
         server.sendContent(output);
         entry.close();
     }
@@ -331,7 +327,7 @@ void MywebServer(void *parameter)
     for (;;)
     {
         server.handleClient();
-        vTaskDelay(1 / portTICK_PERIOD_MS);
+        //vTaskDelay(1 / portTICK_PERIOD_MS);
     }
     vTaskDelete(NULL);
 }

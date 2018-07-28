@@ -15,23 +15,10 @@
 #ifndef _In_eSPIH_
 #define _In_eSPIH_
 
-#define SPI_FREQUENCY  40000000
-
 #define ILI9341_DRIVER
 #include "ILI9341_Defines.h"
+#include "MyEspConfig.h"
 #define  TFT_DRIVER 0x9341
-
-// For M5Stack ESP32 module with integrated display ONLY, remove // in line below
-#define M5STACK
-
-// For the M5Stack module use these #define lines
-#define TFT_MISO 19
-#define TFT_MOSI 23
-#define TFT_SCLK 18
-#define TFT_CS   14  // Chip select control pin
-#define TFT_DC   27  // Data Command control pin
-#define TFT_RST  33  // Reset pin (could connect to Arduino RESET pin)
-#define TFT_BL   32  // LED back-light
 
 #define LOAD_GLCD   // Font 1. Original Adafruit 8 pixel font needs ~1820 bytes in FLASH
 #define LOAD_FONT2  // Font 2. Small 16 pixel high font, needs ~3534 bytes in FLASH, 96 characters
@@ -502,11 +489,11 @@ const PROGMEM fontinfo fontdata [] = {
 
 
 // Class functions and variables
-class M5_sSPI : public Print {
+class M5m_eSPI : public Print {
 
  public:
 
-  M5_sSPI(int16_t _W = TFT_WIDTH, int16_t _H = TFT_HEIGHT);
+  M5m_eSPI(int16_t _W = TFT_WIDTH, int16_t _H = TFT_HEIGHT);
 
   void     init(void), begin(void); // Same - begin included for backwards compatibility
 
@@ -717,7 +704,7 @@ class M5_sSPI : public Print {
   #include "Extensions/Smooth_font.h"
 #endif
 
-}; // End of class M5_sSPI
+}; // End of class M5m_eSPI
 
 // Load the Button Class
 // #include "Extensions/Button.h"

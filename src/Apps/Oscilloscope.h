@@ -21,6 +21,7 @@
 #define TRIG_E_DN 1
 #define RATE_MIN 0
 #define RATE_MAX 14
+
 class OscilloscopeClass
 {
 public:

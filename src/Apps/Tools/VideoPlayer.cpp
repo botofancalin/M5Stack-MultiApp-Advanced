@@ -4,7 +4,7 @@ void VideoPlayerClass::Play(const char *fileName)
 {
     M5m.update();
     M5m.Lcd.fillScreen(BLACK);
-    file = SD.open(fileName);
+    file = My_SD.open(fileName);
     M5m.Lcd.setSwapBytes(true);
     while(!M5m.BtnB.wasPressed() && file.read(videoBuffer, 93960))
     {

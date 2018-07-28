@@ -359,7 +359,7 @@ void WeatherStationClass::Run()
     M5m.update();
     if (WiFi.isConnected())
     {
-        if (GetParams(SD, "/WeatherParams.txt"))
+        if (GetParams(My_SD, "/WeatherParams.txt"))
         {
             updateData(true);
             lastDownloadUpdate = 0;

@@ -59,8 +59,6 @@ void loop()
 			M5m.Lcd.drawRightString("WiFi: " + String(SignalStrength) + " %", 310, 5, 2);
 			if (!OtaRunning)
 			{
-				M5StackServerOta SrververOta(&version);
-				SrververOta.checkForNewVersion();
 				appOta();
 				OtaRunning = true;
 			}

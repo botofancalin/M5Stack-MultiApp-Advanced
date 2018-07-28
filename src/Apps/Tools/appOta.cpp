@@ -2,6 +2,8 @@
 
 void appOta()
 {
+	ArduinoOTA.setHostname("ESP32 - MultiApp");
+
 	ArduinoOTA
 		.onStart([]() {
 			String type;
