@@ -2757,7 +2757,7 @@ inline void M5m_eSPI::setAddrWindow(int32_t x0, int32_t y0, int32_t x1, int32_t 
 
 #else // This is for the ESP32
 
-inline void M5m_eSPI::setAddrWindow(int32_t x0, int32_t y0, int32_t x1, int32_t y1)
+void M5m_eSPI::setAddrWindow(int32_t x0, int32_t y0, int32_t x1, int32_t y1)
 {
   //spi_begin();
 

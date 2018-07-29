@@ -290,9 +290,11 @@ void M5StackMod::begin()
   Serial.print("M5StackMod initializing...");
 
   // I2C
+  #ifdef M5STACK
   pinMode(SCL_PIN, OUTPUT);
   digitalWrite(SDA_PIN, 1);
   Wire.begin(SDA_PIN,SCL_PIN);
+  #endif
 
   // Setup the button with an internal pull-up
   pinMode(BUTTON_A_PIN, INPUT_PULLUP);

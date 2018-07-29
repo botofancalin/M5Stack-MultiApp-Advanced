@@ -96,8 +96,8 @@ void DhtReaderClass::getSHTData(uint8_t _address)
         data[i] = Wire.read();
     }
 
-    temperature = ((((data[0] * 256.0) + data[1]) * 175) / 65535.0) - 49;
-    humidity = ((((data[3] * 256.0) + data[4]) * 100) / 65535.0) + 16;
+    temperature = ((((data[0] * 256.0) + data[1]) * 175) / 65535.0) - t_dr;
+    humidity = ((((data[3] * 256.0) + data[4]) * 100) / 65535.0) + h_dr;
 }
 
 void DhtReaderClass::Run()
@@ -116,7 +116,7 @@ void DhtReaderClass::Run()
                 getSHTData(_address);
                 if (sw)
                 {
-                    M5m.drawAppMenu(F("SHT Sensor"), F("ESC"), F("SHT"), F(""));
+                    M5m.drawAppMenu(F("SHT Sensor"), F("ESC"), F("DHT"), F(""));
                     sw = false;
                 }
             }
@@ -126,7 +126,7 @@ void DhtReaderClass::Run()
                 getDHTData();
                 if (sw)
                 {
-                    M5m.drawAppMenu(F("DHT Sensor"), F("ESC"), F("DHT"), F(""));
+                    M5m.drawAppMenu(F("DHT Sensor Drift Comp"), F("ESC"), F("SHT"), F(""));
                     sw = false;
                 }
             }

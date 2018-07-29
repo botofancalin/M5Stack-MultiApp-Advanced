@@ -1,8 +1,9 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#define SPI_FREQUENCY  40000000
 #define M5STACK
+
+#define SPI_FREQUENCY  40000000
 
 // For the M5Stack module use these #define lines
 #ifdef M5STACK
