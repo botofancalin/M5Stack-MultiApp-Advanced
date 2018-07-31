@@ -3,14 +3,12 @@
 
 class VideoPlayerClass
 {
-  private:
-    uint8_t *videoBuffer = NULL;
-    File file;
+private:
+  uint8_t *videoBuffer = NULL;
+  File file;
 
-  public:
+public:
   void Play(const char *fileName);
-    VideoPlayerClass();
-    ~VideoPlayerClass();
+  VideoPlayerClass();
+  ~VideoPlayerClass();
 };
-
-

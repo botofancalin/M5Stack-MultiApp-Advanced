@@ -15,7 +15,7 @@ private:
   unsigned int data[6];
   uint8_t _address = 0x45, pin = 17, age;
   bool SHT = true, sw = true;
-  int t_dr = 45, h_dr = 0;
+  int t_dr = 48, h_dr = 5;
 
   void DrawWidgets();
   void getSHTData(uint8_t _address);

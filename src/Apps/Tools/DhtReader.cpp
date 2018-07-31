@@ -109,7 +109,7 @@ void DhtReaderClass::Run()
     while (!M5m.BtnA.wasPressed())
     {
         unsigned long start = millis();
-        if (start - past >= 3000)
+        if (start - past >= 5000)
         {
             if (SHT)
             {
@@ -126,7 +126,7 @@ void DhtReaderClass::Run()
                 getDHTData();
                 if (sw)
                 {
-                    M5m.drawAppMenu(F("DHT Sensor Drift Comp"), F("ESC"), F("SHT"), F(""));
+                    M5m.drawAppMenu(F("DHT Sensor"), F("ESC"), F("SHT"), F(""));
                     sw = false;
                 }
             }
