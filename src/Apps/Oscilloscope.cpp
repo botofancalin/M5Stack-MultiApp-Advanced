@@ -367,7 +367,7 @@ void OscilloscopeClass::Run()
 	M5m.Lcd.fillScreen(BLACK);
 	DrawGrid();
 
-	if (Sig_Gen == NULL)
+if (Sig_Gen == NULL)
 	{
 		xTaskCreatePinnedToCore(
 			SigGen_Task,		/* Task function. */

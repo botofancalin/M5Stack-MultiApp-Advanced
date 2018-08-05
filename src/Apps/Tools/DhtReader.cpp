@@ -109,7 +109,7 @@ void DhtReaderClass::Run()
     while (!M5m.BtnA.wasPressed())
     {
         unsigned long start = millis();
-        if (start - past >= 5000)
+        if (start - past >= 3000)
         {
             if (SHT)
             {

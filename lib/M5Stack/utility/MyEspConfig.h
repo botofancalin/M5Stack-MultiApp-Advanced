@@ -1,7 +1,7 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#define M5STACK
+//#define M5STACK
 
 #define SPI_FREQUENCY  40000000
 
