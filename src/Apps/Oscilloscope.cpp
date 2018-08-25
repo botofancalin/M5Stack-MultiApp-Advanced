@@ -322,9 +322,9 @@ void SigGen_Task(void *parameter)
 		switch (Gen)
 		{
 		case 0:
-			for (int MyAngle = 0; MyAngle < 256; MyAngle++)
+			for (int MyAngle = 0; MyAngle < 255; MyAngle++)
 			{
-				dacWrite(26, (((sin(MyAngle * (6.28f) / 256)) * 120) + 128));
+				dacWrite(26, (((sin(MyAngle * (6.28f) / 255)) * 120) + 128));
 				delayMicroseconds(20);
 			}
 			break;
@@ -335,14 +335,14 @@ void SigGen_Task(void *parameter)
 			delay(5);
 			break;
 		case 2:
-			for (int i = 0; i < 256; i++)
+			for (int i = 0; i < 255; i++)
 			{
 				dacWrite(26, i);
 				delayMicroseconds(20);
 			}
 			break;
 		case 3:
-			for (int i = 0; i < 256; i++)
+			for (int i = 0; i < 255; i++)
 			{
 				dacWrite(26, i);
 				delayMicroseconds(10);
@@ -361,13 +361,15 @@ void SigGen_Task(void *parameter)
 	vTaskDelete(NULL);
 }
 
+
+
 void OscilloscopeClass::Run()
 {
 	exitprg = false;
 	M5m.Lcd.fillScreen(BLACK);
 	DrawGrid();
 
-if (Sig_Gen == NULL)
+	if (Sig_Gen == NULL)
 	{
 		xTaskCreatePinnedToCore(
 			SigGen_Task,		/* Task function. */
@@ -386,38 +388,38 @@ if (Sig_Gen == NULL)
 			unsigned long st = millis();
 			if (trig_ch == 0)
 			{
-				*oadp = adRead(&ad_ch0, &ch0_mode, &ch0_off);
+				oad = adRead(&ad_ch0, &ch0_mode, &ch0_off);
 			}
 			else
 			{
-				*oadp = adRead(&ad_ch1, &ch1_mode, &ch1_off);
+				oad = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 			}
 			for (;;)
 			{
 				if (trig_ch == 0)
 				{
-					*adp = adRead(&ad_ch0, &ch0_mode, &ch0_off);
+					ad = adRead(&ad_ch0, &ch0_mode, &ch0_off);
 				}
 				else
 				{
-					*adp = adRead(&ad_ch1, &ch1_mode, &ch1_off);
+					ad = adRead(&ad_ch1, &ch1_mode, &ch1_off);
 				}
 
 				if (trig_edge == TRIG_E_UP)
 				{
-					if (*adp >= trig_lv && *adp > *oadp + 1)
+					if (ad >= trig_lv && ad > oad)
 					{
 						break;
 					}
 				}
 				else
 				{
-					if (*adp <= trig_lv && *adp < *oadp)
+					if (ad <= trig_lv && ad < oad)
 					{
 						break;
 					}
 				}
-				*oadp = *adp;
+				oad = ad;
 				if (trig_mode == TRIG_SCAN)
 				{
 					break;
