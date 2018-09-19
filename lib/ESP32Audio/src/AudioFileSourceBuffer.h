@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#pragma once
+
 #ifndef _AUDIOFILESOURCEBUFFER_H
 #define _AUDIOFILESOURCEBUFFER_H
 
@@ -27,8 +27,8 @@
 class AudioFileSourceBuffer : public AudioFileSource
 {
   public:
-    AudioFileSourceBuffer(AudioFileSource *in, int bufferBytes);
-    AudioFileSourceBuffer(AudioFileSource *in, void *buffer, int bufferBytes); // Pre-allocated buffer by app
+    AudioFileSourceBuffer(AudioFileSource *in, uint32_t bufferBytes);
+    AudioFileSourceBuffer(AudioFileSource *in, void *buffer, uint32_t bufferBytes); // Pre-allocated buffer by app
     virtual ~AudioFileSourceBuffer() override;
     
     virtual uint32_t read(void *data, uint32_t len) override;
@@ -48,12 +48,12 @@ class AudioFileSourceBuffer : public AudioFileSource
 
   private:
     AudioFileSource *src;
-    uint16_t buffSize;
+    uint32_t buffSize;
     uint8_t *buffer;
     bool deallocateBuffer;
-    uint16_t writePtr;
-    uint16_t readPtr;
-    uint16_t length;
+    uint32_t writePtr;
+    uint32_t readPtr;
+    uint32_t length;
     bool filled;
 };
 

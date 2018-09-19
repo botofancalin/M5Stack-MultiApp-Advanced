@@ -93,8 +93,8 @@ void WebRadioClass::Run()
 	M5m.drawAppMenu(F("WebRadio"), F("Vol-"), F("Next"), F("Vol+"));
 	M5m.Lcd.setTextColor(ORANGE);
 	M5m.Lcd.drawCentreString("Long press 'NEXT' to Exit", 158, 190, 2);
-	preallocateBuffer = malloc(preallocateBufferSize);
-	preallocateCodec = malloc(preallocateCodecSize);
+	preallocateBuffer = heap_caps_malloc(preallocateBufferSize, MALLOC_CAP_DEFAULT);
+	preallocateCodec = heap_caps_malloc(preallocateCodecSize, MALLOC_CAP_DEFAULT);
 	out = new AudioOutputI2S(0, 1);
 
 	if (GetStations(My_SD, "/RadioStations.txt"))
@@ -205,8 +205,8 @@ void WebRadioClass::Run()
 				delete out;
 				out = NULL;
 			}
-			free(preallocateBuffer);
-			free(preallocateCodec);
+			heap_caps_free(preallocateBuffer);
+			heap_caps_free(preallocateCodec);
 			dacWrite(25, 0);
 			dacWrite(26, 0);
 		}

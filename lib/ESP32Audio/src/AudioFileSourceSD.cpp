@@ -31,11 +31,7 @@ AudioFileSourceSD::AudioFileSourceSD(const char *filename)
 
 bool AudioFileSourceSD::open(const char *filename)
 {
-  #ifdef M5STACK
   f = SD.open(filename, FILE_READ);
-  #else
-  f = SD_MMC.open(filename, FILE_READ);
-  #endif
   return f;
 }
 

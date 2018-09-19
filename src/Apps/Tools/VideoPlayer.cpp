@@ -17,12 +17,12 @@ void VideoPlayerClass::Play(const char *fileName)
 
 VideoPlayerClass::VideoPlayerClass()
 {
-    videoBuffer = (uint8_t*)malloc(93960);
+     videoBuffer = (uint8_t*)heap_caps_malloc(93960,MALLOC_CAP_DEFAULT);
 }
 
 VideoPlayerClass::~VideoPlayerClass()
 {
-    free(videoBuffer);
+    heap_caps_free(videoBuffer);
     M5m.drawAppMenu(F("SD BROWSER"), F("EXIT"), F("OPEN"), F(">"));
     M5m.showList();
 }

@@ -17,7 +17,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#pragma once
+
 #ifndef _AUDIOOUTPUTI2S_H
 #define _AUDIOOUTPUTI2S_H
 
@@ -26,7 +26,7 @@
 class AudioOutputI2S : public AudioOutput
 {
   public:
-    AudioOutputI2S(int port=0, int output_mode=EXTERNAL_I2S, int use_apll=APLL_DISABLE);
+    AudioOutputI2S(int port=0, int output_mode=EXTERNAL_I2S, int dma_buf_count = 8, int use_apll=APLL_DISABLE);
     virtual ~AudioOutputI2S() override;
     bool SetPinout(int bclkPin, int wclkPin, int doutPin);
     virtual bool SetRate(int hz) override;
