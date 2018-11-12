@@ -33,7 +33,7 @@ public:
 private:
   TaskHandle_t Sig_Gen = NULL;
   const uint8_t ad_ch0 = 35;
-  const uint8_t ad_ch1 = 34;
+  const uint8_t ad_ch1 = 36;
   int range0 = RANGE_MIN;
   int range1 = RANGE_MIN;
   uint8_t ch0_mode = MODE_ON;
