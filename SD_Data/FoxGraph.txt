@@ -1,0 +1,5 @@
+ FoxHome=http://narodmon.ru/api?uuid=your_api_key_here;
+ Minskaya=http://narodmon.ru/api?uuid=your_api_key_here;
+ Borovoe=http://narodmon.ru/api?uuid=your_api_key_here;
+ BorovoePres=http://narodmon.ru/api?uuid=your_api_key_here;
+ BorovoeHum=http://narodmon.ru/api?uuid=your_api_key_here;
