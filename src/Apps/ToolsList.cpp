@@ -10,6 +10,7 @@ void appListTools()
     }
     M5m.clearList();
     M5m.setListCaption("TOOLS");
+    M5m.addList("FOXGRAPH");
     M5m.addList("WIFI PACKET MONITOR");
     M5m.addList("WIFI SCANNER");
     M5m.addList("I2C SCANNER");
@@ -48,6 +49,11 @@ void appListTools()
             {
                 StopWatchClass StopWatchObj;
                 StopWatchObj.Run();
+            }
+            if (M5m.getListString() == "FOXGRAPH")
+            {
+                FoxGraphClass FoxGraphObj;
+                FoxGraphObj.Run();
             }
         }
         M5m.update();

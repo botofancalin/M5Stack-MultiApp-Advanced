@@ -95,7 +95,7 @@ void WebRadioClass::Run()
 	M5m.Lcd.drawCentreString("Long press 'NEXT' to Exit", 158, 190, 2);
 	preallocateBuffer = heap_caps_malloc(preallocateBufferSize, MALLOC_CAP_DEFAULT);
 	preallocateCodec = heap_caps_malloc(preallocateCodecSize, MALLOC_CAP_DEFAULT);
-	out = new AudioOutputI2S(0, 1);
+	out = new AudioOutputI2S(0, 1, 32);
 
 	if (GetStations(My_SD, "/RadioStations.txt"))
 	{
